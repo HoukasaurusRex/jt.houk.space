@@ -8,6 +8,7 @@
   <a href="https://david-dm.org/HoukasaurusRex/houkasaurus">
     <img alt="David Dependencies Status" src="https://david-dm.org/HoukasaurusRex/houkasaurus.svg" target="_blank" />
   </a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHoukasaurusRex%2Fjt.houk.space?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHoukasaurusRex%2Fjt.houk.space.svg?type=shield"/></a>
   <a href="https://lgtm.com/projects/g/HoukasaurusRex/jt.houk.space/context:javascript">
     <img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/HoukasaurusRex/jt.houk.space.svg?logo=lgtm&logoWidth=18" target="_blank" />
   </a>
@@ -26,6 +27,9 @@
 </p>
 
 > Personal blog for JT Houk
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHoukasaurusRex%2Fjt.houk.space.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHoukasaurusRex%2Fjt.houk.space?ref=badge_large)
 
 ### 🏠 [Homepage](jt.houk.space)
 
