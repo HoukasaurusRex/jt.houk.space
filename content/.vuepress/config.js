@@ -55,7 +55,7 @@ module.exports = {
     }],
     ['@vuepress/pwa', {
       serviceWorker: true,
-      updatePopup: true
+      updatePopup: false
     }]
   ],
   head: [
@@ -75,8 +75,6 @@ module.exports = {
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }],
     // ['script', { async: true, src: 'https://platform.twitter.com/widgets.js', charset: 'utf-8' }]
   ],
-  // extend: '@vuepress/theme-blog',
-  // theme: '@vuepress/theme-blog',
   themeConfig: {
     repo: 'HoukasaurusRex',
     author: '@HoukasaurusRex',

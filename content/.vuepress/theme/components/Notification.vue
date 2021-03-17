@@ -16,7 +16,7 @@
     align-items="center"
   >
     <CLink isExternal href="https://donate.unhcr.org/int/ethiopia-emergency/~my-donation#step-1" d="flex" align-items="center" color="var(--background-color)" :_hover="{ color: 'var(--background-color)' }">
-      <CAlertIcon name="hand-holding-heart" />
+      <CAlertIcon name="hand-holding-heart" max-width="50px" />
       <CBox max-width="600px" mx="1rem" >
         <CAlertTitle :mr="2" v-if="notificationTitle">{{notificationTitle}}</CAlertTitle>
         <CAlertDescription class="description" display="none">{{notification}}</CAlertDescription>
