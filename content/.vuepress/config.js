@@ -22,7 +22,6 @@ module.exports = {
     'Full Stack'
   ],
   serviceWorker: true,
-  ga: process.env.GA_ID,
   evergreen: true,
   plugins: [
     ['seo', {
@@ -74,6 +73,14 @@ module.exports = {
     ['meta', { name: 'msapplication-navbutton-color', content: 'rgb(235, 141, 175)' }],
     ['meta', { name: 'msapplication-starturl', content: '/' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }],
+    ['script', {
+      ['data-host']: 'https://microanalytics.io',
+      src: 'https://microanalytics.io/js/script.js',
+      id: process.env.MICRO_ANALYTICS_ID,
+      async: true,
+      defer: true
+    }]
+    // <script data-host="https://microanalytics.io" data-dnt="false" src="https://microanalytics.io/js/script.js" id="ZwSg9rf6GA" async defer></script>
     // ['script', { async: true, src: 'https://platform.twitter.com/widgets.js', charset: 'utf-8' }]
   ],
   themeConfig: {
