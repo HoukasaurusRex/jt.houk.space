@@ -39,7 +39,7 @@
     "stylelint": "^13.13.1"
   },
   "engines": {
-    "node": "^16"
+    "node": ">v14.17.0"
   },
   "repository": {
     "type": "git",
