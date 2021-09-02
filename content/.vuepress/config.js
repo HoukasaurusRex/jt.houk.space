@@ -1,5 +1,5 @@
-require('dotenv-defaults').config()
 const getConfig = require('vuepress-bar')
+require('dotenv-defaults').config()
 
 const articles = getConfig(`${__dirname}/../articles`)
 const portfolio = getConfig(`${__dirname}/../projects`)
@@ -80,7 +80,6 @@ module.exports = {
       async: true,
       defer: true
     }]
-    // <script data-host="https://microanalytics.io" data-dnt="false" src="https://microanalytics.io/js/script.js" id="ZwSg9rf6GA" async defer></script>
     // ['script', { async: true, src: 'https://platform.twitter.com/widgets.js', charset: 'utf-8' }]
   ],
   themeConfig: {
@@ -92,6 +91,12 @@ module.exports = {
     env: {
       CMS_API: process.env.CMS_API,
       DISQUS_API_KEY: process.env.DISQUS_API_KEY
+    },
+    notification: {
+      id: 'irc-afghan-refugees',
+      title: 'Help Refugees in Afghanistan',
+      description: 'Donate to the IRC to provide humanitarian aid and resettlement resources to Afghan refugees',
+      link: 'https://help.rescue.org/donate/afghanistan'
     },
     nav: [
       {

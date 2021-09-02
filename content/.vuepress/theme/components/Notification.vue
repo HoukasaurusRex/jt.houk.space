@@ -15,49 +15,40 @@
     justify-content="center"
     align-items="center"
   >
-    <CLink isExternal href="https://donate.unhcr.org/int/ethiopia-emergency/~my-donation#step-1" d="flex" align-items="center" color="var(--background-color)" :_hover="{ color: 'var(--background-color)' }">
+    <CLink isExternal :href="notification.link" d="flex" align-items="center" color="var(--background-color)" :_hover="{ color: 'var(--background-color)' }">
       <CAlertIcon name="hand-holding-heart" max-width="50px" />
       <CBox max-width="600px" mx="1rem" >
-        <CAlertTitle :mr="2" v-if="notificationTitle">{{notificationTitle}}</CAlertTitle>
-        <CAlertDescription class="description" display="none">{{notification}}</CAlertDescription>
+        <CAlertTitle :mr="2" v-if="notification.title">{{notification.title}}</CAlertTitle>
+        <CAlertDescription class="description" display="none">{{notification.description}}</CAlertDescription>
       </CBox>
     </CLink>
-    <CCloseButton @click="closeNotification" position="absolute" right="10px" />
+    <CCloseButton @click="() => closeNotification(notification.id)" position="absolute" right="10px" />
   </CAlert>
 </template>
 
 <script>
-import {
-  CAlert,
-  CAlertIcon,
-  CAlertTitle,
-  CAlertDescription,
-  CCloseButton,
-  CBox,
-  CLink
-} from "@chakra-ui/vue"
+import { CAlert, CAlertIcon, CAlertTitle, CAlertDescription, CCloseButton, CBox, CLink } from "@chakra-ui/vue"
+
 export default {
   name: 'Notification',
-  components: {
-    CAlert,
-    CAlertIcon,
-    CAlertTitle,
-    CAlertDescription,
-    CCloseButton,
-    CBox,
-    CLink
-  }, 
-  data() {
-    return {
-      notificationTitle: 'Help Refugees in Tigray',
-      notification: 'Donate to UNHCR to help thousands of refugees flee ongoing fighting in Ethiopia\'s Tigray region to seek safety in eastern Sudan.',
-      notificationIsClosed: typeof window !== 'undefined' && localStorage.getItem('notificationIsClosed') || false
+  components: { CAlert, CAlertIcon, CAlertTitle, CAlertDescription, CCloseButton, CBox, CLink },
+  computed: {
+    notification() {
+      return (this.$themeConfig && this.$themeConfig.notification) || {}
+    },
+    notificationIsClosed() {
+      return this.shouldHideNotifcation(this.notification.id)
     }
   },
   methods: {
-    closeNotification() {
+    closeNotification(id) {
       this.notificationIsClosed = true
-      localStorage.setItem('notificationIsClosed', true)
+      localStorage.setItem(id, JSON.stringify({isClosed: true}))
+    },
+    shouldHideNotifcation(id) {
+      if (typeof window === 'undefined') return false
+      const notification = localStorage.getItem(id)
+      return !!notification && JSON.parse(notification).isClosed
     }
   }
 }

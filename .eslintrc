@@ -1,18 +1,31 @@
 {
-  "extends": ["plugin:prettier/recommended"],
-  "env": {
-      "commonjs": true,
-      "es6": true,
-      "node": true
-  },
-  "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
-      "ecmaVersion": 2019,
-      "sourceType": "module"
-  },
-  "rules": {
+    "extends": [
+        "plugin:prettier/recommended",
+        "plugin:vue/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "eslint:recommended",
+        "prettier"
+    ],
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-var": "error",
+        "prefer-const": "error",
+        "prefer-arrow-callback": "error",
+        "no-fallthrough": "off",
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/member-delimiter-style": "off"
+    }
   }
-}
