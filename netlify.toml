@@ -1,5 +1,5 @@
 [build]
-  command = "yarn fetch && yarn build"
+  command = "yarn build"
 
 [context.production.environment]
   NODE_ENV = "production"
