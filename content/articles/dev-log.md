@@ -59,3 +59,62 @@ I need to collaborate with Ecom and US to ask some questions:
 ### Inventory Snapshots
 
 - Removed updating batch inventory on audit update
+
+## Notes
+
+### Retro topics
+
+### System improvements
+
+#### Naming discrepancies
+
+There are differences in how certain things are named in the UI vs in our data and code.
+The effect of this is a higher onboarding time, as well as a higher cognitive load for existing developers.
+
+- Lots (UI) vs Batches (data)
+- Product purchasePrice (data - products) vs wholesaleCost (data - PPO) vs cost (UI)
+- Audits vs Invoices (some areas of code)
+
+### Hackathon ideas
+
+- add download url to ocs admin tool
+- On call rotation tool
+- usability metrics
+- ecom sms delivery updates
+- ~~Admin tool to get company by CRSA~~
+- cron fb base db recreate
+- OpenAPI to notion doc
+- API dependency vetting
+- Stack destroyer lambda
+- Lambda image processor (cloudinary replacement)
+- yarn 4
+- Run automated OWASP test on a schedule
+  - [https://www.zaproxy.org](https://www.zaproxy.org/)
+- PR description AI
+  - [Codium-ai](https://github.com/Codium-ai/pr-agent?tab=readme-ov-file#installation)
+- [Parade DB](https://www.paradedb.com/)
+- Reduce web test memory [swc](https://www.npmjs.com/package/@swc/jest)
+  
+  ```json
+    {
+      "jsc": {
+        "parser": {
+          "syntax": "typescript",
+          "tsx": false,
+          "decorators": true
+        },
+        "transform": {
+          "legacyDecorator": true,
+          "decoratorMetadata": true
+        },
+        "target": "es2017",
+        "keepClassNames": true
+      },
+      "module": {
+        "type": "commonjs",
+        "noInterop": false
+      }
+    }
+    ```
+
+- Hubspot CRM to manage dashboard cards: [query-hubspot-data-using-graphql](https://developers.hubspot.com/docs/cms/data/query-hubspot-data-using-graphql)
