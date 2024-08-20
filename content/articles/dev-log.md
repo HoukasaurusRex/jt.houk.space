@@ -23,7 +23,7 @@
 
 > "The unexamined life is not worth living." - Socrates
 
-## Star Date 2024-08-16
+## Stardate 2024-08-16
 
 ### Team Retro
 
@@ -46,3 +46,16 @@ I need to collaborate with Ecom and US to ask some questions:
 ### Investigating missing lot inventory
 
 - Helped Yongmin with a query to find missing inventory
+
+## Stardate 2024-08-20
+
+### Custom fields product import / export meeting
+
+- Discussed the options for custom fields in the product import / export process
+- Recommended treating any unknown columns in csv as custom fields
+
+### System Review
+
+### Inventory Snapshots
+
+- Removed updating batch inventory on audit update
