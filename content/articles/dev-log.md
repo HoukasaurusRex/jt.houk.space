@@ -42,3 +42,7 @@ I need to collaborate with Ecom and US to ask some questions:
 - Will Ecom send us a full address or can they convert to coordinates?
   - If we must convert to coordinates, should we make a platform service to handle this?
 - Should we make a new platform service to store coordinate-based delivery zones?
+
+### Investigating missing lot inventory
+
+- Helped Yongmin with a query to find missing inventory
