@@ -23,6 +23,28 @@
 
 > "The unexamined life is not worth living." - Socrates
 
+## Stardate 2024-08-21
+
+### Leads Meeting
+
+- Discussed stability concerns and how to improve observability of maintenance tasks in priority of feature development
+
+### Architecture Meeting
+
+- Discussed the scope of KML based delivery zones
+
+## Stardate 2024-08-20
+
+### Custom fields product import / export meeting
+
+- Discussed the options for custom fields in the product import / export process
+- Recommended treating any unknown columns in csv as custom fields
+
+### Inventory Snapshots
+
+- Removed updating batch inventory on audit update
+- Fixed batch related tests and tested deployment
+
 ## Stardate 2024-08-16
 
 ### Team Retro
@@ -47,19 +69,6 @@ I need to collaborate with Ecom and US to ask some questions:
 
 - Helped Yongmin with a query to find missing inventory
 
-## Stardate 2024-08-20
-
-### Custom fields product import / export meeting
-
-- Discussed the options for custom fields in the product import / export process
-- Recommended treating any unknown columns in csv as custom fields
-
-### System Review
-
-### Inventory Snapshots
-
-- Removed updating batch inventory on audit update
-
 ## Notes
 
 ### Retro topics
@@ -74,9 +83,16 @@ The effect of this is a higher onboarding time, as well as a higher cognitive lo
 - Lots (UI) vs Batches (data)
 - Product purchasePrice (data - products) vs wholesaleCost (data - PPO) vs cost (UI)
 - Audits vs Invoices (some areas of code)
+- Partners (US) vs Integrations (CAN)
+- company / tenant
+- location / retailer
 
 ### Hackathon ideas
 
+- Fire alarm improvements
+  - Mention team related to service
+  - Add links to service, dashboards, logs, docs, or other relevant info
+  - Add details about the alarm
 - add download url to ocs admin tool
 - On call rotation tool
 - usability metrics
