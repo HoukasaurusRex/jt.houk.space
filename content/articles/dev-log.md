@@ -23,6 +23,25 @@
 
 > "The unexamined life is not worth living." - Socrates
 
+## Stardate 2024-08-22
+
+### US products service meeting
+
+- Discussed the need for a new service to handle product data for US
+  - Leaning towards integrating with Canada's product service to best utilize limited dev resources
+  - Will need to address some concerns about folding in US data with Canada's
+    - Performance
+    - Bulk updating (abusive product calls)
+    - Event consumer writing to MySQL
+    - Building out foreign keys
+    - Authorization from US
+
+### Investigations
+
+- Continued talks with Budvue about their integration issues
+  - They configured their queue to call us at 750 RPS but their integration is set to 600
+  - We might need to downgrade their integration depending on their burst rate (currently capped at 5k)
+
 ## Stardate 2024-08-21
 
 ### Leads Meeting
@@ -32,6 +51,12 @@
 ### Architecture Meeting
 
 - Discussed the scope of KML based delivery zones
+
+### Investigations
+
+- WooCommerce integration failing for Prairie Cannabis
+  - Their IT thinks it's an IP filter but found authorization errors in the logs so it's likely a token issue
+- Ran inventory submissions for Ganjika House from July
 
 ## Stardate 2024-08-20
 
@@ -86,6 +111,7 @@ The effect of this is a higher onboarding time, as well as a higher cognitive lo
 - Partners (US) vs Integrations (CAN)
 - company / tenant
 - location / retailer
+- location-zones / delivery-zones
 
 ### Hackathon ideas
 
