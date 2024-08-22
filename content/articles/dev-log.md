@@ -25,6 +25,12 @@
 
 ## Stardate 2024-08-22
 
+### KML delivery zones epic breakdown
+
+- Discussed the scope of the KML delivery zones epic
+- Went over time because of overlooked design considerations
+- Will need to follow up with Ecom on whether we need to validate addresses against zones in the pre-validation step
+
 ### US products service meeting
 
 - Discussed the need for a new service to handle product data for US
