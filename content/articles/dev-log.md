@@ -23,6 +23,37 @@
 
 > "The unexamined life is not worth living." - Socrates
 
+## Stardate 2024-08-26
+
+### Code reviews
+
+- Sylvie's work on admin product import tool
+- Yongmin's work adding transactions to batch inventory queries
+
+### Inventory snapshots
+
+- Added newrelic segment monitoring to snapshot queries
+- Performance testing queries in sandbox
+- Deployed UI changes to handle missing product inventory
+
+### Weekly 1/1 with Peter
+
+- Discussed balancing the growing roles and responsibilities left by the departure of the chief architect
+- Recommended plan of action against OCS for their lack of communication and cooperation in retailer compliance issues
+
+## Stardate 2024-08-23
+
+### System review
+
+- Discussed the Budvue usage spike and how to handle it
+  - We are reducing our burst rate to 1000
+
+### Inventory snapshots
+
+- Fixed issue with case statements
+- Tested in feature branch
+- Moved to code review
+
 ## Stardate 2024-08-22
 
 ### KML delivery zones epic breakdown
@@ -30,6 +61,7 @@
 - Discussed the scope of the KML delivery zones epic
 - Went over time because of overlooked design considerations
 - Will need to follow up with Ecom on whether we need to validate addresses against zones in the pre-validation step
+- Researched geospatial data types in mysql
 
 ### US products service meeting
 
