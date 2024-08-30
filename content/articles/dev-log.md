@@ -23,7 +23,55 @@
 
 > "The unexamined life is not worth living." - Socrates
 
+## Stardate 2024-08-30
+
+### Hotfixes
+
+- Helped Jheysson with product price export query scaling issues
+- Fixed ON compliance manual reports retry issue
+
+## Stardate 2024-08-29
+
+### Investigations
+
+- Investigated OCS submissions not matching inventory movements for Ganjika House
+
+### Inventory snapshots
+
+- Finished code for resync snapshots
+- Demoed changes in feature branch
+- Tested performance in sandbox
+
+## Stardate 2024-08-28
+
+### Inventory snapshots
+
+- Released post snapshots endpoint
+
+### Design session
+
+- Helped Yongmin investigate mysql transactions affecting test performance
+
+## Stardate 2024-08-27
+
+### Ignite talks
+
+- Researched and discussed MySQL geospatial data types and querying
+
+### KML delivery zones
+
+- Discussed functionality of KML delivery zone feature
+
+### Inventory snapshots
+
+- Finished performance testing in sandbox
+- Finished coding resync changes and moved to review
+
 ## Stardate 2024-08-26
+
+### Compliance issues
+
+- Worked with Byeong to coordinate US integration with our Compliance issues service
 
 ### Code reviews
 
@@ -153,6 +201,7 @@ The effect of this is a higher onboarding time, as well as a higher cognitive lo
 
 ### Hackathon ideas
 
+- Implement CDK Nag to safeguard CDK projects
 - Fire alarm improvements
   - Mention team related to service
   - Add links to service, dashboards, logs, docs, or other relevant info
