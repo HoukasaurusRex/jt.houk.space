@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal blog for JT Houk",
   "scripts": {
-    "dev": "vuepress dev content",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev content",
     "build": "NODE_OPTIONS=--openssl-legacy-provider vuepress build content",
     "fetch": "ts-node src/fetch-content.ts",
     "lint": "eslint --quiet --fix",

@@ -12,6 +12,7 @@ module.exports = {
   description: 'Software Engineer • Cloud Architect • DevOps',
   metaDescription: 'A space for JT Houk\'s thoughts, works, and ideas. I\'m a Software Engineer • Cloud Architect • DevOps guy living in the web. Shoot me an email or contact me on Twitter for collaborations, freelancing, or talking tech!',
   image: 'https://jt.houk.space/assets/8bitme-right.jpg',
+  patterns: ['**/*.md', '**/*.vue', '!**/*.draft.md'],
   tags: [
     'JT',
     'Houk',
