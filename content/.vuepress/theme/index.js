@@ -1,3 +1,3 @@
 module.exports = {
-  extend: '@vuepress/theme-blog'
+  extend: '@vuepress/theme-default'
 }

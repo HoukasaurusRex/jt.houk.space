@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import RightArrow from '@theme/components/RightArrow'
-import Laser from '@theme/components/Laser'
+import RightArrow from './RightArrow'
+import Laser from './Laser'
 
 export default {
   name: 'Landing',
