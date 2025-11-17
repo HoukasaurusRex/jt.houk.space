@@ -6,6 +6,7 @@
     "dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev content",
     "build": "NODE_OPTIONS=--openssl-legacy-provider vuepress build content",
     "fetch": "ts-node src/fetch-content.ts",
+    "new-journal-entry": "ts-node src/new-journal-entry.ts",
     "lint": "eslint --quiet --fix",
     "test": "echo 'No tests specified'"
   },
