@@ -1,11 +1,11 @@
-# JT Houk -- @HoukasaurusRex
+![header](https://capsule-render.vercel.app/api?type=waving&theme=radical&height=300&section=header&text=HoukasaurusRex&fontSize=90)
 
-[![Hits](https://hits.sh/github.com/HoukasaurusRex/hits.svg)](https://hits.sh/github.com/HoukasaurusRex/hits/)
+[![JT Houk profile views](https://u8views.com/api/v1/github/profiles/23695312/views/day-week-month-total-count.svg)](https://u8views.com/github/HoukasaurusRex)
 
 <img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/8bitme.gif" alt="" align="right" width="250">
 
 Hi, I'm JT -- software engineer and cloud developer in Montreal.
-When I'm not coding, I'm probably at pub trivia, hiking on Mount Royal, or playing board games with friends.
+When I'm not developing software or tinkering with my websites, I'm probably at pub trivia, hiking up Mount Royal, or playing board games with friends.
 
 ## My Values
 
