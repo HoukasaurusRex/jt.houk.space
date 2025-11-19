@@ -1,31 +1,45 @@
 <template>
   <main class="cards">
     <slot name="top"/>
-    <div v-for="(page, index) in pages">
+    <div v-for="(page, index) in pages" :key="page.path">
       <Card
         :name="page.title"
         :url="page.path"
-        :imageUrl="page.frontmatter.screenshots[0].url"
+        :imageUrl="page.frontmatter.screenshots?.[0]?.url"
       />
     </div>
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { usePageData, useSiteData } from 'vuepress/client'
 import Card from './Card.vue'
 
-export default {
+export default defineComponent({
   name: 'Cards',
   components: { Card },
-  computed: {
-    pages() {
-      return this.$site.pages
-        .filter(page => page.path.includes(this.$page.path))
-        .filter(page => page.title)
-        .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
+  setup() {
+    const page = usePageData()
+    const site = useSiteData()
+
+    const pages = computed(() => {
+      const allPages = site.value.pages || []
+      return allPages
+        .filter((p: any) => p.path.includes(page.value.path))
+        .filter((p: any) => p.title)
+        .sort((a: any, b: any) => {
+          const dateA = a.frontmatter?.date ? new Date(a.frontmatter.date).getTime() : 0
+          const dateB = b.frontmatter?.date ? new Date(b.frontmatter.date).getTime() : 0
+          return dateB - dateA
+        })
+    })
+
+    return {
+      pages,
     }
-  }
-}
+  },
+})
 </script>
 
 <style lang="scss" scoped>

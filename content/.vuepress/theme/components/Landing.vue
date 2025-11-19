@@ -5,7 +5,6 @@
         <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" height="100%" width="0" alt=""/>
       </transition>
       <Laser class="laser" :style="profileLoadedLaserStyles" />
-      <!-- <a v-if="!isMobileWidth" class="twitter-timeline" href="https://twitter.com/HoukasaurusRex" data-tweet-limit="1"></a> -->
     </div>
     <main class="landing">
       <h1 class="typewriter">{{title}}</h1>
@@ -22,62 +21,87 @@
   </div>
 </template>
 
-<script>
-import RightArrow from './RightArrow'
-import Laser from './Laser'
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue'
+import { usePageData, usePageFrontmatter, useSiteData } from 'vuepress/client'
+import RightArrow from './RightArrow.vue'
+import Laser from './Laser.vue'
 
-export default {
+export default defineComponent({
   name: 'Landing',
   components: { RightArrow, Laser },
-  data() {
-    return {
-      profileImgLoaded: false,
-      spotifyImgLoaded: false,
-    }
-  },
-  computed: {
-    title() {
-      return this.$page.frontmatter.heroText || this.$page.frontmatter.title || this.$site.title
-    },
-    description() {
-      return this.$site.description
-    },
-    isMobileWidth() {
+  setup() {
+    const page = usePageData()
+    const frontmatter = usePageFrontmatter()
+    const site = useSiteData()
+    
+    const profileImgLoaded = ref(false)
+    const spotifyImgLoaded = ref(false)
+    const profileImg = ref<HTMLImageElement | null>(null)
+
+    const title = computed(() => {
+      return frontmatter.value.heroText || frontmatter.value.title || site.value.title
+    })
+
+    const description = computed(() => {
+      return site.value.description
+    })
+
+    const isMobileWidth = computed(() => {
       return typeof window !== 'undefined' && window.innerWidth <= 425
-    },
-    spotifyCardTheme() {
-      return this.isMobileWidth ? 'natemoo-re' : 'default'
-    },
-    spotifyCard() {
-      return `https://spotify-github-profile.vercel.app/api/view?uid=spacemanjohn&cover_image=true&theme=${this.spotifyCardTheme}`
-    },
-    profileLoadedStyles() {
-      return this.profileImgLoaded ? {
+    })
+
+    const spotifyCardTheme = computed(() => {
+      return isMobileWidth.value ? 'natemoo-re' : 'default'
+    })
+
+    const spotifyCard = computed(() => {
+      return `https://spotify-github-profile.vercel.app/api/view?uid=spacemanjohn&cover_image=true&theme=${spotifyCardTheme.value}`
+    })
+
+    const profileLoadedStyles = computed(() => {
+      return profileImgLoaded.value ? {
         transform: 'translateX(0)'
       } : {
         transform: 'translateX(-250px)'
       }
-    },
-    profileLoadedLaserStyles() {
-      return this.profileImgLoaded ? {
+    })
+
+    const profileLoadedLaserStyles = computed(() => {
+      return profileImgLoaded.value ? {
         transform: 'translateX(0)'
       } : {
         transform: 'translateX(250px)'
       }
+    })
+
+    const onLoadProfileImg = () => {
+      profileImgLoaded.value = true
+      setTimeout(() => {
+        if (profileImg.value) {
+          profileImg.value.width = `${profileImg.value.height * (610 / 725)}`
+        }
+      }, 500)
+    }
+
+    const onLoadSpotifyImg = () => {
+      spotifyImgLoaded.value = true
+    }
+
+    return {
+      profileImg,
+      profileImgLoaded,
+      spotifyImgLoaded,
+      title,
+      description,
+      spotifyCard,
+      profileLoadedStyles,
+      profileLoadedLaserStyles,
+      onLoadProfileImg,
+      onLoadSpotifyImg,
     }
   },
-  methods: {
-    onLoadProfileImg() {
-      this.profileImgLoaded = true
-      setTimeout(() => {
-        this.$refs.profileImg.width = `${this.$refs.profileImg.height * (610 / 725)}`
-      }, 500)
-    },
-    onLoadSpotifyImg() {
-      this.spotifyImgLoaded = true
-    }
-  }
-}
+})
 </script>
 
 <style lang="scss" scoped>

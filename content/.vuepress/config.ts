@@ -1,7 +1,5 @@
 import { defineUserConfig } from 'vuepress'
 import { getDirname, path } from 'vuepress/utils'
-import getConfig from 'vuepress-bar'
-import seoPlugin from 'vuepress-plugin-seo'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { defaultTheme } from '@vuepress/theme-default'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
@@ -13,12 +11,6 @@ dotenv.config()
 
 
 const __dirname = import.meta.dirname || getDirname(import.meta.url)
-
-const articles = getConfig(`${__dirname}/../articles`, {})
-const portfolio = getConfig(`${__dirname}/../projects`, {})
-portfolio.sidebar[0] = ['/projects/', '<- Back to Portfolio']
-
-const exists = (item) => item && item !==' ...' ? item : null
 
 export default defineUserConfig({
   bundler: viteBundler(),
@@ -43,24 +35,6 @@ export default defineUserConfig({
     registerComponentsPlugin({
       componentsDir: `${__dirname}/theme/components`,
       componentsPatterns: ['**/*.vue'],
-    }),
-    seoPlugin({
-      siteTitle: (_, $site) => $site.title,
-      title: ($page, $site) => exists($page.title) || $site.title,
-      description: ($page, $site) => exists($page.frontmatter.description) || $site.metaDescription || $site.description,
-      author: (_, $site) => $site.themeConfig.author,
-      tags: ($page, $site) => exists($page.frontmatter.tags) || $site.tags,
-      twitterCard: $page => exists($page.frontmatter.image) ? 'summary_large_image' : 'summary',
-      type: $page => ['articles', 'posts', 'blog'].some(folder => $page.regularPath.startsWith('/' + folder)) ? 'article' : 'website',
-      url: (_, $site, path) => ($site.themeConfig.domain || '') + path,
-      image: ($page, $site) => exists($page.frontmatter.image) || $site.image,
-      publishedAt: $page => $page.frontmatter.created_at && new Date($page.frontmatter.created_at),
-      modifiedAt: $page => $page.updated_at && new Date($page.updated_at),
-      customMeta: (add, { $site, $page }) => {
-        add('twitter:image:src', exists($page.frontmatter.image) || $site.image)
-        add('twitter:creator', $site.themeConfig.author)
-        add('description', exists($page.frontmatter.description) || $site.metaDescription || $site.description)
-      },
     }),
     pwaPlugin({
       favicon: '/jt-face-logo.png',
@@ -171,8 +145,31 @@ export default defineUserConfig({
       }
     ],
     sidebar: {
-      '/articles/': articles.sidebar,
-      '/projects/': portfolio.sidebar
+      '/articles/': [
+        {
+          text: 'Articles',
+          children: [
+            '/articles/dev-log.md',
+            '/articles/agile-cooking.md',
+            '/articles/a-weekly-commute-in-podcasts.md',
+            '/articles/how-to-track-indoor-air-pollution-with-a-raspberry-pi.md',
+            '/articles/making-a-bastion-host.md',
+            '/articles/how-to-configure-ssl-on-aliyun-dns-for-an-aws-application-load-balancer-for--0.md',
+          ],
+        },
+      ],
+      '/projects/': [
+        {
+          text: 'Portfolio',
+          children: [
+            '/projects/',
+            '/projects/akkadu.md',
+            '/projects/pitchor.md',
+            '/projects/rules-as-written.md',
+            '/projects/zentone.md',
+          ],
+        },
+      ],
     },
     // footer: {
     //   contact: [

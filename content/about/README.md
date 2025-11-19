@@ -58,7 +58,8 @@ I believe companies of all sizes have a responsibility to promote positive chang
       srcset="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&layout=compact"
       media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
     />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&count_private=true&layout=compact" align="right" width="350">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&count_private=true&layout=compact" align="right" width="350">
+  </picture>
 </a>
 
 * GCP BigQuery

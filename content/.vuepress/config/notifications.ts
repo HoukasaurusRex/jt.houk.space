@@ -1,4 +1,11 @@
-export const notifications = [
+export interface Notification {
+  id: string
+  title: string
+  description: string
+  link: string
+}
+
+export const notifications: Notification[] = [
   {
     id: 'unhcr-tigray-refugees',
     title: 'Help Refugees in Tigray',

@@ -1,31 +1,24 @@
 <template>
-  <Disqus :shortname="shortname" :identifier="identifier" :url="url" :language="language" :title="title" />
+  <div class="comments-placeholder">
+    <p>Comments temporarily unavailable during migration</p>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'Comments',
-  computed: {
-    identifier() {
-      return this.$page.key
-    },
-    url() {
-      return `https://${this.$themeConfig.domain}${this.$page.path}`
-    },
-    language() {
-      return this.$lang
-    },
-    title() {
-      return this.$page.title
-    },
-    shortname() {
-      return 'houk'
-    }
-  }
-}
+})
 </script>
 
-<style lang="stylus">
-
+<style lang="scss" scoped>
+.comments-placeholder {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 2rem 0;
+}
 </style>
