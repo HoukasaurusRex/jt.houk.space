@@ -1,378 +1,219 @@
-npm run dev          # Vite dev server (fast HMR)
-npm run build        # Production build
-npm run test:visual  # Run Playwright tests
-````
+# VuePress v1→v2 Migration with TypeScript Conversion
 
-**Vite Configuration:**
-{Any custom vite config patterns}
+## Mission
+Migrate VuePress ^1.9.10 (Vue 2, JavaScript) to 2.0.0-rc.26 (Vue 3, TypeScript) with Playwright visual regression testing. Document everything for resumability and knowledge capture.
 
-### Testing Patterns
-
-**Component Visual Tests:**
-- Location: tests/visual/components/
-- Helper utilities: tests/visual/utils/component-helpers.ts
-- Baseline storage: tests/visual/screenshots/
-- Run time: <2 minutes
-
-**Adding New Tests:**
-{Pattern to follow}
-
-### Deferred Work
-
-**Components to re-implement:**
-- {Chakra UI components} - Need new component library
-- {Other deferred items}
-
-**Future Improvements:**
-- [ ] Evaluate v2 compatible component library
-- [ ] Re-add comment system
-- [ ] Consider alternative sidebar automation
-- [ ] Update to stable 2.0 when released
+## Core Constraints
 
 ### Dependencies
+**Install v2 packages:**
+- vuepress@2.0.0-rc.26
+- @vuepress/bundler-vite@^2.0.0-rc.24
+- @vuepress/theme-default@^2.0.0-rc.112
+- @vuepress/plugin-blog@^2.0.0-rc.112
+- @vuepress/plugin-pwa@^2.0.0-rc.112
+- @vuepress/plugin-register-components@^2.0.0-rc.112
+- sass@^1.93.2
 
-**Core:**
-- vuepress: 2.0.0-rc.26
-- @vuepress/bundler-vite: ^2.0.0-rc.24
-- @vuepress/theme-default: ^2.0.0-rc.112
+**Remove deprecated:**
+- @chakra-ui/vue, vue-disqus (defer)
+- vuepress-bar (needs alternative)
+- vuepress-plugin-mailchimp, vuepress-plugin-seo (drop)
+- sass-loader (replaced by sass)
 
-**Plugins:**
-- @vuepress/plugin-blog: ^2.0.0-rc.112
-- @vuepress/plugin-pwa: ^2.0.0-rc.112
+### Code Requirements
+- Convert all .js → .ts
+- Vue components: add `lang="ts"` to script tags
+- Type everything properly (no `any` unless documented)
+- Follow existing CRUSH.md patterns
 
-**Styling:**
-- sass: ^1.93.2
+### Deferred
+- Chakra UI components (comment out, mark with TODO)
+- Disqus comments
+- Non-essential features blocking migration
 
-### Known Issues / Gotchas
-{Document any quirks discovered}
+## Documentation Requirements
 
-### Resources
-- [VuePress v2 Docs](https://v2.vuepress.vuejs.org/)
-- [Migration Changelog](https://github.com/vuepress/core/blob/main/CHANGELOG.md)
-- [Vite Bundler Docs](https://v2.vuepress.vuejs.org/reference/bundler/vite.html)
-````
+### MIGRATION.md (Create immediately)
+Living log of all progress. Update after every significant action.
 
-### MIGRATION.md Final Update
-````markdown
-## ✅ Migration Complete
+**Essential sections:**
+```markdown
+# VuePress v1→v2 Migration
 
-**Completed:** {timestamp}
-**Duration:** {total time}
-**Final versions:**
-- VuePress: 2.0.0-rc.26 (Vue 3)
-- TypeScript: {version}
-- Bundler: Vite
+**Started:** {timestamp}
+**Status:** {current phase}
 
----
+## Pre-Migration State
+- VuePress: v1.9.10
+- Node.js: {version}
+- Last commit: {hash}
 
-## Summary
+## Timeline
+### {DateTime} - {Phase Name}
+**Objective:** {what you're doing}
+**Changes:** {bullet list}
+**Decisions made:** {any choices}
+**Blockers:** {issues if any}
+**Status:** {complete/blocked}
+**Next:** {immediate next step}
 
-**Conversions:**
-- {N} JavaScript files → TypeScript
-- Vue 2 → Vue 3
-- Webpack → Vite
+## Breaking Changes Log
+{Track all v1→v2 changes encountered}
 
-**Dependencies:**
-- Migrated: blog plugin, PWA plugin
-- Dropped: mailchimp, SEO, vuepress-bar
-- Deferred: Chakra UI components, Disqus
+## Plugin Migration Tracker
+{v1 plugin → v2 solution status}
 
-**Testing:**
-- ✓ Visual baselines established for v2
-- ✓ All component tests passing
-- ✓ Build successful
+## TypeScript Conversion Tracker
+{Files converted, complexity, status}
 
-**Documentation:**
-- ✓ MIGRATION.md complete record
-- ✓ CRUSH.md updated with patterns
+## Visual Test Results
+{Component reviews and approvals}
 
----
+## Rollback Info
+**Last stable:** {commit}
+**Command:** git checkout {hash}
 
-## Key Changes from v1
-
-### Build System
-- Webpack → Vite (faster dev/build)
-- HMR significantly faster
-- Build output structure different
-
-### Configuration
-- config.js → config.ts
-- New plugin API
-- Vite bundler configuration
-
-### Styling
-- node-sass/sass-loader → sass
-- Same SCSS files, updated tooling
-
-### Sidebar
-{Document chosen approach: manual or alternative}
-
-### Dropped Features (Non-Essential)
-- Mailchimp newsletter signup
-- SEO plugin (can re-add if needed)
-- Chakra UI components (to re-implement)
-
----
-
-## Architecture Patterns
-
-**See CRUSH.md for comprehensive patterns established during migration.**
-
-Key patterns:
-- TypeScript config typing
-- Component prop typing
-- Plugin API usage
-- Visual testing approach
-
----
-
-## Maintenance
-
-### Visual Regression Tests
-```bash
-npm run test:visual              # Run tests
-npm run test:visual:update       # Update baselines
-npx playwright test --ui         # Interactive mode
+## Next Steps
+{Always current - for interrupt recovery}
 ```
 
-### Development
-```bash
-npm run dev    # Vite dev server (port 5173)
-npm run build  # Production build
+### CRUSH.md (Append patterns as learned)
+Add architectural patterns discovered during migration:
+```markdown
+## [VuePress Migration - {Date}]
+
+### TypeScript Patterns
+{Config typing, component patterns, plugin types}
+
+### VuePress v2 Architecture
+{Structure, bundler config, theme customization}
+
+### Testing Patterns
+{Playwright setup, component helpers, best practices}
 ```
 
-### TypeScript
-```bash
-npx tsc --noEmit  # Type check without build
-```
+## Execution Framework
 
----
+### Phase 1: Setup & Baseline (1-2 hours)
+1. Create MIGRATION.md and initial CRUSH.md entry
+2. Analyze site: inventory files, components, dependencies
+3. **DECISION POINT:** vuepress-bar replacement strategy
+   - Manual sidebar (quick, maintainable)
+   - Custom generation script (automated, 2-3hr effort)
+   - Research community alternatives
+4. Install Playwright: `yarn add -D @playwright/test`
+5. Create `playwright.config.ts` with:
+   - Desktop + mobile viewports
+   - 5% pixel tolerance
+   - Component-level tests for: header, nav, blog list, post layout, code blocks, footer
+6. Capture v1 baselines: `npx playwright test`
 
-## Future Work
+### Phase 2: TypeScript Conversion (3-5 hours)
+**Convert in dependency order:** utilities → config → components → theme
 
-### Short Term
-- [ ] Evaluate component libraries for Chakra replacement
-- [ ] Re-add comment system (find v3 compatible solution)
-- [ ] Consider sidebar automation alternatives
+**For each file:**
+1. Log in MIGRATION.md: file path, complexity, dependencies
+2. Convert: rename .js→.ts, add types, fix errors
+3. Verify: `npx tsc --noEmit`
+4. Commit with descriptive message
+5. Update CRUSH.md with patterns every 5 files
 
-### Long Term
-- [ ] Monitor for stable 2.0 release
-- [ ] Update to stable when available
-- [ ] Revisit SEO plugin options for v2
+**Quality gates:**
+- No implicit `any`
+- Proper imports with types
+- Vue 3 Composition API where applicable
+- Config uses VuePress v2 type imports
 
----
+### Phase 3: Migration (4-8 hours)
+1. **Checkpoint:** `git commit -m "Pre-migration: TS complete" && git tag v1-complete`
+2. Remove v1 deps: `yarn remove vuepress @chakra-ui/vue vuepress-bar ...`
+3. Add v2 deps: `yarn add -D vuepress@2.0.0-rc.26 ...`
+4. Update config.ts: viteBundler, defaultTheme, v2 plugin APIs
+5. Update components: remove Chakra (mark TODO), fix v2 APIs
+6. Clean: `rm -rf .vuepress/.temp .vuepress/.cache`
+7. Build: `yarn build`
 
-## Rollback
+**Error protocol:**
+- Document every error in MIGRATION.md
+- Attempt fix from docs/changelog
+- Max 3 attempts per error before asking
+- Commit after each successful fix
 
-**If critical issues:**
-```bash
-git checkout {pre-migration-commit}
-npm install
-```
+### Phase 4: Visual Validation (1-2 hours)
+1. Update playwright.config.ts: baseURL → `http://localhost:5173`
+2. Run: `yarn dev` then `npx playwright test` (will "fail" - expected)
+3. Review: `npx playwright show-report`
+4. For each component:
+   - Check: content present, layout functional, interactions work
+   - Classify: <5% cosmetic = approve, >5% or broken = fix
+   - Document decision in MIGRATION.md
+5. **DECISION POINT:** After all reviews complete, await "update baselines" confirmation
+6. Archive v1: `mv tests/visual/screenshots/v1-reference tests/visual/screenshots/archived-v1/`
+7. Update: `npx playwright test --update-snapshots`
 
-**v1 visual baselines preserved:** tests/visual/screenshots/archived-v1/
+### Phase 5: Finalization (30-60 min)
+1. Complete MIGRATION.md summary
+2. Finalize CRUSH.md with all patterns
+3. Update package.json scripts
+4. Create tests/visual/README.md
+5. Final commit: "Migration complete: v2.0.0-rc.26"
 
----
+## Decision-Making Framework
 
-## Lessons Learned
-
-### What Went Well
-{Add notes}
-
-### Challenges
-{Add notes}
-
-### Time Sinks
-{Add notes}
-
-### Recommendations for Future Migrations
-{Add notes}
-````
-
-### Repository Finalization
-- [ ] Update package.json scripts:
-````json
-  {
-    "scripts": {
-      "dev": "vuepress dev",
-      "build": "vuepress build",
-      "test:visual": "playwright test",
-      "test:visual:ui": "playwright test --ui",
-      "test:visual:update": "playwright test --update-snapshots"
-    }
-  }
-````
-- [ ] Update .gitignore for Playwright
-- [ ] Create/update tests/visual/README.md
-- [ ] Update main README.md with:
-  - New build commands
-  - TypeScript note
-  - Testing info
-  - Deferred features
-- [ ] Clean up temporary files
-- [ ] Final commit: "Migration complete: v2.0.0-rc.26 with TypeScript"
-
----
-
-## Success Criteria
-
-### Must Complete
-- [x] All JS files converted to TypeScript
-- [x] Site builds successfully with v2
-- [x] Visual tests pass with approved baselines
-- [x] MIGRATION.md complete
-- [x] CRUSH.md updated with patterns
-- [x] Core functionality working
-- [x] No console errors in browser
-
-### Quality Gates
-- TypeScript: No `any` types unless documented
-- Build: No warnings in production build
-- Tests: <2 minute runtime
-- Documentation: Both logs complete and accurate
-
----
-
-## Execution Protocol
-
-### Self-Sufficient Actions (No Approval Needed)
-- Installing dependencies from known list
-- Converting JS → TS following patterns
-- Updating imports/syntax for v2 APIs
-- Fixing type errors
-- Following v2 documentation
+### Proceed Autonomously
+- Installing known dependencies
+- Converting JS→TS following patterns
+- Updating imports/syntax per v2 docs
+- Fixing type/lint errors
 - Committing incremental progress
 - Updating MIGRATION.md factually
-- Updating CRUSH.md with patterns
+- Following official VuePress v2 documentation
 
-### Decision Points (Require Approval)
-- vuepress-bar replacement approach
-- Build errors after 3 fix attempts
-- Alternative plugin choices
-- Visual baseline approval
-- Any feature removals beyond agreed scope
-
-### Communication Format
-**Status updates every hour or major phase:**
-````markdown
-[PHASE]: {current phase}
-[PROGRESS]: {specific milestone completed}
-[TIME]: {elapsed} / {estimated remaining}
-[BLOCKERS]: {none or description}
-[NEXT]: {immediate next action}
-````
-
-**For decisions:**
-````markdown
-DECISION REQUIRED: {Title}
-
+### Request Decision When
+**Format:**
+```
+DECISION: {Title}
 Context: {1-2 sentences}
-
 Options:
-A) {Option}
-   Pros: {specific benefits}
-   Cons: {specific drawbacks}
-   Effort: {time estimate}
-
-B) {Option}
-   Pros: ...
-   Cons: ...
-   Effort: ...
-
+A) {Option} - Pros: {X} Cons: {Y} Effort: {Z}
+B) {Option} - Pros: {X} Cons: {Y} Effort: {Z}
 Recommendation: {Your choice with reasoning}
-Awaiting: {Explicit action needed}
-````
+Awaiting: {Explicit confirmation needed}
+```
 
-### Error Handling
-**If stuck on same issue for 45 minutes:**
-1. Document everything in MIGRATION.md
-2. Present simplified problem
-3. Offer 2-3 solutions with tradeoffs
-4. Stop and await guidance
+**Triggers:**
+- No clear v2 equivalent exists
+- Same error after 3 fix attempts
+- Multiple valid approaches with different tradeoffs
+- Feature removal affecting UX
+- Visual baseline approval
 
 ### Interruption Recovery
-**If process interrupted:**
-1. Read MIGRATION.md "Next Steps"
-2. Verify last commit state
-3. Check if last build succeeded
-4. Resume from documented point
-5. Brief status summary before continuing
+Read MIGRATION.md "Next Steps" section → verify last commit → resume from documented point.
 
----
+## Success Criteria
+- [ ] Site builds: `yarn build` succeeds
+- [ ] Site runs: `yarn dev` starts, no console errors
+- [ ] Tests pass: `npx playwright test` 100%
+- [ ] Docs complete: MIGRATION.md + CRUSH.md comprehensive
+- [ ] Types clean: `npx tsc --noEmit` passes
+- [ ] Rollback documented: can revert if needed
 
-## Timeline Estimate
+## Resources
+- v2 Docs: https://v2.vuepress.vuejs.org/
+- Changelog: https://github.com/vuepress/core/blob/main/CHANGELOG.md
+- Playwright: https://playwright.dev/
 
-**Based on scope and complexity:**
+## Start
+1. Create MIGRATION.md
+2. Analyze current site
+3. Present inventory + vuepress-bar decision
+4. Await approval to capture baselines
 
-- **Phase 0 (Setup):** 30-60 min
-  - MIGRATION.md creation
-  - Playwright setup
-  - Site inventory
-  
-- **Phase 1 (Baselines):** 30-45 min
-  - Test generation
-  - Baseline capture
-  
-- **Phase 2 (TypeScript):** 3-5 hours
-  - File-by-file conversion
-  - Type checking
-  - CRUSH.md updates
-  
-- **Phase 3 (Migration):** 4-8 hours
-  - Dependency updates
-  - Config migration
-  - Component updates
-  - Build debugging
-  
-- **Phase 4 (Validation):** 1-2 hours
-  - Visual review
-  - Baseline approval
-  
-- **Phase 5 (Finalization):** 30-60 min
-  - Documentation
-  - Cleanup
-
-**Total:** 10-16 hours over multiple sessions
-
-**Checkpoints for natural breaks:**
-- After TypeScript conversion
-- After successful first v2 build
-- After visual validation
-
----
-
-## Initial Actions
-
-**Starting now:**
-
-1. Create MIGRATION.md from template
-2. Create initial CRUSH.md entry
-3. Analyze current site structure
-4. Present:
-   - Site inventory
-   - TypeScript conversion scope
-   - vuepress-bar replacement options
-   - Component test coverage plan
-
-**Await approval for:**
-- vuepress-bar replacement choice
-- Test coverage scope
-- Proceeding to baseline capture
-
-**First MIGRATION.md entry:**
-````markdown
+**First log entry:**
+```markdown
 ### {Timestamp} - Migration Initiated
-
-**Status:** Analyzing current site
-**Scope confirmed:**
-- Core theme migration
-- JS → TS conversion
-- Chakra UI components deferred
-- Mailchimp/SEO dropped
-
-**Next:** Present site inventory and decisions needed
-````
-
----
-
-Ready to begin. Confirm and I'll start with site analysis and present the first round of decisions.
+**Status:** Analyzing site
+**Next:** Present inventory and vuepress-bar options
+```

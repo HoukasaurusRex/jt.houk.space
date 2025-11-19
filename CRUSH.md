@@ -15,6 +15,11 @@ npm run build               # Build production site
 npm run fetch               # Fetch external content
 npm run lint                # Run linter
 npm run lint --fix          # Auto-fix linting issues
+
+# Testing
+npm run test:visual         # Run Playwright visual tests
+npm run test:visual:ui      # Run tests in interactive UI mode
+npm run test:visual:update  # Update visual baselines
 ```
 
 ## VuePress v2 Patterns
@@ -46,6 +51,30 @@ npm run lint --fix          # Auto-fix linting issues
 - Manual sidebar configuration in `config.ts`
 - Structure: `sidebar: { '/path/': [{ text: 'Title', children: [...] }] }`
 - No automatic sidebar generation (vuepress-bar removed)
+
+## Testing
+
+### Visual Regression Testing
+- Use Playwright for visual regression tests
+- Tests located in `tests/visual/`
+- Run on Desktop Chrome and Mobile iPhone 12 viewports
+- Helper utilities in `tests/visual/utils/component-helpers.ts`
+
+### Test Structure
+```typescript
+import { test, expect } from '@playwright/test'
+
+test('should render correctly', async ({ page }) => {
+  await page.goto('/path/')
+  await expect(page.locator('h1')).toBeVisible()
+})
+```
+
+### Baseline Management
+- Visual baselines stored in `tests/visual/screenshots/`
+- Review changes with `npm run test:visual:ui`
+- Update baselines with `npm run test:visual:update`
+- Always commit updated snapshots after intentional UI changes
 
 ## Code Style
 ### TypeScript
