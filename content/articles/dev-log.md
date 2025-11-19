@@ -1,23 +1,23 @@
 ---
-  id: 12
-  category: "coding"
-  Title: "Dev Log"
-  created_at: "2020-03-23T07:19:55.187Z"
-  updated_at: "2021-03-04T10:01:20.550Z"
-  title: "Dev Log"
-  tags: 
-    - "coding"
-    - "dev"
-    - "log"
-    - "journal"
-  description: null
-  status: "published"
-  summary: "A log of my daily coding activities."
-  author: "JT Houk"
-  location: "Montreal"
-  date: "2024-08-16"
-  image: ""
-  images: []
+id: 12
+category: "coding"
+Title: "Dev Log"
+created_at: "2020-03-23T07:19:55.187Z"
+updated_at: "2021-03-04T10:01:20.550Z"
+title: "Dev Log"
+tags:
+  - "coding"
+  - "dev"
+  - "log"
+  - "journal"
+description: null
+status: "published"
+summary: "A log of my daily coding activities."
+author: "JT Houk"
+location: "Montreal"
+date: "2024-08-16"
+image: ""
+images: []
 
 ---
 

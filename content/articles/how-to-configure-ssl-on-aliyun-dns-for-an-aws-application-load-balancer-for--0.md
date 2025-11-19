@@ -1,24 +1,24 @@
 ---
-  id: 1
-  category: "coding"
-  Title: "How to Configure SSL on Aliyun DNS for an AWS Application Load Balancer for $0"
-  created_at: "2020-03-23T07:18:49.814Z"
-  updated_at: "2021-03-04T10:00:18.220Z"
-  title: "How to Configure SSL on Aliyun DNS for an AWS Application Load Balancer for $0"
-  tags: 
-    - "ssl"
-    - "china"
-    - "aws"
-    - "aliyun"
-    - "elastic beanstalk"
-  description: null
-  status: "published"
-  summary: "Learn how to use AWS in China with SSL before getting frustrated out of your mind"
-  author: "JT Houk"
-  location: "Beijing"
-  date: "2019-04-10"
-  image: "https://paper-attachments.dropbox.com/s_FE03AF79DD5D2B4571A0D20307E1D8136366A315E0C734E505A94D8D66C6DDB0_1570259284829_alibaba.jpg"
-  images: []
+id: 1
+category: "coding"
+Title: "How to Configure SSL on Aliyun DNS for an AWS Application Load Balancer for $0"
+created_at: "2020-03-23T07:18:49.814Z"
+updated_at: "2021-03-04T10:00:18.220Z"
+title: "How to Configure SSL on Aliyun DNS for an AWS Application Load Balancer for $0"
+tags:
+  - "ssl"
+  - "china"
+  - "aws"
+  - "aliyun"
+  - "elastic beanstalk"
+description: null
+status: "published"
+summary: "Learn how to use AWS in China with SSL before getting frustrated out of your mind"
+author: "JT Houk"
+location: "Beijing"
+date: "2019-04-10"
+image: "https://paper-attachments.dropbox.com/s_FE03AF79DD5D2B4571A0D20307E1D8136366A315E0C734E505A94D8D66C6DDB0_1570259284829_alibaba.jpg"
+images: []
 
 ---
 *In just 3 steps, go from an insecure http zero to an https hero using Aliyun and AWS.*

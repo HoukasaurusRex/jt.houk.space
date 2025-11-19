@@ -1,23 +1,23 @@
 ---
-  id: 2
-  category: "lifestyle"
-  Title: "Agile Cooking"
-  created_at: "2020-03-23T07:19:55.187Z"
-  updated_at: "2021-03-04T10:01:20.550Z"
-  title: "Agile Cooking"
-  tags: 
-    - "lifestyle"
-    - "agile"
-    - "cooking"
-    - "startups"
-  description: null
-  status: "published"
-  summary: "Do you like to cook? Do you like optimizing the performance of everything? Here's something for that."
-  author: "JT Houk"
-  location: "Beijing"
-  date: "2020-03-21"
-  image: "https://paper-attachments.dropbox.com/s_748D31F1AF349B94DE812F5D308F2433EFBF09943CE9A5BE32EA9523926B9BFE_1574049367409_image.png"
-  images: []
+id: 2
+category: "lifestyle"
+Title: "Agile Cooking"
+created_at: "2020-03-23T07:19:55.187Z"
+updated_at: "2021-03-04T10:01:20.550Z"
+title: "Agile Cooking"
+tags:
+  - "lifestyle"
+  - "agile"
+  - "cooking"
+  - "startups"
+description: null
+status: "published"
+summary: "Do you like to cook? Do you like optimizing the performance of everything? Here's something for that."
+author: "JT Houk"
+location: "Beijing"
+date: "2020-03-21"
+image: "https://paper-attachments.dropbox.com/s_748D31F1AF349B94DE812F5D308F2433EFBF09943CE9A5BE32EA9523926B9BFE_1574049367409_image.png"
+images: []
 
 ---
 > “The ultimate value in Agile development is that it enables teams to deliver value faster, with greater quality and predictability, and greater aptitude to respond to change.”

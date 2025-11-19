@@ -1,22 +1,22 @@
 ---
-  id: 3
-  category: "lifestyle"
-  Title: "A Weekly Commute in Podcasts"
-  created_at: "2020-03-23T07:20:36.125Z"
-  updated_at: "2020-03-31T14:06:37.953Z"
-  title: "A Weekly Commute in Podcasts"
-  tags: 
-    - "lifestyle"
-    - "podcasts"
-    - "commute"
-  description: null
-  status: "published"
-  summary: "For the podcast connoisseur, here's a few of my favorites you may or may not have heard of, organized by my morning commute."
-  author: "JT Houk"
-  location: "Beijing"
-  date: "2019-09-23"
-  image: null
-  images: []
+id: 3
+category: "lifestyle"
+Title: "A Weekly Commute in Podcasts"
+created_at: "2020-03-23T07:20:36.125Z"
+updated_at: "2020-03-31T14:06:37.953Z"
+title: "A Weekly Commute in Podcasts"
+tags:
+  - "lifestyle"
+  - "podcasts"
+  - "commute"
+description: null
+status: "published"
+summary: "For the podcast connoisseur, here's a few of my favorites you may or may not have heard of, organized by my morning commute."
+author: "JT Houk"
+location: "Beijing"
+date: "2019-09-23"
+image: null
+images: []
 
 ---
 Each day I spend about 30-40 minutes on a bicycle or a bus traveling to work. That adds up to quite a bit of downtime (~3 hours a week). I’m not the kind of person to squeeze every ounce out of productivity, so I would rather use this time to explore my interests. While it’s common to languish with your coworkers about the banality of each of your morning commutes, learning about a little piece of life, the universe, and everything gives me a reason to not only accept, but look forward to my little trips to and from work.

@@ -1,41 +1,43 @@
-# JT Houk -- @HoukasaurusRex
+![header](https://capsule-render.vercel.app/api?type=waving&theme=radical&height=300&section=header&text=HoukasaurusRex&fontSize=90)
 
-[![](https://img.shields.io/badge/JavaScript-875%20commits-yellow.svg)](https://profile.codersrank.io/user/houkasaurusrex)
-[![](https://img.shields.io/badge/TypeScript-34%20commits-blue.svg)](https://profile.codersrank.io/user/houkasaurusrex)
-[![](https://img.shields.io/badge/Python-22%20commits-green.svg)](https://profile.codersrank.io/user/houkasaurusrex)
-[![](https://img.shields.io/badge/Shell-121%20commits-grey.svg)](https://profile.codersrank.io/user/houkasaurusrex)
+[![JT Houk profile views](https://u8views.com/api/v1/github/profiles/23695312/views/day-week-month-total-count.svg)](https://u8views.com/github/HoukasaurusRex)
 
-<a href="https://profile.codersrank.io/user/houkasaurusrex" target="_blank">
-  <img src="https://cr-ss-service.azurewebsites.net/api/ScreenShot?widget=summary&username=houkasaurusrex&badges=4&show-avatar=true&branding=false&style=--header-bg-color:%23000;--border-radius:10px" alt="" width="350">
-</a>
+<img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/8bitme.gif" alt="" align="right" width="250">
 
-<img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/8bitme.gif" alt="" align="right" width="300">
-
-Hi, I'm JT -- software engineer and cloud developer in Beijing. When I'm not developing software, I'm coordinating events with [Vue Beijing](https://twitter.com/beijing_vue), writing on [my blog](https://jt.houk.space), or GM-ing adventurers in D&D 🐲.
+Hi, I'm JT -- software engineer and cloud developer in Montreal.
+When I'm not developing software or tinkering with my websites, I'm probably at pub trivia, hiking up Mount Royal, or playing board games with friends.
 
 ## My Values
 
 📈 Growth mindsets
-
 ➕ Positive working environments
-
 👏 Product ownership
-
 🤝 Trust and cooperation among team members
 
 ## How I Work
 
-I'm motivated by challenging work and care deeply about having a positive impact on those around me. I get excited about new technologies and frameworks, but I also hope to master a few languages, human and computer in my lifetime. I believe companies of all sizes have a responsibility to promote positive change in their industries and I would like to be a part of bringing that about.
+I'm motivated by challenging work and care deeply about having a positive impact on those around me.
+I get excited about new technologies and frameworks, but I also hope to master a few languages, human and computer in my lifetime.
+I believe companies of all sizes have a responsibility to promote positive change in their industries and I would like to be a part of bringing that about.
 
 ## What I'm Confident In
 
 <a href="https://github.com/HoukasaurusRex?tab=repositories" target="_blank">
-  <img src="https://github-readme-stats.vercel.app/api?username=HoukasaurusRex&count_private=true&show_icons=true&theme=radical" width="350" align="right">
+  <picture>
+    <source
+      srcset="https://github-readme-stats.vercel.app/api?username=HoukasaurusRex&show_icons=true&theme=radical"
+      media="(prefers-color-scheme: dark)"
+    />
+    <source
+      srcset="https://github-readme-stats.vercel.app/api?username=HoukasaurusRex&show_icons=true"
+      media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+    />
+    <img src="https://github-readme-stats.vercel.app/api?username=HoukasaurusRex&count_private=true&show_icons=true" width="350" align="right" />
+  </picture>
 </a>
 
-
-
 * JS/TS
+* Golang
 * Node.js
 * Vue.js
 * UX/UI
@@ -44,19 +46,24 @@ I'm motivated by challenging work and care deeply about having a positive impact
 * TCP/IP
 * Websockets
 
-## What I'm Excited About Learning in 2021
+## What I'm Excited About Learning in 2026
 
 <a href="https://wakatime.com/@HoukasaurusRex" target="_blank">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=HoukasaurusRex&layout=compact&theme=radical" align="right" width="350">
+  <picture>
+    <source
+      srcset="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&layout=compact&theme=radical"
+      media="(prefers-color-scheme: dark)"
+    />
+    <source
+      srcset="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&layout=compact"
+      media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+    />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=HoukasaurusRex&count_private=true&layout=compact" align="right" width="350">
 </a>
 
-* Rust
-* WASM
-* Python
-* Go
-* Deno
-* D3
-* IoT
+* GCP BigQuery
+* Golang advanced patterns
+* French
 
 ## Get in Touch
 
@@ -64,4 +71,4 @@ I'm motivated by challenging work and care deeply about having a positive impact
 
 <img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/linkedin-brands.svg" alt="" height="25" align="center">  LinkedIn: [JT Houk](https://www.linkedin.com/in/jt-houk/)
 
-<img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/paint-brush-solid.svg" alt="" height="25" align="center">  Personal Site: [jt.houk.space](https://jt.houk.space/about/)
+<img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/paint-brush-solid.svg" alt="" height="25" align="center"> Personal Site: [jt.houk.space](https://jt.houk.space/about/)

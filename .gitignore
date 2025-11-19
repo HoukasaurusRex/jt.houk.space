@@ -68,3 +68,4 @@ dist/
 .theme
 .temp
 .cache
+.vuepress
