@@ -73,6 +73,20 @@ export default defineUserConfig({
     }),
     blogPlugin({
       hotReload: true,
+      filter: ({ filePathRelative }) => {
+        // Only include markdown files in articles directory (exclude index and dev-log subdirectory)
+        if (!filePathRelative) return false
+        return filePathRelative.startsWith('articles/') 
+          && !filePathRelative.startsWith('articles/dev-log/')
+          && filePathRelative !== 'articles/README.md'
+      },
+      getInfo: ({ frontmatter, title }) => ({
+        title: title || '',
+        date: frontmatter.date || null,
+        category: frontmatter.category || [],
+        tag: frontmatter.tags || [],
+        excerpt: frontmatter.summary || frontmatter.description || '',
+      }),
     }),
     commentPlugin({
       provider: 'Giscus',
