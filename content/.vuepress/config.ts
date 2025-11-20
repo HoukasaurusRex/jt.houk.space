@@ -5,6 +5,8 @@ import { defaultTheme } from '@vuepress/theme-default'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { blogPlugin } from '@vuepress/plugin-blog'
+import { commentPlugin } from '@vuepress/plugin-comment'
+import vuetify from 'vite-plugin-vuetify'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -13,7 +15,14 @@ dotenv.config()
 const __dirname = import.meta.dirname || getDirname(import.meta.url)
 
 export default defineUserConfig({
-  bundler: viteBundler(),
+  bundler: viteBundler({
+    viteOptions: {
+      plugins: [vuetify({ autoImport: true })],
+      ssr: {
+        noExternal: ['vuetify'],
+      },
+    },
+  }),
   title: 'JT\'s Space',
   description: 'Software Engineer • Cloud Architect • DevOps',
   shouldPrefetch: false,
@@ -64,6 +73,20 @@ export default defineUserConfig({
     }),
     blogPlugin({
       hotReload: true,
+    }),
+    commentPlugin({
+      provider: 'Giscus',
+      repo: 'HoukasaurusRex/jt.houk.space',
+      repoId: 'MDEwOlJlcG9zaXRvcnkxOTA3MTk5NzM=',
+      category: 'Announcements',
+      categoryId: 'DIC_kwDOC14n5c4CyAtn',
+      mapping: 'pathname',
+      strict: false,
+      reactionsEnabled: true,
+      inputPosition: 'top',
+      theme: 'preferred_color_scheme',
+      lang: 'en',
+      lazyLoading: true,
     })
   ],
   head: [

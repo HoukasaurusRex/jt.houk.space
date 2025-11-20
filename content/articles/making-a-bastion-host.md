@@ -195,4 +195,3 @@ A [fully deployable example](https://github.com/HoukasaurusRex/article-code-exam
 
 If you would like alternative solutions for specific vendors, databases, or local machines, please leave a comment and I'll add it to the repository!
 <Newsletter />
-<Comments />

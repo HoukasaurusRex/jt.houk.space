@@ -237,4 +237,3 @@ This project can be easily extended by adding additional sensors, such as an Ozo
 Big thanks to Andrew Gregory from [raspberrypi.org](https://www.raspberrypi.org/blog/monitor-air-quality-with-a-raspberry-pi/) on his work providing the inspiration for this project.
 
 <Newsletter />
-<Comments />

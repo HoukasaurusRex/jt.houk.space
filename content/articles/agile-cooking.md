@@ -75,4 +75,3 @@ After some time you might find yourself making quite a unique collection of reci
 
 
 <Newsletter />
-<Comments />

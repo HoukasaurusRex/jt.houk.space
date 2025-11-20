@@ -123,7 +123,7 @@ export default defineComponent({
   transition: all 0.1s ease;
   img {
     transition: all 0.1s ease;
-    filter: drop-shadow(2px 5px 5px #222);
+    filter: drop-shadow(2px 5px 5px var(--shadow-color));
   }
 }
 
@@ -143,11 +143,11 @@ export default defineComponent({
   background-color: var(--accent-color);
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
-  box-shadow: 1px 1px 2px #222;
+  box-shadow: var(--box-shadow-back);
   transition: all 0.15s ease;
   opacity: 0.9;
   &:hover {
-    box-shadow: 1.5px 1.5px 3px #222;
+    box-shadow: var(--box-shadow-mid);
     transform: scale(1.01);
   }
 }

@@ -23,6 +23,96 @@
 
 ## Current State Analysis
 
+### 2025-11-20 - Theme Colors Standardized
+
+**Build Status:** ✅ SUCCESS
+**Theme:** ✅ All colors using CSS variables
+
+**Theme Colors Completed:**
+- ✓ Added missing CSS variables to dynamic.scss
+  - border-color, shadow-color, btn-color-secondary
+  - box-shadow-back, box-shadow-mid
+- ✓ Updated Landing.vue to use CSS variables for shadows
+- ✓ Updated Laser.vue to use CSS variables for shadows
+- ✓ Updated Vuetify theme colors in client.ts
+  - Added dark theme configuration
+  - Mapped error/success/info colors to --red/--green/--blue
+- ✓ Documented all theme colors in CRUSH.md
+- ✓ Build succeeds with 41 pages
+
+**Color Variables (Light Theme):**
+- accent-color: hsla(327, 76%, 64%, 1)
+- background-color: hsla(0, 0%, 94%, 1)
+- foreground-color: hsla(0, 0%, 97%, 1)
+- text-color: hsla(180, 33%, 10%, 1)
+- red/green/blue: hsl(327/83/202, 70%, 75%)
+- border-color: hsla(0, 0%, 85%, 1)
+- shadow-color: hsla(0, 0%, 13%, 1)
+
+**Next Steps:**
+- Test dark mode appearance
+- Verify all components respect theme colors
+- Run visual regression tests
+
+---
+
+### 2025-11-20 - Giscus Comments Integration Complete
+
+**Build Status:** ✅ SUCCESS
+**Comments System:** ✅ Giscus (GitHub Discussions) Configured
+
+**Giscus Setup Completed:**
+- ✓ @vuepress/plugin-comment@next installed
+- ✓ Giscus provider configured in config.ts
+- ✓ GitHub repository connected (HoukasaurusRex/jt.houk.space)
+- ✓ GitHub Discussions category configured (Announcements)
+- ✓ Removed `<Comments />` tags from 5 article markdown files
+- ✓ Lazy loading enabled for performance
+- ✓ Reactions and preferred color scheme enabled
+- ✓ Build succeeds with 41 pages
+
+**Configuration:**
+- Repository: HoukasaurusRex/jt.houk.space
+- Mapping: pathname (comments tied to page URLs)
+- Theme: preferred_color_scheme (auto light/dark)
+- Input position: top (comment box at top)
+- Lazy loading: enabled (loads when scrolled into view)
+
+**Next Steps:**
+- Verify comments render correctly on dev server
+- Test comment posting and reactions
+- Update CRUSH.md with comment plugin patterns
+
+---
+
+### 2025-11-20 - Vuetify Integration Complete
+
+**Build Status:** ✅ SUCCESS
+**Component Library:** ✅ Vuetify 3 Installed
+
+**Vuetify Setup Completed:**
+- ✓ vuetify@3.10.11 installed
+- ✓ vite-plugin-vuetify@2.1.2 installed
+- ✓ vue@3.5.17 peer dependency resolved
+- ✓ Vite bundler configured with Vuetify plugin
+- ✓ SSR support enabled for Vuetify
+- ✓ Vuetify initialized in client.ts with custom theme
+- ✓ Notification.vue migrated to v-alert component
+- ✓ Build succeeds with 41 pages
+
+**Theme Configuration:**
+- Primary color: #eb8da7 (site brand color)
+- Secondary color: #424242
+- Auto-import enabled for all Vuetify components
+
+**Next Steps:**
+- Migrate Newsletter.vue to use Vuetify form components
+- Migrate Comments.vue to use Vuetify components
+- Run visual regression tests
+- Update CRUSH.md with Vuetify patterns
+
+---
+
 ### 2025-11-19 17:00 - Playwright Visual Testing Setup Complete
 
 **Build Status:** ✅ SUCCESS
