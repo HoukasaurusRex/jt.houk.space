@@ -23,6 +23,36 @@
 
 ## Current State Analysis
 
+### 2025-11-20 - Articles List Auto-Generation
+
+**Build Status:** ✅ SUCCESS
+**Component:** ✅ ArticleList component created
+
+**ArticleList Component:**
+- ✓ Created dynamic component using useSiteData() composable
+- ✓ Filters articles from /articles/ directory
+- ✓ Excludes dev-log subdirectory and draft files
+- ✓ Sorts by date (newest first)
+- ✓ Displays title, date, category, and summary
+- ✓ Uses client-side hydration for dynamic data
+- ✓ Auto-includes new articles without manual updates
+
+**Blog Plugin Configuration:**
+- Enhanced with filter() and getInfo() for article tracking
+- Filters articles based on file path
+- Extracts metadata (title, date, category, tags, excerpt)
+
+**Articles Index Page:**
+- Simplified to use <ArticleList /> component
+- No more manual link maintenance required
+
+**Removed Files:**
+- content/.vuepress/client.ts (was causing components to render globally)
+
+**Build:** 42 pages, 66 precached files
+
+---
+
 ### 2025-11-20 - Complete Chakra UI to Vuetify Migration
 
 **Build Status:** ✅ SUCCESS (No SSR Errors)
