@@ -1,22 +1,24 @@
 <template>
-  <v-alert
-    v-if="notification && !notificationIsClosed"
-    :href="notification.link"
-    target="_blank"
-    rel="noopener noreferrer"
-    color="primary"
-    variant="elevated"
-    closable
-    @click:close="closeNotification(notification.id)"
-    class="notification-alert"
-  >
-    <template v-slot:title v-if="notification.title">
-      {{ notification.title }}
-    </template>
-    <template v-slot:text>
-      {{ notification.description }}
-    </template>
-  </v-alert>
+  <ClientOnly>
+    <v-alert
+      v-if="notification && !notificationIsClosed"
+      :href="notification.link"
+      target="_blank"
+      rel="noopener noreferrer"
+      color="primary"
+      variant="elevated"
+      closable
+      @click:close="closeNotification(notification.id)"
+      class="notification-alert"
+    >
+      <template v-slot:title v-if="notification.title">
+        {{ notification.title }}
+      </template>
+      <template v-slot:text>
+        {{ notification.description }}
+      </template>
+    </v-alert>
+  </ClientOnly>
 </template>
 
 <script lang="ts">

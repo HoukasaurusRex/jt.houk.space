@@ -1,7 +1,12 @@
 <template>
-  <div class="comments-placeholder">
-    <p>Comments temporarily unavailable during migration</p>
-  </div>
+  <ClientOnly>
+    <v-sheet class="comments-wrapper" rounded>
+      <v-alert type="info" variant="tonal">
+        Comments are now powered by GitHub Discussions via Giscus.
+        They will appear below when the page loads.
+      </v-alert>
+    </v-sheet>
+  </ClientOnly>
 </template>
 
 <script lang="ts">
@@ -13,12 +18,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.comments-placeholder {
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+.comments-wrapper {
   margin: 2rem 0;
+  padding: 1rem;
 }
 </style>

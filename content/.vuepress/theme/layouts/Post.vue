@@ -1,23 +1,20 @@
 <template>
-  <CThemeProvider class="child-theme-post" >
-    <!-- <CReset /> -->
+  <div>
     <Notification />
-    <Post />
-  </CThemeProvider>
+    <ParentLayout />
+  </div>
 </template>
 
-<script>
-import { CThemeProvider, CReset } from '@chakra-ui/vue'
-import Post from '@parent-theme/layouts/Post.vue'
-import Notification from '@theme/components/Notification.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import ParentLayout from '@vuepress/theme-default/lib/client/layouts/Layout.vue'
+import Notification from '../components/Notification.vue'
 
-export default {
-  name: 'ChakraPost',
+export default defineComponent({
+  name: 'Post',
   components: {
-    CThemeProvider,
-    CReset,
-    Post,
-    Notification
-  }
-}
+    ParentLayout,
+    Notification,
+  },
+})
 </script>

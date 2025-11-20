@@ -1,20 +1,21 @@
 <template>
-  <CThemeProvider class="child-theme-layout">
-    <!-- <CReset /> -->
-    <Layout />
-  </CThemeProvider>
+  <ParentLayout>
+    <template #page-top>
+      <Notification />
+    </template>
+  </ParentLayout>
 </template>
 
-<script>
-import { CThemeProvider, CReset } from '@chakra-ui/vue'
-import Layout from '@parent-theme/layouts/Layout.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import ParentLayout from '@vuepress/theme-default/lib/client/layouts/Layout.vue'
+import Notification from '../components/Notification.vue'
 
-export default {
-  name: 'ChakraLayout',
+export default defineComponent({
+  name: 'Layout',
   components: {
-    CThemeProvider,
-    CReset,
-    Layout
-  }
-}
+    ParentLayout,
+    Notification,
+  },
+})
 </script>

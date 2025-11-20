@@ -1,4 +1,5 @@
 import { defineClientConfig } from 'vuepress/client'
+import { h } from 'vue'
 import Layout from './layouts/Layout.vue'
 import './styles/index.scss'
 import 'vuetify/styles'
@@ -9,6 +10,7 @@ import * as directives from 'vuetify/directives'
 const vuetify = createVuetify({
   components,
   directives,
+  ssr: true,
   theme: {
     defaultTheme: 'light',
     themes: {
@@ -45,4 +47,7 @@ export default defineClientConfig({
   layouts: {
     Layout,
   },
+  rootComponents: [
+    () => h('div', { id: 'vuetify-root' })
+  ],
 })

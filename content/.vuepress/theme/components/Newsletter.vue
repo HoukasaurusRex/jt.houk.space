@@ -1,7 +1,30 @@
 <template>
-  <div class="newsletter-placeholder">
-    <p>Newsletter signup temporarily unavailable during migration</p>
-  </div>
+  <ClientOnly>
+    <v-card class="newsletter-card" elevation="2">
+      <v-card-title>
+        <v-icon left color="primary">mdi-email-newsletter</v-icon>
+        Newsletter
+      </v-card-title>
+      <v-card-text>
+        <v-alert type="info" variant="tonal" class="mb-4">
+          Newsletter signup coming soon! Subscribe to get updates on new articles and projects.
+        </v-alert>
+        <v-text-field
+          label="Email Address"
+          type="email"
+          variant="outlined"
+          prepend-inner-icon="mdi-email"
+          disabled
+          hint="Newsletter integration in progress"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" variant="elevated" disabled block>
+          Subscribe
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </ClientOnly>
 </template>
 
 <script lang="ts">
@@ -13,14 +36,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.newsletter-placeholder {
+.newsletter-card {
   max-width: 420px;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  margin: auto;
-  padding: 30px;
-  text-align: center;
-  border-radius: 5px;
+  margin: 2rem auto;
 }
 </style>

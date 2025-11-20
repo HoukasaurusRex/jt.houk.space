@@ -1,56 +1,64 @@
 <template>
-  <router-link class="right-arrow" :to="link" >{{text}} <span class="move">→</span></router-link>
+  <ClientOnly>
+    <v-btn
+      :to="link"
+      class="right-arrow-btn"
+      color="primary"
+      variant="elevated"
+      size="large"
+      append-icon="mdi-arrow-right"
+    >
+      {{ text }}
+    </v-btn>
+  </ClientOnly>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { usePageFrontmatter } from 'vuepress/client'
+
+export default defineComponent({
   name: 'RightArrow',
   props: {
     actionLink: {
-      type: String
+      type: String,
+      default: ''
     },
     actionText: {
-      type: String
+      type: String,
+      default: ''
     }
   },
-  computed: {
-    link() {
-      return this.url || this.$page.frontmatter.actionLink || '/articles/'
-    },
-    text() {
-      return this.name || this.$page.frontmatter.actionText || 'Articles'
+  setup(props) {
+    const frontmatter = usePageFrontmatter()
+
+    const link = computed(() => {
+      return props.actionLink || frontmatter.value.actionLink || '/articles/'
+    })
+
+    const text = computed(() => {
+      return props.actionText || frontmatter.value.actionText || 'Articles'
+    })
+
+    return {
+      link,
+      text,
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@keyframes move {
-  0% {
-    transform: translateX(0);
+.right-arrow-btn {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
-    transform: translateX(10px);
+    transform: translateY(-8px);
   }
-  100% {
-    transform: translateX(0);
-  }
-}
-.right-arrow {
-  text-align: right;
-  align-self: center;
-  font-size: 1.5em;
-  color: var(--text-color);
-  &:hover {
-    color: var(--text-color);
-    .move {
-      animation: move 1s ease-in-out infinite;
-    }
-  }
-}
-.move {
-  position: absolute;
-  top: 5px;
-  padding-left: 12px;
 }
 </style>

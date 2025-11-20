@@ -1,13 +1,35 @@
 <template>
-  <router-link class="card" :to="url" >
-    <section>
-      <header><h2 class="card__title">{{name}}</h2></header>
-      <div class="card__content" :style="backgroundImageStyle"></div>
-    </section>
-  </router-link>
+  <ClientOnly>
+    <v-card 
+      :to="url"
+      class="project-card"
+      elevation="2"
+      hover
+    >
+      <v-img
+        :src="imageUrl"
+        :alt="name"
+        height="200"
+        cover
+      >
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular indeterminate color="grey-lighten-5" />
+          </v-row>
+        </template>
+      </v-img>
+      
+      <v-card-title class="card-title">
+        {{ name }}
+      </v-card-title>
+    </v-card>
+  </ClientOnly>
 </template>
-<script>
-export default {
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'Card',
   props: {
     name: {
@@ -23,41 +45,24 @@ export default {
       default: 'https://jt.houk.space/logo.png'
     }
   },
-  computed: {
-    backgroundImageStyle() {
-      return `background-image: url(${this.imageUrl});`
-    }
-  },
-}
+})
 </script>
-<style lang="scss" scoped>
 
-.card {
-  .card__title {
-    color: var(--text-color);
-    transition: all 0.1s ease-in-out;
-  }
-  .card__content {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top, center;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    height: 12rem;
-    max-width: 90vw;
-    text-align: center;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.15);
-    transition: all 0.1s ease-in-out;
-  }
+<style lang="scss" scoped>
+.project-card {
+  transition: all 0.2s ease-in-out;
+  
   &:hover {
-    .card__title {
-      color: var(--accent-color);
-    }
-    .card__content {
-      transform: scale(1.01);
-      box-shadow: 3px 3px 5px rgba(0,0,0,0.15);
-    }
+    transform: translateY(-4px);
+  }
+  
+  .card-title {
+    color: var(--text-color);
+    transition: color 0.2s ease-in-out;
+  }
+  
+  &:hover .card-title {
+    color: var(--accent-color);
   }
 }
-
 </style>
