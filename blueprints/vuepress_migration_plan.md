@@ -34,7 +34,7 @@ Migrate VuePress ^1.9.10 (Vue 2, JavaScript) to 2.0.0-rc.26 (Vue 3, TypeScript) 
 
 ## Documentation Requirements
 
-### MIGRATION.md (Create immediately)
+### blueprints/vuepress_migration_log.md (Create immediately)
 Living log of all progress. Update after every significant action.
 
 **Essential sections:**
@@ -96,7 +96,7 @@ Add architectural patterns discovered during migration:
 ## Execution Framework
 
 ### Phase 1: Setup & Baseline (1-2 hours)
-1. Create MIGRATION.md and initial CRUSH.md entry
+1. Create blueprints/vuepress_migration_log.md and initial CRUSH.md entry
 2. Analyze site: inventory files, components, dependencies
 3. **DECISION POINT:** vuepress-bar replacement strategy
    - Manual sidebar (quick, maintainable)
@@ -113,7 +113,7 @@ Add architectural patterns discovered during migration:
 **Convert in dependency order:** utilities → config → components → theme
 
 **For each file:**
-1. Log in MIGRATION.md: file path, complexity, dependencies
+1. Log in blueprints/vuepress_migration_log.md: file path, complexity, dependencies
 2. Convert: rename .js→.ts, add types, fix errors
 3. Verify: `npx tsc --noEmit`
 4. Commit with descriptive message
@@ -135,7 +135,7 @@ Add architectural patterns discovered during migration:
 7. Build: `yarn build`
 
 **Error protocol:**
-- Document every error in MIGRATION.md
+- Document every error in blueprints/vuepress_migration_log.md
 - Attempt fix from docs/changelog
 - Max 3 attempts per error before asking
 - Commit after each successful fix
@@ -147,13 +147,13 @@ Add architectural patterns discovered during migration:
 4. For each component:
    - Check: content present, layout functional, interactions work
    - Classify: <5% cosmetic = approve, >5% or broken = fix
-   - Document decision in MIGRATION.md
+   - Document decision in blueprints/vuepress_migration_log.md
 5. **DECISION POINT:** After all reviews complete, await "update baselines" confirmation
 6. Archive v1: `mv tests/visual/screenshots/v1-reference tests/visual/screenshots/archived-v1/`
 7. Update: `npx playwright test --update-snapshots`
 
 ### Phase 5: Finalization (30-60 min)
-1. Complete MIGRATION.md summary
+1. Complete blueprints/vuepress_migration_log.md summary
 2. Finalize CRUSH.md with all patterns
 3. Update package.json scripts
 4. Create tests/visual/README.md
@@ -167,7 +167,7 @@ Add architectural patterns discovered during migration:
 - Updating imports/syntax per v2 docs
 - Fixing type/lint errors
 - Committing incremental progress
-- Updating MIGRATION.md factually
+- Updating blueprints/vuepress_migration_log.md factually
 - Following official VuePress v2 documentation
 
 ### Request Decision When
@@ -190,13 +190,16 @@ Awaiting: {Explicit confirmation needed}
 - Visual baseline approval
 
 ### Interruption Recovery
-Read MIGRATION.md "Next Steps" section → verify last commit → resume from documented point.
+Read blueprints/vuepress_migration_log.md "Next Steps" section → verify last commit → resume from documented point.
+
+### Record Keeping
+Every deferred decision result is logged in blueprints/vuepress_migration_deferred_decisions.md
 
 ## Success Criteria
 - [ ] Site builds: `yarn build` succeeds
 - [ ] Site runs: `yarn dev` starts, no console errors
 - [ ] Tests pass: `npx playwright test` 100%
-- [ ] Docs complete: MIGRATION.md + CRUSH.md comprehensive
+- [ ] Docs complete: blueprints/vuepress_migration_log.md + CRUSH.md comprehensive
 - [ ] Types clean: `npx tsc --noEmit` passes
 - [ ] Rollback documented: can revert if needed
 
@@ -204,9 +207,13 @@ Read MIGRATION.md "Next Steps" section → verify last commit → resume from do
 - v2 Docs: https://v2.vuepress.vuejs.org/
 - Changelog: https://github.com/vuepress/core/blob/main/CHANGELOG.md
 - Playwright: https://playwright.dev/
+- Vue 3 Composition API: https://v3.vuejs.org/guide/composition-api-introduction.html
+- TypeScript: https://www.typescriptlang.org/docs/
+- VuePress v2 Migration Guide: https://v2.vuepress.vuejs.org/guide/migration.html
+- Vuetify Docs: https://next.vuetifyjs.com/en/getting-started/installation/
 
 ## Start
-1. Create MIGRATION.md
+1. Create blueprints/vuepress_migration_log.md
 2. Analyze current site
 3. Present inventory + vuepress-bar decision
 4. Await approval to capture baselines
