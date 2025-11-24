@@ -68,7 +68,6 @@ dist/
 .theme
 .temp
 .cache
-.vuepress
 CRUSH.md
 
 # Playwright
