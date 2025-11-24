@@ -109,7 +109,7 @@ When this decision is revisited:
 
 3. **If continuing custom CSS:**
    - Create reusable component patterns
-   - Document styling conventions in CRUSH.md
+   - Document styling conventions in CONTRIBUTING.md
    - Ensure accessibility standards are met
 
 ### Related Deferred Items

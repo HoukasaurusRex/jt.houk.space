@@ -6,6 +6,7 @@ import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { blogPlugin } from '@vuepress/plugin-blog'
 import { commentPlugin } from '@vuepress/plugin-comment'
+import { feedPlugin } from '@vuepress/plugin-feed'
 import vuetify from 'vite-plugin-vuetify'
 import dotenv from 'dotenv'
 
@@ -74,10 +75,9 @@ export default defineUserConfig({
     blogPlugin({
       hotReload: true,
       filter: ({ filePathRelative }) => {
-        // Only include markdown files in articles directory (exclude index and dev-log subdirectory)
+        // Only include markdown files in articles directory (exclude index)
         if (!filePathRelative) return false
-        return filePathRelative.startsWith('articles/') 
-          && !filePathRelative.startsWith('articles/dev-log/')
+        return filePathRelative.startsWith('articles/')
           && filePathRelative !== 'articles/README.md'
       },
       getInfo: ({ frontmatter, title }) => ({
@@ -87,6 +87,36 @@ export default defineUserConfig({
         tag: frontmatter.tags || [],
         excerpt: frontmatter.summary || frontmatter.description || '',
       }),
+      category: [
+        {
+          key: 'category',
+          getter: (page) => {
+            const category = page.frontmatter.category
+            if (!category) return []
+            if (typeof category === 'string') return [category]
+            if (Array.isArray(category)) return category.filter((c): c is string => typeof c === 'string')
+            return []
+          },
+          frontmatter: () => ({
+            title: 'Categories',
+            sidebar: false,
+          }),
+        },
+        {
+          key: 'tag',
+          getter: (page) => {
+            const tags = page.frontmatter.tags
+            if (!tags) return []
+            if (Array.isArray(tags)) return tags.filter((t): t is string => typeof t === 'string')
+            if (typeof tags === 'string') return [tags]
+            return []
+          },
+          frontmatter: () => ({
+            title: 'Tags',
+            sidebar: false,
+          }),
+        },
+      ],
     }),
     commentPlugin({
       provider: 'Giscus',
@@ -98,9 +128,28 @@ export default defineUserConfig({
       strict: false,
       reactionsEnabled: true,
       inputPosition: 'top',
-      theme: 'preferred_color_scheme',
-      lang: 'en',
+      darkTheme: 'dark',
+      lightTheme: 'light',
       lazyLoading: true,
+    }),
+    feedPlugin({
+      hostname: 'https://jt.houk.space',
+      atom: true,
+      json: true,
+      rss: true,
+      count: 20,
+      filter: ({ filePathRelative }) => {
+        // Only include articles (not drafts)
+        if (!filePathRelative) return false
+        return filePathRelative.startsWith('articles/')
+          && !filePathRelative.includes('.draft')
+          && filePathRelative !== 'articles/README.md'
+      },
+      sorter: (a, b) => {
+        const dateA = a.frontmatter.created_at ? new Date(a.frontmatter.created_at as string).getTime() : 0
+        const dateB = b.frontmatter.created_at ? new Date(b.frontmatter.created_at as string).getTime() : 0
+        return dateB - dateA
+      },
     })
   ],
   head: [

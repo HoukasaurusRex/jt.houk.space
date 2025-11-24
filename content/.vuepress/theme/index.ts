@@ -1,12 +1,15 @@
 import { getDirname, path } from 'vuepress/utils'
+import type { Theme } from 'vuepress'
+import { defaultTheme } from '@vuepress/theme-default'
 
 const __dirname = getDirname(import.meta.url)
 
-export default {
-  name: 'vuepress-theme-local',
-  extends: '@vuepress/theme-default',
-  layouts: {
-    Layout: path.resolve(__dirname, 'layouts/Layout.vue'),
-    Post: path.resolve(__dirname, 'layouts/Post.vue'),
-  },
+const localTheme = (): Theme => {
+  return {
+    name: 'vuepress-theme-local',
+    extends: defaultTheme({}),
+    clientConfigFile: path.resolve(__dirname, 'clientConfig.ts'),
+  }
 }
+
+export default localTheme

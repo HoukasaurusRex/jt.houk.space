@@ -23,6 +23,267 @@
 
 ## Current State Analysis
 
+### 2025-11-20 - Blog Theme Features Implementation Complete
+
+**Build Status:** ✅ SUCCESS (71 pages rendered)
+**Objective:** Implement Priority 1 blog theme features for v1 parity
+
+#### Features Implemented
+
+**1. RSS Feed Generation ✅**
+- Installed `@vuepress/plugin-feed@next`
+- Configured RSS, Atom, and JSON feeds at `/rss.xml`, `/atom.xml`, `/feed.json`
+- Filters articles automatically (excludes dev-log and drafts)
+- Sorts by date (newest first using `created_at` field)
+- Generates 6 article feed items
+- Feed links automatically added to page head
+
+**2. Custom Footer Component ✅**
+- Created `Footer.vue` with social media links (GitHub, LinkedIn, Email)
+- Dynamic copyright year display
+- SVG icon components for social platforms
+- Integrated into `Layout.vue` via `#page-bottom` slot
+- Responsive design with hover effects
+- Accessible with proper ARIA labels
+
+**3. Category/Tag Pages ✅**
+- Configured blog plugin with category system for both categories and tags
+- Created `BlogCategory.vue` layout for displaying filtered articles
+- Dynamic routes generated for `/category/:slug` and `/tag/:slug`
+- Added breadcrumb navigation
+- Displays article count per category/tag
+- Shows filtered article list with metadata
+- Registered BlogCategory layout in theme index
+- **Result:** 29 new tag/category pages generated (71 total pages vs 42 before)
+
+**4. Pagination Component ✅**
+- Enhanced `ArticleList.vue` with pagination (5 articles per page)
+- Previous/Next navigation buttons
+- Page number buttons with smart visibility (shows current ± 1 pages)
+- Active page highlighting
+- Smooth scroll to top on page change
+- Responsive design for mobile
+- Disabled state for boundary pages
+
+#### Build Results
+
+**Pages Generated:**
+- 42 → 71 pages (+29 category/tag pages)
+- Categories: 1 unique category
+- Tags: 20 unique tags
+- Articles with pagination: 6 articles
+- Feed items: 6 articles
+
+**Files Generated:**
+- `/rss.xml` - RSS 2.0 feed (54.5 KB)
+- `/atom.xml` - Atom feed (56.1 KB)
+- `/feed.json` - JSON feed (55.3 KB)
+- `/sitemap.xml` - Updated sitemap
+- 96 precached files (0.71 MB)
+
+**Category/Tag Pages Created:**
+- `/category/lifestyle/`
+- `/tag/lifestyle/`, `/tag/agile/`, `/tag/cooking/`, `/tag/startups/`
+- `/tag/coding/`, `/tag/dev/`, `/tag/log/`, `/tag/journal/`
+- `/tag/ssl/`, `/tag/china/`, `/tag/aws/`, `/tag/aliyun/`
+- `/tag/elastic-beanstalk/`, `/tag/raspberrypi/`, `/tag/projects/`
+- `/tag/python/`, `/tag/data-science/`, `/tag/cloud-architecture/`
+- `/tag/vpc/`, `/tag/ssh/`, `/tag/memoir/`, `/tag/storytime/`
+
+#### Implementation Details
+
+**Blog Plugin Configuration:**
+```typescript
+blogPlugin({
+  category: [
+    {
+      key: 'category',
+      getter: (page) => // Extract category from frontmatter
+      layout: 'BlogCategory',
+      frontmatter: () => ({ title: 'Categories', sidebar: false }),
+    },
+    {
+      key: 'tag',
+      getter: (page) => // Extract tags array from frontmatter
+      layout: 'BlogCategory',
+      frontmatter: () => ({ title: 'Tags', sidebar: false }),
+    },
+  ],
+})
+```
+
+**Feed Plugin Configuration:**
+```typescript
+feedPlugin({
+  hostname: 'https://jt.houk.space',
+  atom: true,
+  json: true,
+  rss: true,
+  count: 20,
+  filter: ({ filePathRelative }) => // Filter articles only
+  sorter: (a, b) => // Sort by date descending
+})
+```
+
+#### Components Created/Modified
+
+**New Components:**
+- `Footer.vue` - Social links footer with icons
+- `BlogCategory.vue` - Category/tag page layout
+
+**Modified Components:**
+- `ArticleList.vue` - Added pagination support
+- `Layout.vue` - Added footer slot
+
+**Modified Configuration:**
+- `config.ts` - Added feed plugin and blog category config
+- `theme/index.ts` - Registered BlogCategory layout
+
+#### What's Still Missing from v1 Blog Theme
+
+**Deferred to Future (Priority 2-3):**
+- ❌ Custom permalinks (`/articles/:slug` instead of `/articles/filename.html`)
+- ❌ Tag filtering UI on articles index page
+- ❌ Author/Location display in post metadata
+- ❌ Reading time estimation
+- ❌ Related articles based on tags
+- ❌ Featured posts type
+- ❌ SEO plugin (using manual meta tags currently)
+- ❌ Archive page organized by date
+
+**Current Implementation Covers:**
+- ✅ RSS/Atom/JSON feeds
+- ✅ Footer with social links and copyright
+- ✅ Category pages
+- ✅ Tag pages
+- ✅ Pagination (5 items per page)
+- ✅ Breadcrumb navigation
+- ✅ Article metadata display (date, category)
+- ✅ Tags displayed on category pages
+
+#### Next Steps
+
+1. Optionally implement Priority 2 features (tag filtering, SEO, etc.)
+2. Test all new features in dev server
+3. Run visual regression tests
+4. Update CONTRIBUTING.md with new patterns
+5. Merge to master branch
+
+---
+
+### 2025-11-20 - Blog Theme Feature Analysis
+
+**Status:** ✅ Analysis Complete
+**Objective:** Compare v1 @vuepress/theme-blog features with v2 default theme + blog plugin
+
+#### Master Branch (v1) Configuration
+
+**Theme Setup:**
+- Extended `@vuepress/theme-blog` (version 2.3.3)
+- Custom Layout.vue and Post.vue wrapping parent theme with Chakra UI
+- Global components auto-registered from theme directory
+
+**Blog Theme Features Used:**
+1. **Footer Configuration:**
+   - Contact links (GitHub, Twitter, LinkedIn, Email)
+   - Copyright notice with dynamic year
+
+2. **Directories Configuration:**
+   ```js
+   directories: [{
+     id: 'articles',
+     dirname: 'articles',
+     path: '/articles/',
+     title: 'Articles',
+     itemPermalink: '/articles/:slug',
+     pagination: { lengthPerPage: 5 },
+     frontmatter: { type: 'post', feed: { enable: true } }
+   }]
+   ```
+
+3. **Feed Generation:**
+   - RSS feed with canonical_base: 'https://jt.houk.space'
+   - Enabled via frontmatter in directories config
+
+4. **Additional v1 Features:**
+   - SEO plugin for meta tags (title, description, author, tags, Twitter cards, Open Graph)
+   - Automatic sidebar generation via vuepress-bar
+   - Mailchimp newsletter popup
+   - Disqus comments
+   - Theme-provided tag/category pages
+
+#### Current Branch (v2) Implementation
+
+**What's Implemented:**
+- ✅ Custom Layout.vue and Post.vue (extends default theme)
+- ✅ Blog plugin configured with filter() and getInfo()
+- ✅ ArticleList component (custom built, auto-generates listing)
+- ✅ Giscus comments (replacement for Disqus)
+- ✅ PWA plugin with manifest
+- ✅ Manual sidebar configuration
+- ✅ Vuetify 3 component library (replacement for Chakra UI)
+
+**Missing v1 Blog Theme Features:**
+1. ❌ **Footer with contact links and copyright** - Default theme footer not customized
+2. ❌ **RSS/Atom feed generation** - Not configured
+3. ❌ **Tag/Category pages** - Blog plugin supports but not implemented
+4. ❌ **Pagination** - No pagination on articles listing
+5. ❌ **Custom permalinks** - Articles use default /articles/filename.html instead of /articles/:slug
+6. ❌ **SEO meta tags** - No automated SEO plugin (using manual head meta tags)
+7. ❌ **Tag filtering UI** - No way to filter articles by tag
+8. ❌ **Author/Location display** - Not shown in article metadata
+
+#### VuePress v2 Blog Plugin Capabilities
+
+The `@vuepress/plugin-blog` provides:
+- **Composables:**
+  - `useBlogCategory()` - Access categorized articles (tags, categories)
+  - `useBlogType()` - Access typed articles (custom filters)
+- **Features:**
+  - Article collection with custom filter
+  - Excerpt generation (auto or manual with `<!-- more -->`)
+  - Metadata extraction via getInfo()
+  - Category and tag organization
+  - Type-based filtering
+  - i18n support
+
+**Not Used Yet:**
+- Category/tag pages (need custom layouts)
+- Blog composables in components
+- Excerpt generation (using manual summaries)
+- Type filtering (e.g., starred articles, featured posts)
+
+#### Recommendations for Theme Extension
+
+**Priority 1 (Core Blog Features):**
+1. **Create category/tag pages** using blog plugin composables
+2. **Add pagination** to ArticleList component
+3. **Configure RSS feed** generation
+4. **Customize footer** with contact links and copyright
+
+**Priority 2 (Enhanced Features):**
+5. **Add custom permalinks** (/articles/:slug)
+6. **Implement tag filtering UI** on articles index
+7. **Add SEO meta tags** (manual or plugin)
+8. **Create blog post layout** with author/location/tags display
+
+**Priority 3 (Nice to Have):**
+9. **Add "featured posts" type** using blog plugin types
+10. **Implement related articles** based on tags
+11. **Add reading time estimation**
+12. **Create archive page** organized by date
+
+#### Next Steps
+
+1. Evaluate which v1 blog theme features are essential
+2. Create custom layouts for category/tag pages
+3. Implement pagination in ArticleList component
+4. Configure RSS feed plugin
+5. Customize default theme footer
+6. Add SEO optimization features
+
+---
+
 ### 2025-11-20 - Articles List Auto-Generation
 
 **Build Status:** ✅ SUCCESS
@@ -91,7 +352,7 @@
 - ✓ Updated Vuetify theme colors in client.ts
   - Added dark theme configuration
   - Mapped error/success/info colors to --red/--green/--blue
-- ✓ Documented all theme colors in CRUSH.md
+- ✓ Documented all theme colors in CONTRIBUTING.md
 - ✓ Build succeeds with 41 pages
 
 **Color Variables (Light Theme):**
@@ -135,7 +396,7 @@
 **Next Steps:**
 - Verify comments render correctly on dev server
 - Test comment posting and reactions
-- Update CRUSH.md with comment plugin patterns
+- Update CONTRIBUTING.md with comment plugin patterns
 
 ---
 
@@ -163,7 +424,7 @@
 - Migrate Newsletter.vue to use Vuetify form components
 - Migrate Comments.vue to use Vuetify components
 - Run visual regression tests
-- Update CRUSH.md with Vuetify patterns
+- Update CONTRIBUTING.md with Vuetify patterns
 
 ---
 
@@ -310,7 +571,7 @@ npm run test:visual:update       # Update baselines
 
 ### Phase 5: Finalization ✅
 - MIGRATION.md completed with full summary
-- CRUSH.md updated with v2 patterns and testing info
+- CONTRIBUTING.md updated with v2 patterns and testing info
 - package.json scripts updated
 - tests/visual/README.md created
 - All changes committed
@@ -422,6 +683,79 @@ npm run test:visual:update       # Update baselines
 - Test build frequently during migration
 - Document all changes in MIGRATION.md as you go
 - Set up visual regression testing early
+
+---
+
+## Bug Fixes and Improvements (2025-11-20)
+
+### Issues Fixed
+
+1. **ArticleList Component Not Displaying Articles**
+   - **Problem**: The /articles page was showing no articles
+   - **Root Cause**:
+     - ArticleList component was excluding dev-log subdirectory
+     - Blog plugin filter was also excluding dev-log
+     - User requirement was to include dev-log articles in listings
+   - **Solution**:
+     - Removed dev-log exclusion from ArticleList.vue line 80
+     - Updated blog plugin filter to include dev-log articles
+     - Updated feed plugin filter to include dev-log articles
+
+2. **Category and Tag Pages Not Displaying Articles**
+   - **Problem**: Pages like /tag/lifestyle/ and /category/lifestyle/ showed no articles
+   - **Root Cause**:
+     - BlogCategory layout couldn't be resolved during SSR build
+     - Custom layout registration wasn't working properly with VuePress 2 theme system
+   - **Solution**:
+     - Removed custom `layout: 'BlogCategory'` from blog plugin configuration
+     - Created new CategoryPage.vue component that uses `useBlogCategory()` composable
+     - Updated Layout.vue to detect category/tag pages and render CategoryPage component
+     - Registered components globally via clientConfig.ts
+     - Build now succeeds with 73 pages rendered
+
+3. **RSS Feed Accessibility**
+   - **Status**: Feed files (rss.xml, atom.xml, feed.json) are being generated correctly in dist/
+   - **Note**: The redirect to .html might be a dev server or deployment configuration issue
+   - **Recommendation**: Test on production deployment to confirm if this is a real issue
+
+### Code Changes
+
+1. **content/.vuepress/config.ts**:
+   - Removed dev-log exclusion from blog plugin filter (line 80-81)
+   - Removed dev-log exclusion from feed plugin filter (line 147)
+   - Removed `layout: 'BlogCategory'` from category configurations (lines 100, 115)
+
+2. **content/.vuepress/theme/components/ArticleList.vue**:
+   - Removed `!p.path.includes('/dev-log/')` condition from filter (line 80)
+   - Now includes all articles in /articles/ directory except drafts
+
+3. **content/.vuepress/theme/components/CategoryPage.vue** (NEW):
+   - Created component to display blog category/tag pages
+   - Uses `useBlogCategory()` composable from blog plugin
+   - Displays filtered articles with metadata, breadcrumbs, article count
+   - Responsive styling with VuePress theme variables
+
+4. **content/.vuepress/theme/layouts/Layout.vue**:
+   - Updated to detect category/tag pages via route.path
+   - Conditionally renders CategoryPage component for /category/* and /tag/* routes
+   - Falls back to ParentLayout for all other pages
+
+5. **content/.vuepress/theme/clientConfig.ts** (NEW):
+   - Created client config to register global components and layouts
+   - Registers ArticleList and CategoryPage components globally
+   - Properly exports Layout, Post, and BlogCategory layouts
+
+6. **content/.vuepress/theme/index.ts**:
+   - Updated to use proper VuePress 2 theme structure
+   - Returns a theme function that extends defaultTheme
+   - References clientConfigFile for proper component registration
+
+### Build Status
+
+- ✅ Build completes successfully (5.52s)
+- ✅ 73 pages rendered (42 content pages + 29 category/tag pages + index/about)
+- ✅ 20 articles added to RSS feeds
+- ✅ No layout resolution errors
 
 ---
 
