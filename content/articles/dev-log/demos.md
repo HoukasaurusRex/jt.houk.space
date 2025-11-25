@@ -8,7 +8,7 @@ tags:
   - "dev"
   - "demo"
   - "journal"
-status: "draft"
+status: "published"
 summary: ""
 author: "JT Houk"
 location: "Montreal"

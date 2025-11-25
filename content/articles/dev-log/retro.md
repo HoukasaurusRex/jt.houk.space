@@ -9,7 +9,7 @@ tags:
   - "retro"
   - "journal"
 description:
-status: "draft"
+status: "published"
 summary: ""
 author: "JT Houk"
 location: "Montreal"
