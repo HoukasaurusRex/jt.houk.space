@@ -23,12 +23,12 @@ const createNewJournalEntry = () => {
   // Create file with basic frontmatter
   const content = `---
 title: "${today.format('dddd MMMM D, YYYY')}"
-category: "coding"
+category: "Software Development"
 created_at: "${today.toISOString()}"
 updated_at: "${today.toISOString()}"
+date: "${today.format('YYYY-MM-DD')}"
 tags:
-  - "coding"
-  - "journal"
+  - ""
 status: "draft"
 summary: ""
 author: "JT Houk"
