@@ -162,6 +162,11 @@ module.exports = {
         itemPermalink: '/articles/:slug', // Permalink for matched pages.
         pagination: { // Pagination behavior
           lengthPerPage: 5,
+          sorter: (prev, next) => {
+            const prevTime = new Date(prev.frontmatter.created_at).getTime()
+            const nextTime = new Date(next.frontmatter.created_at).getTime()
+            return nextTime - prevTime // Sort descending (newest first)
+          }
         },
         frontmatter: {
           type: 'post',
