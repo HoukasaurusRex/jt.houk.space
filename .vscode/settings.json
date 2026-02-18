@@ -15,5 +15,6 @@
     "commandCenter.border": "#e7e7e799",
     "sash.hoverBorder": "#7295b1"
   },
-  "peacock.color": "#557c9b"
+  "peacock.color": "#557c9b",
+  "markdown.validate.enabled": true
 }
