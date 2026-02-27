@@ -12,7 +12,7 @@ When I'm not developing software or tinkering with my websites, I'm probably at 
 
 Well I didn't plan it.
 
-I started university as a mechanical engineering student, switched to physics, then switched again to philosophy -- each time following the thing that actually held my attention rather than the one that made the most career sense. I graduated from Old Dominion University with a thesis on Platonic dialogues and no clear plan.
+I started university as a mechanical engineering student, switched to physics, then switched again to philosophy - each time following the thing that actually held my attention rather than the one that made the most career sense. I graduated from Old Dominion University with a thesis on Platonic dialogues and no clear plan.
 
 So naturally I drove across America with my best friend, my mom's minivan, and a shoestring budget. I'd recommend it to anyone who needs to figure something out and can't afford to just stare at a wall. At the end of it, I had a flight to Beijing and a TEFL certification.
 
