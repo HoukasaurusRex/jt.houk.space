@@ -32,17 +32,17 @@ I came to Montreal to be close to the people I loved, including my incredible wi
 
 **Dropbox Paper CMS** — An open-source Node.js module that generates static site content from a Dropbox Paper backend, letting non-technical collaborators update a site without touching code.
 
-**[Rules as Written](https://rulesaswritten.com)** — A static site I built for our D&D podcast, featuring audio players, lazy-loaded YouTube transcripts, and offline PWA support. Some projects exist because the work matters; others exist because your friends deserve a good website for their podcast.
+**[Rules as Written](https://rulesaswrittenshow.com)** — A static site I built for our D&D podcast, featuring audio players, lazy-loaded YouTube transcripts, and offline PWA support. Some projects exist because the work matters; others exist because your friends deserve a good website for their podcast.
 
 ## Writing
 
-**[The People In The Room: A Manifesto for AI Governance](/articles/ai-governance-manifesto.md)** — A call to action for engineers, designers, and product people building AI systems. Not about compliance -- about what it means to be in the room when something consequential gets built, and to take that seriously.
+**[The People In The Room: A Manifesto for AI Governance](/articles/ai-governance-manifesto.md)** — A call to action for engineers, designers, and product people building AI systems. What it means to be in the room when something consequential gets built, and to take that seriously.
 
 ## How I Work
 
 I'm motivated by challenging work and care deeply about having a positive impact on the people around me. I get excited about new technologies and frameworks, but I'm more interested in mastering a few things well than collecting buzzwords.
 
-I believe companies of all sizes have a responsibility to promote positive change in their industries -- and that responsibility belongs not just to leadership, but to the people doing the building.
+I believe companies of all sizes have a responsibility to promote positive change in their industries, and that responsibility belongs not just to leadership, but to the people doing the building.
 
 ## What I'm Confident In
 
