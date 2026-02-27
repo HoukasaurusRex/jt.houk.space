@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/8bitme.gif" alt="" align="right" width="250">
 
-Hi, I'm JT -- senior software engineer and cloud developer based in Montreal. Over the past eight years I've built production systems across the stack: real-time audio platforms, machine monitoring hardware, big data pipelines, and developer tooling -- often from initial architecture to shipped product.
+Hi, I'm JT - senior software engineer and cloud developer based in Montreal. Over the past eight years I've built production systems across the stack: real-time audio platforms, machine monitoring hardware, big data pipelines, and developer tooling - often from initial architecture to shipped product.
 
 I care about clear communication as much as clean architecture. The most interesting problems in tech are rarely purely technical ones.
 
