@@ -69,8 +69,8 @@
     on404 = "error"
 
     # Change this key to restart from scratch
-    # Updated to v4 after taxonomy restructure (Feb 2026)
-    cacheKey = "v4"
+    # Updated to v5 after taxonomy restructure (Feb 2026)
+    cacheKey = "v5"
 
     # Extra diagnostic logging for development
     debugMode = false
