@@ -2,7 +2,7 @@
 category: "technology"
 created_at: "2026-02-26T00:00:00.000Z"
 updated_at: "2026-02-26T00:00:00.000Z"
-title: "The People In The Room: A Manifesto for the Responsible Use of AI in Organizations with Access to Customer Data"
+title: "The People In The Room: A Manifesto for AI Governance"
 tags:
   - "ai"
   - "ethics"
