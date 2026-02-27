@@ -6,7 +6,7 @@ import { exec } from 'child_process'
 const createNewJournalEntry = () => {
   const today = dayjs()
   const fileName = `${today.format('YYYY-MM-DD')}.md`
-  const dirPath = path.join(process.cwd(), 'content', 'articles', 'dev-log')
+  const dirPath = path.join(process.cwd(), 'content', 'dev-log')
   const filePath = path.join(dirPath, fileName)
 
   // Ensure directory exists

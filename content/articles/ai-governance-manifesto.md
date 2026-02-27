@@ -78,9 +78,11 @@ Participation in systems of harm rarely begins with bad actors. It begins with a
 
 **A company sells its customer dataset** during acquisition due diligence, and that data is later used by the new owner in ways none of us ever anticipated.
 
-**An organization provides footage or identity data** to a partner with law enforcement relationships, and that data is used to compile biometric profiles of people who attended a public gathering. Their identities are retained, shared, weaponized. Not because they did anything wrong. Because they were present. Because a camera saw them, and the infrastructure existed to do something with what it saw. This is not a cautionary hypothetical. It is a description of something that has already happened, that is happening now, built in part from the kind of commercial data infrastructure we design and deploy every day.
+**An organization provides footage or identity data** to a partner with law enforcement relationships, and that data is used to compile biometric profiles of people who attended a public gathering. Their identities are retained, shared, weaponized. Not because they did anything wrong. Because they were present. Because a camera saw them, and the infrastructure existed to do something with what it saw.
 
-None of these scenarios require negligence. They require only an absence of deliberate governance, the organizational equivalent of building a vehicle without brakes because everyone was focused on making it go faster.
+This is happening now, being built in part from the kind of commercial data infrastructure we design and deploy every day.
+
+None of these scenarios require negligence. They require only an absence of deliberate governance, like manufacturing a car without brakes because everyone was focused on making it go faster.
 
 The [EU AI Alliance](https://futurium.ec.europa.eu/en/european-ai-alliance) describes organizational AI policy as the necessary middle layer between abstract ethical principles and formal regulation: the layer where values become rules, and rules become decisions. Without that layer, consequential choices get made by default, by whoever ships fastest, whoever asks the fewest questions, whoever optimizes hardest for the metric in front of them. Default choices, in systems with this much power, are not neutral. They tend to concentrate consequences in the communities least equipped to push back.
 
