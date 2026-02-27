@@ -94,10 +94,10 @@ module.exports = {
       DISQUS_API_KEY: process.env.DISQUS_API_KEY
     },
     notification: {
-      id: 'irc-afghan-refugees',
-      title: 'Help Refugees in Afghanistan',
-      description: 'Donate to the IRC to provide humanitarian aid and resettlement resources to Afghan refugees',
-      link: 'https://help.rescue.org/donate/afghanistan'
+      id: 'irc-donate-gaza',
+      title: 'Help families in Gaza',
+      description: 'Donate to the IRC to provide humanitarian aid and resettlement resources to families in Gaza',
+      link: 'https://help.rescue.org/donate'
     },
     nav: [
       {
