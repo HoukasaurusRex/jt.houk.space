@@ -104,18 +104,18 @@ module.exports = {
         text: 'Articles',
         link: '/articles/'
       },
-      {
-        text: 'Portfolio',
-        link: '/projects/'
-      },
+      // {
+      //   text: 'Portfolio',
+      //   link: '/projects/'
+      // },
       {
         text: 'About',
         link: '/about/'
       },
-      {
-        text: 'Labs',
-        link: 'https://labs.houk.space'
-      },
+      // {
+      //   text: 'Labs',
+      //   link: 'https://labs.houk.space'
+      // },
       {
         text: 'RaW',
         link: 'https://rulesaswrittenshow.com'
@@ -134,10 +134,6 @@ module.exports = {
         {
           type: 'github',
           link: 'https://github.com/HoukasaurusRex',
-        },
-        {
-          type: 'twitter',
-          link: 'https://twitter.com/HoukasaurusRex',
         },
         {
           type: 'linkedin',
