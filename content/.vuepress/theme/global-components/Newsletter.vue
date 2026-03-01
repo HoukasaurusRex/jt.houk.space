@@ -86,7 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .newsletter {
-  /deep/ .newsletter__wrap {
+  ::v-deep .newsletter__wrap {
     max-width: 420px;
     background-color: var(--background-color);
     color: var(--text-color);

@@ -1,83 +1,83 @@
 ---
-  id: 8
-  category: "coding"
-  Title: null
-  created_at: "2021-03-30T09:07:50.583Z"
-  updated_at: "2021-07-09T06:56:01.311Z"
-  title: "Making a Bastion Host"
-  tags: 
-    - "coding"
-    - "cloud architecture"
-    - "aws"
-    - "vpc"
-    - "ssh"
-  description: null
-  status: "published"
-  summary: "Connecting to a database in a VPC might be a little daunting, but with a simple design borrowed from medieval architecture you can create a secure connection locally without sacrificing security."
-  author: "JT Houk"
-  location: "Beijing"
-  date: "2021-03-30"
-  image: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
-  images: 
-    - 
-      id: 32
-      name: "cliff-fort-bastion.jpg"
-      hash: "cliff_fort_bastion_17bcfc7190"
-      sha256: null
-      ext: ".jpg"
-      mime: "image/jpeg"
-      size: 261.57
-      url: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
-      provider: "cloudinary"
-      provider_metadata: 
-        public_id: "cliff_fort_bastion_17bcfc7190"
-        resource_type: "image"
-      created_at: "2021-03-30T11:40:06.437Z"
-      updated_at: "2021-03-30T11:40:06.467Z"
-      alternativeText: ""
-      caption: ""
-      width: 1600
-      height: 1067
-      formats: 
-        large: 
-          ext: ".jpg"
-          url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/large_cliff_fort_bastion_17bcfc7190.jpg"
-          hash: "large_cliff_fort_bastion_17bcfc7190"
-          mime: "image/jpeg"
-          name: "large_cliff-fort-bastion.jpg"
-          path: null
-          size: 157.89
-          width: 1000
-          height: 667
-          provider_metadata: 
-            public_id: "large_cliff_fort_bastion_17bcfc7190"
-            resource_type: "image"
-        small: 
-          ext: ".jpg"
-          url: "https://res.cloudinary.com/jthouk/image/upload/v1617104406/small_cliff_fort_bastion_17bcfc7190.jpg"
-          hash: "small_cliff_fort_bastion_17bcfc7190"
-          mime: "image/jpeg"
-          name: "small_cliff-fort-bastion.jpg"
-          path: null
-          size: 42.83
-          width: 500
-          height: 333
-          provider_metadata: 
-            public_id: "small_cliff_fort_bastion_17bcfc7190"
-            resource_type: "image"
-        medium: 
-          ext: ".jpg"
-          url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/medium_cliff_fort_bastion_17bcfc7190.jpg"
-          hash: "medium_cliff_fort_bastion_17bcfc7190"
-          mime: "image/jpeg"
-          name: "medium_cliff-fort-bastion.jpg"
-          path: null
-          size: 90.1
-          width: 750
-          height: 500
-          provider_metadata: 
-            public_id: "medium_cliff_fort_bastion_17bcfc7190"
-            resource_type: "image"
+id: 8
+category: "coding"
+Title: null
+created_at: "2021-03-30T09:07:50.583Z"
+updated_at: "2021-07-09T06:56:01.311Z"
+title: "Making a Bastion Host"
+tags:
+  - "coding"
+  - "cloud architecture"
+  - "aws"
+  - "vpc"
+  - "ssh"
+description: null
+status: "published"
+summary: "Connecting to a database in a VPC might be a little daunting, but with a simple design borrowed from medieval architecture you can create a secure connection locally without sacrificing security."
+author: "JT Houk"
+location: "Beijing"
+date: "2021-03-30"
+image: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
+images:
+  -
+    id: 32
+    name: "cliff-fort-bastion.jpg"
+    hash: "cliff_fort_bastion_17bcfc7190"
+    sha256: null
+    ext: ".jpg"
+    mime: "image/jpeg"
+    size: 261.57
+    url: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
+    provider: "cloudinary"
+    provider_metadata:
+      public_id: "cliff_fort_bastion_17bcfc7190"
+      resource_type: "image"
+    created_at: "2021-03-30T11:40:06.437Z"
+    updated_at: "2021-03-30T11:40:06.467Z"
+    alternativeText: ""
+    caption: ""
+    width: 1600
+    height: 1067
+    formats:
+      large:
+        ext: ".jpg"
+        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/large_cliff_fort_bastion_17bcfc7190.jpg"
+        hash: "large_cliff_fort_bastion_17bcfc7190"
+        mime: "image/jpeg"
+        name: "large_cliff-fort-bastion.jpg"
+        path: null
+        size: 157.89
+        width: 1000
+        height: 667
+        provider_metadata:
+          public_id: "large_cliff_fort_bastion_17bcfc7190"
+          resource_type: "image"
+      small:
+        ext: ".jpg"
+        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104406/small_cliff_fort_bastion_17bcfc7190.jpg"
+        hash: "small_cliff_fort_bastion_17bcfc7190"
+        mime: "image/jpeg"
+        name: "small_cliff-fort-bastion.jpg"
+        path: null
+        size: 42.83
+        width: 500
+        height: 333
+        provider_metadata:
+          public_id: "small_cliff_fort_bastion_17bcfc7190"
+          resource_type: "image"
+      medium:
+        ext: ".jpg"
+        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/medium_cliff_fort_bastion_17bcfc7190.jpg"
+        hash: "medium_cliff_fort_bastion_17bcfc7190"
+        mime: "image/jpeg"
+        name: "medium_cliff-fort-bastion.jpg"
+        path: null
+        size: 90.1
+        width: 750
+        height: 500
+        provider_metadata:
+          public_id: "medium_cliff_fort_bastion_17bcfc7190"
+          resource_type: "image"
         thumbnail: 
           ext: ".jpg"
           url: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/thumbnail_cliff_fort_bastion_17bcfc7190.jpg"
