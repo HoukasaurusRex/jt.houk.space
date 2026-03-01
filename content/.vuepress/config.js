@@ -76,7 +76,7 @@ module.exports = {
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }],
     ['script', {
       ['data-website-id']: '486ef362-975e-4b9a-aa43-9579256aca2c',
-      src: 'https://cloud.umami.is/script.js',
+      src: '/umami.js',
       async: true,
       defer: true
     }]
