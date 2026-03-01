@@ -11,7 +11,7 @@
       <h1 class="typewriter">{{title}}</h1>
       <h2 class="description">{{description}}</h2>
         <div class="spotify-card">
-          <a href="https://spotify-github-profile.vercel.app/api/view?uid=spacemanjohn&redirect=true" target="_blank" rel="noopener">
+          <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=spacemanjohn&redirect=true" target="_blank" rel="noopener">
               <transition name="fade">
                 <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="">
               </transition>
