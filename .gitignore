@@ -66,6 +66,5 @@ dist/
 .DS_Store
 
 .theme
-.vuepress
 playwright-report
 test-results
