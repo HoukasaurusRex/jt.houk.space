@@ -8,6 +8,11 @@ portfolio.sidebar[0] = ['/projects/', '<- Back to Portfolio']
 const exists = (item) => item && item !==' ...' ? item : null
 
 module.exports = {
+  configureWebpack: {
+    plugins: [
+      new (require('webpack')).DefinePlugin({ GA_ID: JSON.stringify(false) })
+    ]
+  },
   title: 'JT\'s Space',
   description: 'Software Engineer • Cloud Architect • DevOps',
   metaDescription: 'A space for JT Houk\'s thoughts, works, and ideas. I\'m a Software Engineer • Cloud Architect • DevOps guy living in the web. Shoot me an email or contact me on Twitter for collaborations, freelancing, or talking tech!',
