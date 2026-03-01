@@ -14,7 +14,6 @@
   date: "2024-09-01"
   image: ""
   images: []
-
 ---
 
 - [ ] What is DRM
