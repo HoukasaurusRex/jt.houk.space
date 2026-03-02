@@ -5,6 +5,8 @@ import { RandomProvider } from "@cdktf/provider-random/lib/provider";
 import { GcpApis } from "./constructs/apis";
 import { KeilaNetworking } from "./constructs/networking";
 import { KeilaDatabase } from "./constructs/database";
+import { KeilaSecrets } from "./constructs/secrets";
+import { KeilaStorage } from "./constructs/storage";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -51,6 +53,16 @@ export class KeilaStack extends TerraformStack {
       networkId: networking.network.id,
     });
     database.node.addDependency(networking);
+
+    const secrets = new KeilaSecrets(this, "secrets", {
+      connectionString: database.connectionString,
+    });
+    secrets.node.addDependency(database);
+
+    const storage = new KeilaStorage(this, "storage", {
+      region: this.region.stringValue,
+    });
+    storage.node.addDependency(apis);
   }
 }
 
