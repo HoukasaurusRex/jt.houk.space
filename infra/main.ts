@@ -1,8 +1,10 @@
 import { App, TerraformStack, TerraformVariable } from "cdktf";
 import { Construct } from "constructs";
 import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
+import { RandomProvider } from "@cdktf/provider-random/lib/provider";
 import { GcpApis } from "./constructs/apis";
 import { KeilaNetworking } from "./constructs/networking";
+import { KeilaDatabase } from "./constructs/database";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -35,12 +37,20 @@ export class KeilaStack extends TerraformStack {
       region: this.region.stringValue,
     });
 
+    new RandomProvider(this, "random");
+
     const apis = new GcpApis(this, "apis");
 
     const networking = new KeilaNetworking(this, "networking", {
       region: this.region.stringValue,
     });
     networking.node.addDependency(apis);
+
+    const database = new KeilaDatabase(this, "database", {
+      region: this.region.stringValue,
+      networkId: networking.network.id,
+    });
+    database.node.addDependency(networking);
   }
 }
 
