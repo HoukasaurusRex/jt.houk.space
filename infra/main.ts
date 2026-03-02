@@ -9,6 +9,8 @@ import { KeilaSecrets } from "./constructs/secrets";
 import { KeilaStorage } from "./constructs/storage";
 import { KeilaIam } from "./constructs/iam";
 import { KeilaCloudRun } from "./constructs/cloudrun";
+import { KeilaDomain } from "./constructs/domain";
+import { KeilaMonitoring } from "./constructs/monitoring";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -82,9 +84,23 @@ export class KeilaStack extends TerraformStack {
       storageBucket: storage.bucket,
     });
     cloudrun.node.addDependency(iam);
+
+    const domain = new KeilaDomain(this, "domain-mapping", {
+      domain: this.domain.stringValue,
+      serviceId: cloudrun.service.name,
+      region: this.region.stringValue,
+    });
+    domain.node.addDependency(cloudrun);
+
+    new KeilaMonitoring(this, "monitoring", {
+      alertEmail: "ops@houk.space",
+      serviceName: cloudrun.service.name,
+    });
   }
 }
 
-const app = new App();
-new KeilaStack(app, "keila");
-app.synth();
+if (require.main === module) {
+  const app = new App();
+  new KeilaStack(app, "keila");
+  app.synth();
+}
