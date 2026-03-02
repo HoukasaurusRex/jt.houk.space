@@ -7,6 +7,7 @@ import { KeilaNetworking } from "./constructs/networking";
 import { KeilaDatabase } from "./constructs/database";
 import { KeilaSecrets } from "./constructs/secrets";
 import { KeilaStorage } from "./constructs/storage";
+import { KeilaIam } from "./constructs/iam";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -63,6 +64,13 @@ export class KeilaStack extends TerraformStack {
       region: this.region.stringValue,
     });
     storage.node.addDependency(apis);
+
+    const iam = new KeilaIam(this, "iam", {
+      secrets,
+      storageBucket: storage.bucket,
+    });
+    iam.node.addDependency(secrets);
+    iam.node.addDependency(storage);
   }
 }
 
