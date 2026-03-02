@@ -8,6 +8,7 @@ import { KeilaDatabase } from "./constructs/database";
 import { KeilaSecrets } from "./constructs/secrets";
 import { KeilaStorage } from "./constructs/storage";
 import { KeilaIam } from "./constructs/iam";
+import { KeilaCloudRun } from "./constructs/cloudrun";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -71,6 +72,16 @@ export class KeilaStack extends TerraformStack {
     });
     iam.node.addDependency(secrets);
     iam.node.addDependency(storage);
+
+    const cloudrun = new KeilaCloudRun(this, "cloudrun", {
+      region: this.region.stringValue,
+      domain: this.domain.stringValue,
+      connectorId: networking.connector.id,
+      serviceAccountEmail: iam.serviceAccountEmail,
+      secrets,
+      storageBucket: storage.bucket,
+    });
+    cloudrun.node.addDependency(iam);
   }
 }
 
