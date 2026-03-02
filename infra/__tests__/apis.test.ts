@@ -1,25 +1,26 @@
-import { Testing } from "cdktf";
-import { KeilaStack } from "../main";
+import { Testing, TerraformStack } from "cdktf";
+import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
 import { GcpApis, REQUIRED_APIS } from "../constructs/apis";
 
 describe("GcpApis", () => {
-  let synthOutput: Record<string, unknown>;
+  let synth: Record<string, unknown>;
 
   beforeAll(() => {
     const app = Testing.app();
-    const stack = new KeilaStack(app, "keila-test");
+    const stack = new TerraformStack(app, "test");
+    new GoogleProvider(stack, "google", { project: "test-project" });
     new GcpApis(stack, "apis");
-    synthOutput = JSON.parse(Testing.synth(stack));
+    synth = JSON.parse(Testing.synth(stack));
   });
 
-  it("enables all required APIs", () => {
-    const services = synthOutput.resource as Record<string, unknown>;
-    const googleProjectService = services?.google_project_service as Record<string, unknown>;
-    expect(googleProjectService).toBeDefined();
+  const services = () =>
+    (synth.resource as Record<string, Record<string, unknown>>)
+      .google_project_service;
 
+  it("enables all required APIs", () => {
+    expect(services()).toBeDefined();
     for (const api of REQUIRED_APIS) {
-      const resourceId = api.replace(/\./g, "_").replace(/googleapis_com$/, "api");
-      const found = Object.values(googleProjectService).some(
+      const found = Object.values(services()).some(
         (v) => (v as Record<string, unknown>).service === api
       );
       expect(found).toBe(true);
@@ -27,9 +28,7 @@ describe("GcpApis", () => {
   });
 
   it("sets disable_on_destroy to false for all API resources", () => {
-    const services = synthOutput.resource as Record<string, unknown>;
-    const googleProjectService = services?.google_project_service as Record<string, unknown>;
-    for (const resource of Object.values(googleProjectService)) {
+    for (const resource of Object.values(services())) {
       expect((resource as Record<string, unknown>).disable_on_destroy).toBe(false);
     }
   });
