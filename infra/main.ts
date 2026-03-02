@@ -1,6 +1,7 @@
 import { App, TerraformStack, TerraformVariable } from "cdktf";
 import { Construct } from "constructs";
 import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
+import { GcpApis } from "./constructs/apis";
 
 export class KeilaStack extends TerraformStack {
   readonly projectId: TerraformVariable;
@@ -32,6 +33,8 @@ export class KeilaStack extends TerraformStack {
       project: this.projectId.stringValue,
       region: this.region.stringValue,
     });
+
+    new GcpApis(this, "apis");
   }
 }
 
