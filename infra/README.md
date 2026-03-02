@@ -16,10 +16,7 @@ Terraform CDK (TypeScript) infrastructure for deploying [Keila](https://www.keil
 ```bash
 # Install dependencies
 cd infra/
-npm install
-
-# Generate provider bindings
-npm run get
+yarn install
 
 # Authenticate with GCP
 gcloud auth application-default login
@@ -36,19 +33,74 @@ cp terraform.tfvars.example terraform.tfvars
 
 ```bash
 # Preview changes
-npm run diff
+yarn diff
 
 # Deploy
-npm run deploy
+yarn deploy
 
 # Destroy all resources
-npm run destroy
+yarn destroy
 ```
 
 ## Testing
 
 ```bash
-npm test
+yarn test
+```
+
+## SMTP Configuration (issue #72)
+
+After deployment, update the SMTP secrets in GCP Secret Manager with real values:
+
+```bash
+# Set SMTP host
+echo -n "smtp.postmarkapp.com" | \
+  gcloud secrets versions add keila-smtp-host --data-file=-
+
+# Set SMTP password (server API token)
+echo -n "YOUR_SMTP_TOKEN" | \
+  gcloud secrets versions add keila-smtp-password --data-file=-
+
+# Set sender address
+echo -n "keila@yourdomain.com" | \
+  gcloud secrets versions add keila-smtp-from-email --data-file=-
+
+# Set admin email and trigger a new Cloud Run revision to pick up changes
+echo -n "admin@yourdomain.com" | \
+  gcloud secrets versions add keila-admin-email --data-file=-
+```
+
+Recommended SMTP providers: [Postmark](https://postmarkapp.com),
+[SendGrid](https://sendgrid.com), [Mailgun](https://mailgun.com).
+Configure SPF and DKIM on your sending domain before sending campaigns.
+
+## CI/CD (issue #73)
+
+GitHub Actions workflow at `.github/workflows/infra-deploy.yml`:
+
+- **PRs**: runs tests + `cdktf diff` (plan only)
+- **Merges to `master`**: runs tests + `cdktf deploy --auto-approve`
+
+Required GitHub secrets and variables:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `GCP_WORKLOAD_IDENTITY_PROVIDER` | Secret | WIF provider resource name |
+| `GCP_DEPLOY_SERVICE_ACCOUNT` | Secret | Deploy SA email |
+| `GCP_PROJECT_ID` | Variable | GCP project ID |
+| `GCP_REGION` | Variable | GCP region (e.g. `us-central1`) |
+| `KEILA_DOMAIN` | Variable | Custom domain (e.g. `mail.houk.space`) |
+
+Set up Workload Identity Federation:
+
+```bash
+gcloud iam workload-identity-pools create github-pool \
+  --location=global --display-name="GitHub Actions Pool"
+
+gcloud iam workload-identity-pools providers create-oidc github-provider \
+  --workload-identity-pool=github-pool --location=global \
+  --issuer-uri="https://token.actions.githubusercontent.com" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository"
 ```
 
 ## Stack Structure
