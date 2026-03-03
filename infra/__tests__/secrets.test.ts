@@ -13,6 +13,13 @@ describe("KeilaSecrets", () => {
     new RandomProvider(stack, "random");
     new KeilaSecrets(stack, "secrets", {
       connectionString: "postgres://keila:pass@localhost/keila",
+      secretKeyBase: "a".repeat(64),
+      adminEmail: "admin@example.com",
+      adminPassword: "test-password-123",
+      smtpHost: "smtp.example.com",
+      smtpUser: "apikey",
+      smtpPassword: "test-password",
+      smtpFromEmail: "keila@example.com",
     });
     synth = JSON.parse(Testing.synth(stack));
   });
@@ -35,7 +42,7 @@ describe("KeilaSecrets", () => {
   it("creates random_password resources for generated secrets", () => {
     const passwords = resources().random_password;
     expect(passwords).toBeDefined();
-    expect(Object.keys(passwords)).toHaveLength(3);
+    expect(Object.keys(passwords)).toHaveLength(1);
   });
 
   it("all secrets use automatic replication", () => {
@@ -56,23 +63,16 @@ describe("KeilaSecrets", () => {
     expect(dbUrlSecret).toBeDefined();
   });
 
-  it("creates the keila-secret-key-base secret with a 64-char password", () => {
+  it("creates the keila-secret-key-base secret", () => {
     const secrets = resources().google_secret_manager_secret;
     const keyBaseSecret = Object.values(secrets).find(
       (s) =>
         (s as Record<string, unknown>).secret_id === "keila-secret-key-base"
     );
     expect(keyBaseSecret).toBeDefined();
-
-    const passwords = resources().random_password;
-    const keyBasePwd = Object.values(passwords).find(
-      (p) => (p as Record<string, unknown>).length === 64
-    );
-    expect(keyBasePwd).toBeDefined();
-    expect((keyBasePwd as Record<string, unknown>).special).toBe(false);
   });
 
-  it("creates the keila-hashid-salt secret with a 32-char password", () => {
+it("creates the keila-hashid-salt secret with a 32-char password", () => {
     const passwords = resources().random_password;
     const hashidPwd = Object.values(passwords).find(
       (p) => (p as Record<string, unknown>).length === 32
@@ -81,16 +81,7 @@ describe("KeilaSecrets", () => {
     expect((hashidPwd as Record<string, unknown>).special).toBe(false);
   });
 
-  it("creates the keila-admin-password secret with a 16-char password", () => {
-    const passwords = resources().random_password;
-    const adminPwd = Object.values(passwords).find(
-      (p) => (p as Record<string, unknown>).length === 16
-    );
-    expect(adminPwd).toBeDefined();
-    expect((adminPwd as Record<string, unknown>).special).toBe(false);
-  });
-
-  it("creates placeholder secrets for smtp and admin email", () => {
+it("creates secrets for smtp and admin email", () => {
     const secrets = resources().google_secret_manager_secret;
     const secretIds = Object.values(secrets).map(
       (s) => (s as Record<string, unknown>).secret_id

@@ -5,6 +5,13 @@ import { Password } from "@cdktf/provider-random/lib/password";
 
 export interface KeilaSecretsConfig {
   connectionString: string;
+  secretKeyBase: string;
+  adminEmail: string;
+  adminPassword: string;
+  smtpHost: string;
+  smtpUser: string;
+  smtpPassword: string;
+  smtpFromEmail: string;
 }
 
 export class KeilaSecrets extends Construct {
@@ -21,22 +28,12 @@ export class KeilaSecrets extends Construct {
   constructor(scope: Construct, id: string, config: KeilaSecretsConfig) {
     super(scope, id);
 
-    const secretKeyBasePassword = new Password(this, "secret-key-base-pwd", {
-      length: 64,
-      special: false,
-    });
-
     const hashidSaltPassword = new Password(this, "hashid-salt-pwd", {
       length: 32,
       special: false,
     });
 
-    const adminPasswordPassword = new Password(this, "admin-password-pwd", {
-      length: 16,
-      special: false,
-    });
-
-    this.dbUrl = new SecretManagerSecret(this, "keila-db-url", {
+this.dbUrl = new SecretManagerSecret(this, "keila-db-url", {
       secretId: "keila-db-url",
       replication: { auto: {} },
     });
@@ -51,7 +48,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-secret-key-base-version", {
       secret: this.secretKeyBase.id,
-      secretData: secretKeyBasePassword.result,
+      secretData: config.secretKeyBase,
     });
 
     this.hashidSalt = new SecretManagerSecret(this, "keila-hashid-salt", {
@@ -69,7 +66,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-admin-email-version", {
       secret: this.adminEmail.id,
-      secretData: "admin@example.com",
+      secretData: config.adminEmail,
     });
 
     this.adminPassword = new SecretManagerSecret(this, "keila-admin-password", {
@@ -78,7 +75,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-admin-password-version", {
       secret: this.adminPassword.id,
-      secretData: adminPasswordPassword.result,
+      secretData: config.adminPassword,
     });
 
     this.smtpHost = new SecretManagerSecret(this, "keila-smtp-host", {
@@ -87,7 +84,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-smtp-host-version", {
       secret: this.smtpHost.id,
-      secretData: "smtp.example.com",
+      secretData: config.smtpHost,
     });
 
     this.smtpUser = new SecretManagerSecret(this, "keila-smtp-user", {
@@ -96,7 +93,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-smtp-user-version", {
       secret: this.smtpUser.id,
-      secretData: "changeme",
+      secretData: config.smtpUser,
     });
 
     this.smtpPassword = new SecretManagerSecret(this, "keila-smtp-password", {
@@ -105,7 +102,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-smtp-password-version", {
       secret: this.smtpPassword.id,
-      secretData: "changeme",
+      secretData: config.smtpPassword,
     });
 
     this.smtpFromEmail = new SecretManagerSecret(this, "keila-smtp-from-email", {
@@ -114,7 +111,7 @@ export class KeilaSecrets extends Construct {
     });
     new SecretManagerSecretVersion(this, "keila-smtp-from-email-version", {
       secret: this.smtpFromEmail.id,
-      secretData: "keila@example.com",
+      secretData: config.smtpFromEmail,
     });
   }
 }

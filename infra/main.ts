@@ -44,9 +44,56 @@ export class KeilaStack extends TerraformStack {
       sensitive: true,
     });
 
+    const secretKeyBase = new TerraformVariable(this, "secret_key_base", {
+      type: "string",
+      description: "Secret key base for Phoenix session encryption (min 64 chars)",
+      nullable: false,
+      sensitive: true,
+    });
+
     const cloudflareZoneId = new TerraformVariable(this, "cloudflare_zone_id", {
       type: "string",
       description: "Cloudflare zone ID for the domain",
+      nullable: false,
+    });
+
+    const adminEmail = new TerraformVariable(this, "admin_email", {
+      type: "string",
+      description: "Keila admin login email address",
+      nullable: false,
+      sensitive: true,
+    });
+
+    const adminPassword = new TerraformVariable(this, "admin_password", {
+      type: "string",
+      description: "Keila admin login password",
+      nullable: false,
+      sensitive: true,
+    });
+
+    const smtpHost = new TerraformVariable(this, "smtp_host", {
+      type: "string",
+      description: "SMTP server hostname",
+      nullable: false,
+    });
+
+    const smtpUser = new TerraformVariable(this, "smtp_user", {
+      type: "string",
+      description: "SMTP authentication username",
+      nullable: false,
+      sensitive: true,
+    });
+
+    const smtpPassword = new TerraformVariable(this, "smtp_password", {
+      type: "string",
+      description: "SMTP authentication password",
+      nullable: false,
+      sensitive: true,
+    });
+
+    const smtpFromEmail = new TerraformVariable(this, "smtp_from_email", {
+      type: "string",
+      description: "From address for outgoing email",
       nullable: false,
     });
 
@@ -68,6 +115,13 @@ export class KeilaStack extends TerraformStack {
 
     const secrets = new KeilaSecrets(this, "secrets", {
       connectionString: dbUrl.stringValue,
+      secretKeyBase: secretKeyBase.stringValue,
+      adminEmail: adminEmail.stringValue,
+      adminPassword: adminPassword.stringValue,
+      smtpHost: smtpHost.stringValue,
+      smtpUser: smtpUser.stringValue,
+      smtpPassword: smtpPassword.stringValue,
+      smtpFromEmail: smtpFromEmail.stringValue,
     });
     secrets.node.addDependency(apis);
 

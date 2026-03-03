@@ -15,6 +15,13 @@ describe("KeilaIam", () => {
     new RandomProvider(stack, "random");
     const secrets = new KeilaSecrets(stack, "secrets", {
       connectionString: "postgres://keila:pass@10.0.0.2/keila",
+      secretKeyBase: "a".repeat(64),
+      adminEmail: "admin@example.com",
+      adminPassword: "test-password-123",
+      smtpHost: "smtp.example.com",
+      smtpUser: "apikey",
+      smtpPassword: "test-password",
+      smtpFromEmail: "keila@example.com",
     });
     const storage = new KeilaStorage(stack, "storage", { region: "us-central1" });
     new KeilaIam(stack, "iam", { secrets, storageBucket: storage.bucket });
