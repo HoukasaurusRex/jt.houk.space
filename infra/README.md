@@ -1,5 +1,7 @@
 # Keila on Cloud Run — CDKTF Infrastructure
 
+[![Infra Deploy](https://github.com/HoukasaurusRex/jt.houk.space/actions/workflows/infra-deploy.yml/badge.svg)](https://github.com/HoukasaurusRex/jt.houk.space/actions/workflows/infra-deploy.yml)
+
 Terraform CDK (TypeScript) infrastructure for deploying [Keila](https://www.keila.io/) on Google Cloud Run.
 
 ## Prerequisites
