@@ -1,7 +1,7 @@
 # jt.houk.space
 
 [![Infra Deploy](https://github.com/HoukasaurusRex/jt.houk.space/actions/workflows/infra-deploy.yml/badge.svg)](https://github.com/HoukasaurusRex/jt.houk.space/actions/workflows/infra-deploy.yml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_NETLIFY_SITE_ID/deploy-status)](https://app.netlify.com/sites/YOUR_NETLIFY_SITE_NAME/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/db1500c5-d307-4fa7-acd0-60543ece4624/deploy-status)](https://app.netlify.com/sites/houkspace/deploys)
 
 Personal blog and portfolio for [JT Houk](https://jt.houk.space), built with VuePress 1.x and deployed on Netlify.
 
