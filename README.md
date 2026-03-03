@@ -44,7 +44,7 @@ infra/            # GCP infrastructure (CDKTF)
 
 Self-hosted email marketing via [Keila](https://www.keila.io/) on Google Cloud Run, managed with [CDKTF](infra/README.md).
 
-To deploy: `git tag deploy && git push origin deploy`
+To deploy: merge to `master` with a commit message containing `deploy`
 
 ## License
 

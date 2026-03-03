@@ -96,7 +96,8 @@ Configure SPF and DKIM on your sending domain before sending campaigns.
 GitHub Actions workflow at `.github/workflows/infra-deploy.yml`:
 
 - **PRs**: runs tests + `cdktf diff` (plan only)
-- **Merges to `master`**: runs tests + `cdktf deploy --auto-approve`
+- **Merges to `master`**: runs tests only
+- **Merges to `master` with `deploy` in the commit message**: runs tests + `cdktf deploy --auto-approve`
 
 Required GitHub secrets and variables:
 
