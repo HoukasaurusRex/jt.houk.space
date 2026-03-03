@@ -45,15 +45,14 @@ describe("KeilaCloudRun", () => {
     expect(String(containers[0].image)).toContain("pentacent/keila");
   });
 
-  it("injects PORT env var", () => {
+  it("does not set PORT env var (reserved by Cloud Run V2)", () => {
     const services = resources().google_cloud_run_v2_service;
     const svc = Object.values(services)[0] as Record<string, unknown>;
     const template = svc.template as Record<string, unknown>;
     const containers = template.containers as Record<string, unknown>[];
     const envs = containers[0].env as Record<string, unknown>[];
     const portEnv = envs.find((e) => e.name === "PORT");
-    expect(portEnv).toBeDefined();
-    expect(portEnv!.value).toBe("4000");
+    expect(portEnv).toBeUndefined();
   });
 
   it("injects SECRET_KEY_BASE from Secret Manager", () => {

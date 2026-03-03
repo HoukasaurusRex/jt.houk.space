@@ -47,4 +47,14 @@ describe("KeilaMonitoring", () => {
     expect(channels).toBeDefined();
     expect(channels.length).toBeGreaterThan(0);
   });
+
+  it("alert policy condition includes perSeriesAligner for DELTA metric", () => {
+    const policies = resources().google_monitoring_alert_policy;
+    const policy = Object.values(policies)[0] as Record<string, unknown>;
+    const conditions = policy.conditions as Array<Record<string, unknown>>;
+    const threshold = conditions[0].condition_threshold as Record<string, unknown>;
+    const aggregations = threshold.aggregations as Array<Record<string, unknown>>;
+    expect(aggregations).toBeDefined();
+    expect(aggregations[0].per_series_aligner).toBe("ALIGN_RATE");
+  });
 });

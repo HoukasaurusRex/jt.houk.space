@@ -39,6 +39,14 @@ export class KeilaMonitoring extends Construct {
               `metric.type = "run.googleapis.com/request_count"`,
               `metric.label.response_code_class = "5xx"`,
             ].join(" AND "),
+            aggregations: [
+              {
+                alignmentPeriod: "300s",
+                perSeriesAligner: "ALIGN_RATE",
+                crossSeriesReducer: "REDUCE_SUM",
+                groupByFields: ["resource.label.service_name"],
+              },
+            ],
             comparison: "COMPARISON_GT",
             thresholdValue: 1.0,
             duration: "300s",

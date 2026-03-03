@@ -43,7 +43,6 @@ export class KeilaCloudRun extends Construct {
             resources: { limits: { cpu: "1", memory: "512Mi" } },
             volumeMounts: [{ name: "uploads", mountPath: "/app/uploads" }],
             env: [
-              { name: "PORT", value: "4000" },
               { name: "URL_HOST", value: config.domain },
               { name: "URL_SCHEMA", value: "https" },
               { name: "DB_ENABLE_SSL", value: "true" },
