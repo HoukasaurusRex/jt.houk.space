@@ -29,10 +29,11 @@ describe("KeilaDomain", () => {
     expect(record.name).toBe("mail.houk.space");
   });
 
-  it("creates a CNAME record pointing to the Cloud Run URL", () => {
+  it("creates a CNAME record with https:// stripped from the Cloud Run URL", () => {
     const record = Object.values(resources().cloudflare_dns_record)[0] as Record<string, unknown>;
     expect(record.type).toBe("CNAME");
-    expect(record.content).toBe("https://keila-xxxx-uc.a.run.app");
+    // Fn.trimprefix renders as a Terraform expression token, not a plain string
+    expect(JSON.stringify(record.content)).toContain("trimprefix");
   });
 
   it("enables Cloudflare proxying", () => {

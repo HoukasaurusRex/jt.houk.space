@@ -1,3 +1,4 @@
+import { Fn } from "cdktf";
 import { Construct } from "constructs";
 import { DnsRecord } from "@cdktf/provider-cloudflare/lib/dns-record";
 
@@ -16,7 +17,7 @@ export class KeilaDomain extends Construct {
     this.record = new DnsRecord(this, "record", {
       zoneId: config.zoneId,
       name: config.domain,
-      content: config.serviceUrl,
+      content: Fn.trimprefix(config.serviceUrl, "https://"),
       type: "CNAME",
       proxied: true,
       ttl: 1, // 1 = automatic when proxied
