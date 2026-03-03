@@ -28,12 +28,10 @@ describe("KeilaStorage", () => {
     expect(bucket.uniform_bucket_level_access).toBe(true);
   });
 
-  it("enables versioning", () => {
+  it("does not enable versioning (cost optimized)", () => {
     const buckets = resources().google_storage_bucket;
     const bucket = Object.values(buckets)[0] as Record<string, unknown>;
-    const versioning = bucket.versioning as Record<string, unknown>;
-    expect(versioning).toBeDefined();
-    expect(versioning.enabled).toBe(true);
+    expect(bucket.versioning).toBeUndefined();
   });
 
   it("sets force_destroy to false", () => {

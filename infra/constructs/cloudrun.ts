@@ -41,7 +41,7 @@ export class KeilaCloudRun extends Construct {
             gcs: { bucket: config.storageBucket.name, readOnly: false },
           },
         ],
-        scaling: { minInstanceCount: 0, maxInstanceCount: 2 },
+        scaling: { minInstanceCount: 0, maxInstanceCount: 1 },
         containers: [
           {
             image: "pentacent/keila:latest",

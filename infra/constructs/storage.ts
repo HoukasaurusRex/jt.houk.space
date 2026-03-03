@@ -15,7 +15,6 @@ export class KeilaStorage extends Construct {
       name: "keila-uploads",
       location: config.region.toUpperCase(),
       uniformBucketLevelAccess: true,
-      versioning: { enabled: true },
       forceDestroy: false,
       lifecycleRule: [
         {

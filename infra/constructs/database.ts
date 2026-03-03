@@ -26,7 +26,7 @@ export class KeilaDatabase extends Construct {
       name: "keila-postgres",
       databaseVersion: "POSTGRES_15",
       region: config.region,
-      deletionProtection: true,
+      deletionProtection: false,
       settings: {
         tier: "db-f1-micro",
         ipConfiguration: {
@@ -35,7 +35,6 @@ export class KeilaDatabase extends Construct {
         },
         backupConfiguration: {
           enabled: true,
-          pointInTimeRecoveryEnabled: true,
         },
       },
     });
