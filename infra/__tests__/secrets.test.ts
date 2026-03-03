@@ -20,16 +20,16 @@ describe("KeilaSecrets", () => {
   const resources = () =>
     synth.resource as Record<string, Record<string, unknown>>;
 
-  it("creates 8 google_secret_manager_secret resources", () => {
+  it("creates 9 google_secret_manager_secret resources", () => {
     const secrets = resources().google_secret_manager_secret;
     expect(secrets).toBeDefined();
-    expect(Object.keys(secrets)).toHaveLength(8);
+    expect(Object.keys(secrets)).toHaveLength(9);
   });
 
-  it("creates 8 google_secret_manager_secret_version resources", () => {
+  it("creates 9 google_secret_manager_secret_version resources", () => {
     const versions = resources().google_secret_manager_secret_version;
     expect(versions).toBeDefined();
-    expect(Object.keys(versions)).toHaveLength(8);
+    expect(Object.keys(versions)).toHaveLength(9);
   });
 
   it("creates random_password resources for generated secrets", () => {
@@ -97,6 +97,7 @@ describe("KeilaSecrets", () => {
     );
     expect(secretIds).toContain("keila-admin-email");
     expect(secretIds).toContain("keila-smtp-host");
+    expect(secretIds).toContain("keila-smtp-user");
     expect(secretIds).toContain("keila-smtp-password");
     expect(secretIds).toContain("keila-smtp-from-email");
   });

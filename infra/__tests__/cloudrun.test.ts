@@ -80,6 +80,30 @@ describe("KeilaCloudRun", () => {
     ).toBeDefined();
   });
 
+  it("injects MAILER_SMTP_USER from Secret Manager", () => {
+    const services = resources().google_cloud_run_v2_service;
+    const svc = Object.values(services)[0] as Record<string, unknown>;
+    const template = svc.template as Record<string, unknown>;
+    const containers = template.containers as Record<string, unknown>[];
+    const envs = containers[0].env as Record<string, unknown>[];
+    const smtpUserEnv = envs.find((e) => e.name === "MAILER_SMTP_USER");
+    expect(smtpUserEnv).toBeDefined();
+    expect(
+      (smtpUserEnv!.value_source as Record<string, unknown>).secret_key_ref
+    ).toBeDefined();
+  });
+
+  it("disables update checks", () => {
+    const services = resources().google_cloud_run_v2_service;
+    const svc = Object.values(services)[0] as Record<string, unknown>;
+    const template = svc.template as Record<string, unknown>;
+    const containers = template.containers as Record<string, unknown>[];
+    const envs = containers[0].env as Record<string, unknown>[];
+    const updateChecksEnv = envs.find((e) => e.name === "DISABLE_UPDATE_CHECKS");
+    expect(updateChecksEnv).toBeDefined();
+    expect(updateChecksEnv!.value).toBe("true");
+  });
+
   it("enables SSL for Neon database connection", () => {
     const services = resources().google_cloud_run_v2_service;
     const svc = Object.values(services)[0] as Record<string, unknown>;

@@ -14,6 +14,7 @@ export class KeilaSecrets extends Construct {
   readonly adminEmail: SecretManagerSecret;
   readonly adminPassword: SecretManagerSecret;
   readonly smtpHost: SecretManagerSecret;
+  readonly smtpUser: SecretManagerSecret;
   readonly smtpPassword: SecretManagerSecret;
   readonly smtpFromEmail: SecretManagerSecret;
 
@@ -87,6 +88,15 @@ export class KeilaSecrets extends Construct {
     new SecretManagerSecretVersion(this, "keila-smtp-host-version", {
       secret: this.smtpHost.id,
       secretData: "smtp.example.com",
+    });
+
+    this.smtpUser = new SecretManagerSecret(this, "keila-smtp-user", {
+      secretId: "keila-smtp-user",
+      replication: { auto: {} },
+    });
+    new SecretManagerSecretVersion(this, "keila-smtp-user-version", {
+      secret: this.smtpUser.id,
+      secretData: "changeme",
     });
 
     this.smtpPassword = new SecretManagerSecret(this, "keila-smtp-password", {
