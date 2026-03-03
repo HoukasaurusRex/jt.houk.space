@@ -22,7 +22,6 @@ describe("KeilaCloudRun", () => {
     new KeilaCloudRun(stack, "cloudrun", {
       region: "us-central1",
       domain: "mail.houk.space",
-      connectorId: "projects/p/locations/us-central1/connectors/keila-connector",
       serviceAccountEmail: iam.serviceAccountEmail,
       secrets,
       storageBucket: storage.bucket,
@@ -82,13 +81,15 @@ describe("KeilaCloudRun", () => {
     ).toBeDefined();
   });
 
-  it("configures VPC connector egress for private DB access", () => {
+  it("enables SSL for Neon database connection", () => {
     const services = resources().google_cloud_run_v2_service;
     const svc = Object.values(services)[0] as Record<string, unknown>;
     const template = svc.template as Record<string, unknown>;
-    const vpc = template.vpc_access as Record<string, unknown>;
-    expect(vpc).toBeDefined();
-    expect(vpc.egress).toBe("ALL_TRAFFIC");
+    const containers = template.containers as Record<string, unknown>[];
+    const envs = containers[0].env as Record<string, unknown>[];
+    const sslEnv = envs.find((e) => e.name === "DB_ENABLE_SSL");
+    expect(sslEnv).toBeDefined();
+    expect(sslEnv!.value).toBe("true");
   });
 
   it("grants public invoker access to allUsers", () => {

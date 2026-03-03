@@ -3,8 +3,6 @@ import { Construct } from "constructs";
 import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
 import { RandomProvider } from "@cdktf/provider-random/lib/provider";
 import { GcpApis } from "./constructs/apis";
-import { KeilaNetworking } from "./constructs/networking";
-import { KeilaDatabase } from "./constructs/database";
 import { KeilaSecrets } from "./constructs/secrets";
 import { KeilaStorage } from "./constructs/storage";
 import { KeilaIam } from "./constructs/iam";
@@ -38,6 +36,13 @@ export class KeilaStack extends TerraformStack {
       nullable: false,
     });
 
+    const dbUrl = new TerraformVariable(this, "db_url", {
+      type: "string",
+      description: "Neon PostgreSQL connection string",
+      nullable: false,
+      sensitive: true,
+    });
+
     new GoogleProvider(this, "google", {
       project: this.projectId.stringValue,
       region: this.region.stringValue,
@@ -47,21 +52,10 @@ export class KeilaStack extends TerraformStack {
 
     const apis = new GcpApis(this, "apis");
 
-    const networking = new KeilaNetworking(this, "networking", {
-      region: this.region.stringValue,
-    });
-    networking.node.addDependency(apis);
-
-    const database = new KeilaDatabase(this, "database", {
-      region: this.region.stringValue,
-      networkId: networking.network.id,
-    });
-    database.node.addDependency(networking);
-
     const secrets = new KeilaSecrets(this, "secrets", {
-      connectionString: database.connectionString,
+      connectionString: dbUrl.stringValue,
     });
-    secrets.node.addDependency(database);
+    secrets.node.addDependency(apis);
 
     const storage = new KeilaStorage(this, "storage", {
       region: this.region.stringValue,
@@ -78,7 +72,6 @@ export class KeilaStack extends TerraformStack {
     const cloudrun = new KeilaCloudRun(this, "cloudrun", {
       region: this.region.stringValue,
       domain: this.domain.stringValue,
-      connectorId: networking.connector.id,
       serviceAccountEmail: iam.serviceAccountEmail,
       secrets,
       storageBucket: storage.bucket,

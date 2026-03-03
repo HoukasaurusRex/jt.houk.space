@@ -3,11 +3,7 @@ import { ProjectService } from "@cdktf/provider-google/lib/project-service";
 
 export const REQUIRED_APIS = [
   "run.googleapis.com",
-  "sqladmin.googleapis.com",
   "secretmanager.googleapis.com",
-  "vpcaccess.googleapis.com",
-  "servicenetworking.googleapis.com",
-  "compute.googleapis.com",
   "iam.googleapis.com",
 ] as const;
 

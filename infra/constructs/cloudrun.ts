@@ -8,7 +8,6 @@ import { KeilaSecrets } from "./secrets";
 export interface KeilaCloudRunConfig {
   region: string;
   domain: string;
-  connectorId: string;
   serviceAccountEmail: string;
   secrets: KeilaSecrets;
   storageBucket: StorageBucket;
@@ -31,10 +30,6 @@ export class KeilaCloudRun extends Construct {
       location: config.region,
       template: {
         serviceAccount: config.serviceAccountEmail,
-        vpcAccess: {
-          connector: config.connectorId,
-          egress: "ALL_TRAFFIC",
-        },
         volumes: [
           {
             name: "uploads",
@@ -51,7 +46,7 @@ export class KeilaCloudRun extends Construct {
               { name: "PORT", value: "4000" },
               { name: "URL_HOST", value: config.domain },
               { name: "URL_SCHEMA", value: "https" },
-              { name: "DB_ENABLE_SSL", value: "false" },
+              { name: "DB_ENABLE_SSL", value: "true" },
               { name: "MAILER_SMTP_PORT", value: "587" },
               { name: "MAILER_ENABLE_STARTTLS", value: "true" },
               { name: "USER_CONTENT_DIR", value: "/app/uploads" },

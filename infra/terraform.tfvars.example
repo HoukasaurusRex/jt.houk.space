@@ -4,3 +4,4 @@
 project_id = "your-gcp-project-id"
 region     = "us-central1"
 domain     = "mail.houk.space"
+db_url     = "postgresql://user:password@ep-xxx.neon.tech/neondb?sslmode=require"
