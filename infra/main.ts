@@ -1,4 +1,4 @@
-import { App, TerraformStack, TerraformVariable } from "cdktf";
+import { App, GcsBackend, TerraformStack, TerraformVariable } from "cdktf";
 import { Construct } from "constructs";
 import { CloudflareProvider } from "@cdktf/provider-cloudflare/lib/provider";
 import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
@@ -48,6 +48,11 @@ export class KeilaStack extends TerraformStack {
       type: "string",
       description: "Cloudflare zone ID for the domain",
       nullable: false,
+    });
+
+    new GcsBackend(this, {
+      bucket: "jt-houk-space-tfstate",
+      prefix: "keila",
     });
 
     new CloudflareProvider(this, "cloudflare");

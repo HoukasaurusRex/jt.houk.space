@@ -24,11 +24,26 @@ yarn install
 gcloud auth application-default login
 ```
 
+## Bootstrap (one-time)
+
+The Terraform state bucket must exist before the first deploy. Run once after creating the GCP project:
+
+```bash
+gcloud storage buckets create gs://jt-houk-space-tfstate \
+  --project=jt-houk-space --location=US --uniform-bucket-level-access
+
+gcloud storage buckets update gs://jt-houk-space-tfstate --versioning
+
+gcloud storage buckets add-iam-policy-binding gs://jt-houk-space-tfstate \
+  --member="serviceAccount:keila-deploy@jt-houk-space.iam.gserviceaccount.com" \
+  --role="roles/storage.objectAdmin"
+```
+
 ## Configuration
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars with your GCP project ID and domain
+# Edit terraform.tfvars with your GCP project ID, domain, Neon URL, and Cloudflare zone ID
 ```
 
 ## Usage
