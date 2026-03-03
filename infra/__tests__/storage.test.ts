@@ -40,10 +40,10 @@ describe("KeilaStorage", () => {
     expect(bucket.force_destroy).toBe(false);
   });
 
-  it("uppercases the region for the bucket location", () => {
+  it("sets the bucket location to the configured region", () => {
     const buckets = resources().google_storage_bucket;
     const bucket = Object.values(buckets)[0] as Record<string, unknown>;
-    expect(bucket.location).toBe("US-CENTRAL1");
+    expect(bucket.location).toBe("us-central1");
   });
 
   it("configures a lifecycle rule to abort incomplete multipart uploads after 1 day", () => {

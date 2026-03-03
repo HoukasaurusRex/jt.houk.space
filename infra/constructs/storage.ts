@@ -13,7 +13,7 @@ export class KeilaStorage extends Construct {
 
     this.bucket = new StorageBucket(this, "keila-uploads", {
       name: "keila-uploads",
-      location: config.region.toUpperCase(),
+      location: config.region,
       uniformBucketLevelAccess: true,
       forceDestroy: false,
       lifecycleRule: [
