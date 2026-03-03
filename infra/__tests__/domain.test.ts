@@ -1,5 +1,6 @@
 import { Testing, TerraformStack } from "cdktf";
 import { CloudflareProvider } from "@cdktf/provider-cloudflare/lib/provider";
+import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
 import { KeilaDomain } from "../constructs/domain";
 
 describe("KeilaDomain", () => {
@@ -9,9 +10,12 @@ describe("KeilaDomain", () => {
     const app = Testing.app();
     const stack = new TerraformStack(app, "test");
     new CloudflareProvider(stack, "cloudflare");
+    new GoogleProvider(stack, "google");
     new KeilaDomain(stack, "domain", {
       domain: "mail.houk.space",
-      serviceUrl: "https://keila-xxxx-uc.a.run.app",
+      serviceName: "keila",
+      region: "us-central1",
+      projectId: "my-project",
       zoneId: "abc123",
     });
     synth = JSON.parse(Testing.synth(stack));
@@ -24,20 +28,29 @@ describe("KeilaDomain", () => {
     expect(resources().cloudflare_dns_record).toBeDefined();
   });
 
-  it("sets the domain name correctly", () => {
+  it("creates a google_cloud_run_domain_mapping resource", () => {
+    expect(resources().google_cloud_run_domain_mapping).toBeDefined();
+  });
+
+  it("sets the domain name correctly on the DNS record", () => {
     const record = Object.values(resources().cloudflare_dns_record)[0] as Record<string, unknown>;
     expect(record.name).toBe("mail.houk.space");
   });
 
-  it("creates a CNAME record with https:// stripped from the Cloud Run URL", () => {
+  it("creates a CNAME record targeting ghs.googlehosted.com", () => {
     const record = Object.values(resources().cloudflare_dns_record)[0] as Record<string, unknown>;
     expect(record.type).toBe("CNAME");
-    // Fn.trimprefix renders as a Terraform expression token, not a plain string
-    expect(JSON.stringify(record.content)).toContain("trimprefix");
+    expect(record.content).toBe("ghs.googlehosted.com");
   });
 
   it("enables Cloudflare proxying", () => {
     const record = Object.values(resources().cloudflare_dns_record)[0] as Record<string, unknown>;
     expect(record.proxied).toBe(true);
+  });
+
+  it("sets the domain mapping route name to the service name", () => {
+    const mapping = Object.values(resources().google_cloud_run_domain_mapping)[0] as Record<string, unknown>;
+    const spec = mapping.spec as Record<string, unknown>;
+    expect(spec.route_name).toBe("keila");
   });
 });

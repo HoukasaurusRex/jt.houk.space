@@ -94,7 +94,9 @@ export class KeilaStack extends TerraformStack {
 
     const domain = new KeilaDomain(this, "domain-mapping", {
       domain: this.domain.stringValue,
-      serviceUrl: cloudrun.service.uri,
+      serviceName: cloudrun.service.name,
+      region: this.region.stringValue,
+      projectId: this.projectId.stringValue,
       zoneId: cloudflareZoneId.stringValue,
     });
     domain.node.addDependency(cloudrun);
