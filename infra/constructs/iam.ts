@@ -32,6 +32,7 @@ export class KeilaIam extends Construct {
       ["admin-email", config.secrets.adminEmail],
       ["admin-password", config.secrets.adminPassword],
       ["smtp-host", config.secrets.smtpHost],
+      ["smtp-user", config.secrets.smtpUser],
       ["smtp-password", config.secrets.smtpPassword],
       ["smtp-from-email", config.secrets.smtpFromEmail],
     ];

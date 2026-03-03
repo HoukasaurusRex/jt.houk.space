@@ -47,8 +47,8 @@ describe("KeilaIam", () => {
     expect(roles.every((r) => r === "roles/secretmanager.secretAccessor")).toBe(
       true
     );
-    // 8 secrets → 8 bindings
-    expect(Object.keys(bindings).length).toBe(8);
+    // 9 secrets → 9 bindings
+    expect(Object.keys(bindings).length).toBe(9);
   });
 
   it("grants storage.objectAdmin to the service account on the uploads bucket", () => {
