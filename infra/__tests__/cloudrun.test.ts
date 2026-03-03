@@ -89,6 +89,9 @@ describe("KeilaCloudRun", () => {
     const sslEnv = envs.find((e) => e.name === "DB_ENABLE_SSL");
     expect(sslEnv).toBeDefined();
     expect(sslEnv!.value).toBe("true");
+    const verifyEnv = envs.find((e) => e.name === "DB_VERIFY_SSL_HOST");
+    expect(verifyEnv).toBeDefined();
+    expect(verifyEnv!.value).toBe("false");
   });
 
   it("grants public invoker access to allUsers", () => {

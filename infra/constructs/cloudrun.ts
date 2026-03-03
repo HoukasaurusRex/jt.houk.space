@@ -46,6 +46,7 @@ export class KeilaCloudRun extends Construct {
               { name: "URL_HOST", value: config.domain },
               { name: "URL_SCHEMA", value: "https" },
               { name: "DB_ENABLE_SSL", value: "true" },
+              { name: "DB_VERIFY_SSL_HOST", value: "false" },
               { name: "MAILER_SMTP_PORT", value: "587" },
               { name: "MAILER_ENABLE_STARTTLS", value: "true" },
               { name: "USER_CONTENT_DIR", value: "/app/uploads" },
