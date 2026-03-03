@@ -29,7 +29,6 @@ updated_at: "${today.toISOString()}"
 date: "${today.format('YYYY-MM-DD')}"
 tags:
   - ""
-status: "draft"
 summary: ""
 author: "JT Houk"
 location: "Montreal"

@@ -4,7 +4,6 @@ on:
   push:
     branches: [master]
     tags: [deploy]
-    paths: [infra/**]
   pull_request:
     branches: [master]
     paths: [infra/**]
