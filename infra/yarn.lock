@@ -270,6 +270,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cdktf/provider-cloudflare@^13.0.0":
+  version "13.9.1"
+  resolved "https://registry.yarnpkg.com/@cdktf/provider-cloudflare/-/provider-cloudflare-13.9.1.tgz#3dcf7f8993f4382fe4faef0b264771ec4d4af4c4"
+  integrity sha512-8O8Kot+yWYyhgHjrQEyqZ3V5eyt3eRigYrTbSrbB5cy/Q5cWFPCwJ9OxTJpPIJZkplCW+cYXsCSA7GrNTtS1hw==
+
 "@cdktf/provider-google@^14.0.0":
   version "14.36.0"
   resolved "https://registry.yarnpkg.com/@cdktf/provider-google/-/provider-google-14.36.0.tgz#292440c0af9ea59916b58068a0ef0f438b80027c"

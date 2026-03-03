@@ -1,30 +1,25 @@
 import { Construct } from "constructs";
-import { TerraformOutput } from "cdktf";
-import { CloudRunDomainMapping } from "@cdktf/provider-google/lib/cloud-run-domain-mapping";
+import { DnsRecord } from "@cdktf/provider-cloudflare/lib/dns-record";
 
 export interface KeilaDomainConfig {
   domain: string;
-  serviceId: string;
-  region: string;
+  serviceUrl: string;
+  zoneId: string;
 }
 
 export class KeilaDomain extends Construct {
-  readonly domainMapping: CloudRunDomainMapping;
+  readonly record: DnsRecord;
 
   constructor(scope: Construct, id: string, config: KeilaDomainConfig) {
     super(scope, id);
 
-    this.domainMapping = new CloudRunDomainMapping(this, "domain-mapping", {
+    this.record = new DnsRecord(this, "record", {
+      zoneId: config.zoneId,
       name: config.domain,
-      location: config.region,
-      spec: {
-        routeName: config.serviceId,
-      },
-    });
-
-    new TerraformOutput(this, "dns_instructions", {
-      value: `Add a CNAME record for ${config.domain} pointing to ghs.googlehosted.com`,
-      description: "DNS records to configure for the custom domain",
+      content: config.serviceUrl,
+      type: "CNAME",
+      proxied: true,
+      ttl: 1, // 1 = automatic when proxied
     });
   }
 }

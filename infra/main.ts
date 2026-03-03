@@ -1,5 +1,6 @@
 import { App, TerraformStack, TerraformVariable } from "cdktf";
 import { Construct } from "constructs";
+import { CloudflareProvider } from "@cdktf/provider-cloudflare/lib/provider";
 import { GoogleProvider } from "@cdktf/provider-google/lib/provider";
 import { RandomProvider } from "@cdktf/provider-random/lib/provider";
 import { GcpApis } from "./constructs/apis";
@@ -43,6 +44,14 @@ export class KeilaStack extends TerraformStack {
       sensitive: true,
     });
 
+    const cloudflareZoneId = new TerraformVariable(this, "cloudflare_zone_id", {
+      type: "string",
+      description: "Cloudflare zone ID for the domain",
+      nullable: false,
+    });
+
+    new CloudflareProvider(this, "cloudflare");
+
     new GoogleProvider(this, "google", {
       project: this.projectId.stringValue,
       region: this.region.stringValue,
@@ -80,13 +89,13 @@ export class KeilaStack extends TerraformStack {
 
     const domain = new KeilaDomain(this, "domain-mapping", {
       domain: this.domain.stringValue,
-      serviceId: cloudrun.service.name,
-      region: this.region.stringValue,
+      serviceUrl: cloudrun.service.uri,
+      zoneId: cloudflareZoneId.stringValue,
     });
     domain.node.addDependency(cloudrun);
 
     new KeilaMonitoring(this, "monitoring", {
-      alertEmail: "ops@houk.space",
+      alertEmail: "jt@houk.space",
       serviceName: cloudrun.service.name,
     });
   }
