@@ -89,6 +89,9 @@ Required GitHub secrets and variables:
 | --- | --- | --- |
 | `GCP_WORKLOAD_IDENTITY_PROVIDER` | Secret | WIF provider resource name |
 | `GCP_DEPLOY_SERVICE_ACCOUNT` | Secret | Deploy SA email |
+| `NEON_DATABASE_URL` | Secret | Netlify Neon PostgreSQL connection string |
+| `CLOUDFLARE_ZONE_ID` | Secret | Cloudflare zone ID (Dashboard → zone → Overview) |
+| `CLOUDFLARE_API_TOKEN` | Secret | Cloudflare API token with `Zone:DNS:Edit` permission — **expires 2026-06-01, renew before then** |
 | `GCP_PROJECT_ID` | Variable | GCP project ID |
 | `GCP_REGION` | Variable | GCP region (e.g. `us-central1`) |
 | `KEILA_DOMAIN` | Variable | Custom domain (e.g. `mail.houk.space`) |
@@ -113,13 +116,11 @@ Each feature is a separate construct file in `constructs/`:
 |---|---|
 | `main.ts` | Root `KeilaStack` — provider + variables |
 | `constructs/apis.ts` | GCP API enablement |
-| `constructs/networking.ts` | VPC, subnets, VPC connector |
-| `constructs/database.ts` | Cloud SQL PostgreSQL |
 | `constructs/secrets.ts` | Secret Manager entries |
 | `constructs/storage.ts` | GCS bucket for uploads |
 | `constructs/iam.ts` | Service account + IAM bindings |
 | `constructs/cloudrun.ts` | Cloud Run service definition |
-| `constructs/domain.ts` | Domain mapping + HTTPS |
+| `constructs/domain.ts` | Cloudflare DNS record (proxied CNAME) |
 | `constructs/monitoring.ts` | Alerts and notification channels |
 
 ## GitHub Project
