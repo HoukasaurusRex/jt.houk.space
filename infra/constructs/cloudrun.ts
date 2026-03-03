@@ -28,6 +28,7 @@ export class KeilaCloudRun extends Construct {
     this.service = new CloudRunV2Service(this, "service", {
       name: "keila",
       location: config.region,
+      deletionProtection: false,
       template: {
         serviceAccount: config.serviceAccountEmail,
         volumes: [
