@@ -79,10 +79,10 @@ jobs:
           TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
           TF_VAR_admin_email: ${{ secrets.KEILA_USER }}
           TF_VAR_admin_password: ${{ secrets.KEILA_PASSWORD }}
-          TF_VAR_smtp_host: ${{ vars.KEILA_SMTP_HOST }}
+          TF_VAR_smtp_host: ${{ vars.MAILER_SMTP_HOST }}
           TF_VAR_smtp_user: ${{ secrets.KEILA_SMTP_USER }}
           TF_VAR_smtp_password: ${{ secrets.MAILER_SMTP_PASSWORD }}
-          TF_VAR_smtp_from_email: ${{ vars.KEILA_SMTP_FROM_EMAIL }}
+          TF_VAR_smtp_from_email: ${{ vars.MAILER_SMTP_FROM_EMAIL }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   deploy:
@@ -126,8 +126,8 @@ jobs:
           TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
           TF_VAR_admin_email: ${{ secrets.KEILA_USER }}
           TF_VAR_admin_password: ${{ secrets.KEILA_PASSWORD }}
-          TF_VAR_smtp_host: ${{ vars.KEILA_SMTP_HOST }}
+          TF_VAR_smtp_host: ${{ vars.MAILER_SMTP_HOST }}
           TF_VAR_smtp_user: ${{ secrets.KEILA_SMTP_USER }}
           TF_VAR_smtp_password: ${{ secrets.MAILER_SMTP_PASSWORD }}
-          TF_VAR_smtp_from_email: ${{ vars.KEILA_SMTP_FROM_EMAIL }}
+          TF_VAR_smtp_from_email: ${{ vars.MAILER_SMTP_FROM_EMAIL }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
