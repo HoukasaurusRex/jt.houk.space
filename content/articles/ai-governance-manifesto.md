@@ -68,7 +68,7 @@ right now, in hackathons and product sprints, by people who haven't yet been giv
 Doorbells on our neighbors' houses capture our faces as we pass. Security cameras at shop entrances stitch together
 a map of our daily movements. Robotic house maids create networks of associates and relationships sold to authorities.
 The infrastructure of neighborhood surveillance has been installed voluntarily, camera by camera,
-in the name of safety and convenience, and none of us consented to becoming arecurring node in someone else's network.
+in the name of safety and convenience, and none of us consented to becoming a recurring node in someone else's network.
 
 This is the context in which we are building.
 
