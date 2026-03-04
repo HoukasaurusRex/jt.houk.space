@@ -16,7 +16,7 @@
   for = "/*"
   [headers.values]
     # Content Security Policy
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api-gateway.umami.dev; frame-ancestors 'self';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api-gateway.umami.dev https://mail.houk.space; frame-ancestors 'self';"
 
     # Prevent MIME type sniffing
     X-Content-Type-Options = "nosniff"
@@ -59,6 +59,12 @@
   for = "/*.jpeg"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[redirects]]
+  from = "/api/subscribe"
+  to = "https://mail.houk.space/forms/nfrm_dQ7Pd7Y2"
+  status = 200
+  force = true
 
 # 404 detection plugin
 [[plugins]]
