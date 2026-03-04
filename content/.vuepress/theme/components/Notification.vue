@@ -22,7 +22,7 @@
         <CAlertDescription class="description" display="none">{{notification.description}}</CAlertDescription>
       </CBox>
     </CLink>
-    <CCloseButton @click="() => closeNotification(notification.id)" position="absolute" right="10px" bg="unset" />
+    <CCloseButton @click="() => closeNotification(notification.id)" position="absolute" right="10px" bg="unset"/>
   </CAlert>
 </template>
 
@@ -59,7 +59,7 @@ export default {
   &:hover {
     box-shadow: 3px 3px 5px rgba(0,0,0,0.15);
   }
-  ::v-deep svg {
+  ::v-deep .chakra-alert__icon svg {
     width: 30px;
     height: 30px;
     max-width: 30px;

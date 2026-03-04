@@ -19,6 +19,7 @@ body {
     text-decoration: none;
   }
   background-color: var(--foreground-color);
+  min-height: 100vh;
   color: var(--text-color);
   #header,
   .mobile-header-bar,
@@ -153,9 +154,23 @@ body {
 
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */
+  html {
+    /* -webkit-fill-available correctly excludes Safari's dynamic chrome */
+    height: -webkit-fill-available;
+  }
   #vuepress-theme-blog__global-layout {
+    min-height: -webkit-fill-available;
+    min-height: 100dvh; /* dvh tracks the dynamic viewport (iOS 15.4+) */
+
     .content-wrapper {
-      min-height: calc(100vh - 72px - 100px - 20px - 114px); /* I think the 114px comes from ios bottom nav? */
+      /* dvh removes the need for the old 114px browser-chrome hack */
+      min-height: calc(100dvh - 72px - 100px - 20px);
+    }
+
+    .footer {
+      /* extend footer background behind the home indicator */
+      height: auto;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
     }
   }
 }

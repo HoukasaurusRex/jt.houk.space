@@ -111,7 +111,7 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-title', content: 'JT' }],
     ['meta', { name: 'msapplication-navbutton-color', content: 'rgb(235, 141, 175)' }],
     ['meta', { name: 'msapplication-starturl', content: '/' }],
-    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover' }],
     ['script', {
       ['data-website-id']: '486ef362-975e-4b9a-aa43-9579256aca2c',
       src: '/umami.js',
