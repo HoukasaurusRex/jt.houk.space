@@ -14,9 +14,11 @@ export interface KeilaIamConfig {
 export class KeilaIam extends Construct {
   readonly serviceAccount: ServiceAccount;
   readonly serviceAccountEmail: string;
+  readonly iamBindings: SecretManagerSecretIamMember[];
 
   constructor(scope: Construct, id: string, config: KeilaIamConfig) {
     super(scope, id);
+    this.iamBindings = [];
 
     this.serviceAccount = new ServiceAccount(this, "sa", {
       accountId: "keila-runner",
@@ -38,11 +40,13 @@ export class KeilaIam extends Construct {
     ];
 
     for (const [name, secret] of allSecrets) {
-      new SecretManagerSecretIamMember(this, `secret-access-${name}`, {
-        secretId: secret.secretId,
-        role: "roles/secretmanager.secretAccessor",
-        member: `serviceAccount:${this.serviceAccount.email}`,
-      });
+      this.iamBindings.push(
+        new SecretManagerSecretIamMember(this, `secret-access-${name}`, {
+          secretId: secret.secretId,
+          role: "roles/secretmanager.secretAccessor",
+          member: `serviceAccount:${this.serviceAccount.email}`,
+        })
+      );
     }
 
     new StorageBucketIamMember(this, "storage-access", {

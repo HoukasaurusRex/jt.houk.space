@@ -32,6 +32,8 @@ describe("KeilaCloudRun", () => {
       serviceAccountEmail: iam.serviceAccountEmail,
       secrets,
       storageBucket: storage.bucket,
+      secretVersions: secrets.versions,
+      iamBindings: iam.iamBindings,
     });
     synth = JSON.parse(Testing.synth(stack));
   });

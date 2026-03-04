@@ -24,94 +24,39 @@ export class KeilaSecrets extends Construct {
   readonly smtpUser: SecretManagerSecret;
   readonly smtpPassword: SecretManagerSecret;
   readonly smtpFromEmail: SecretManagerSecret;
+  readonly versions: SecretManagerSecretVersion[];
 
   constructor(scope: Construct, id: string, config: KeilaSecretsConfig) {
     super(scope, id);
+    this.versions = [];
 
     const hashidSaltPassword = new Password(this, "hashid-salt-pwd", {
       length: 32,
       special: false,
     });
 
-this.dbUrl = new SecretManagerSecret(this, "keila-db-url", {
-      secretId: "keila-db-url",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-db-url-version", {
-      secret: this.dbUrl.id,
-      secretData: config.connectionString,
-    });
+    const mkSecret = (name: string, secretId: string, data: string) => {
+      const secret = new SecretManagerSecret(this, name, {
+        secretId,
+        replication: { auto: {} },
+      });
+      this.versions.push(
+        new SecretManagerSecretVersion(this, `${name}-version`, {
+          secret: secret.id,
+          secretData: data,
+        })
+      );
+      return secret;
+    };
 
-    this.secretKeyBase = new SecretManagerSecret(this, "keila-secret-key-base", {
-      secretId: "keila-secret-key-base",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-secret-key-base-version", {
-      secret: this.secretKeyBase.id,
-      secretData: config.secretKeyBase,
-    });
-
-    this.hashidSalt = new SecretManagerSecret(this, "keila-hashid-salt", {
-      secretId: "keila-hashid-salt",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-hashid-salt-version", {
-      secret: this.hashidSalt.id,
-      secretData: hashidSaltPassword.result,
-    });
-
-    this.adminEmail = new SecretManagerSecret(this, "keila-admin-email", {
-      secretId: "keila-admin-email",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-admin-email-version", {
-      secret: this.adminEmail.id,
-      secretData: config.adminEmail,
-    });
-
-    this.adminPassword = new SecretManagerSecret(this, "keila-admin-password", {
-      secretId: "keila-admin-password",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-admin-password-version", {
-      secret: this.adminPassword.id,
-      secretData: config.adminPassword,
-    });
-
-    this.smtpHost = new SecretManagerSecret(this, "keila-smtp-host", {
-      secretId: "keila-smtp-host",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-smtp-host-version", {
-      secret: this.smtpHost.id,
-      secretData: config.smtpHost,
-    });
-
-    this.smtpUser = new SecretManagerSecret(this, "keila-smtp-user", {
-      secretId: "keila-smtp-user",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-smtp-user-version", {
-      secret: this.smtpUser.id,
-      secretData: config.smtpUser,
-    });
-
-    this.smtpPassword = new SecretManagerSecret(this, "keila-smtp-password", {
-      secretId: "keila-smtp-password",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-smtp-password-version", {
-      secret: this.smtpPassword.id,
-      secretData: config.smtpPassword,
-    });
-
-    this.smtpFromEmail = new SecretManagerSecret(this, "keila-smtp-from-email", {
-      secretId: "keila-smtp-from-email",
-      replication: { auto: {} },
-    });
-    new SecretManagerSecretVersion(this, "keila-smtp-from-email-version", {
-      secret: this.smtpFromEmail.id,
-      secretData: config.smtpFromEmail,
-    });
+    this.dbUrl = mkSecret("keila-db-url", "keila-db-url", config.connectionString);
+    this.secretKeyBase = mkSecret("keila-secret-key-base", "keila-secret-key-base", config.secretKeyBase);
+    this.hashidSalt = mkSecret("keila-hashid-salt", "keila-hashid-salt", hashidSaltPassword.result);
+    this.adminEmail = mkSecret("keila-admin-email", "keila-admin-email", config.adminEmail);
+    this.adminPassword = mkSecret("keila-admin-password", "keila-admin-password", config.adminPassword);
+    this.smtpHost = mkSecret("keila-smtp-host", "keila-smtp-host", config.smtpHost);
+    this.smtpUser = mkSecret("keila-smtp-user", "keila-smtp-user", config.smtpUser);
+    this.smtpPassword = mkSecret("keila-smtp-password", "keila-smtp-password", config.smtpPassword);
+    this.smtpFromEmail = mkSecret("keila-smtp-from-email", "keila-smtp-from-email", config.smtpFromEmail);
   }
 }

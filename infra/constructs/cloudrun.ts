@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { TerraformOutput } from "cdktf";
+import { ITerraformDependable, TerraformOutput } from "cdktf";
 import { CloudRunV2Service } from "@cdktf/provider-google/lib/cloud-run-v2-service";
 import { CloudRunV2ServiceIamMember } from "@cdktf/provider-google/lib/cloud-run-v2-service-iam-member";
 import { StorageBucket } from "@cdktf/provider-google/lib/storage-bucket";
@@ -11,6 +11,8 @@ export interface KeilaCloudRunConfig {
   serviceAccountEmail: string;
   secrets: KeilaSecrets;
   storageBucket: StorageBucket;
+  secretVersions: ITerraformDependable[];
+  iamBindings: ITerraformDependable[];
 }
 
 export class KeilaCloudRun extends Construct {
@@ -26,6 +28,7 @@ export class KeilaCloudRun extends Construct {
     });
 
     this.service = new CloudRunV2Service(this, "service", {
+      dependsOn: [...config.secretVersions, ...config.iamBindings],
       name: "keila",
       location: config.region,
       deletionProtection: false,
