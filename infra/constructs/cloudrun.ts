@@ -1,7 +1,8 @@
 import { Construct } from "constructs";
-import { ITerraformDependable, TerraformOutput } from "cdktf";
+import { Fn, ITerraformDependable, TerraformOutput } from "cdktf";
 import { CloudRunV2Service } from "@cdktf/provider-google/lib/cloud-run-v2-service";
 import { CloudRunV2ServiceIamMember } from "@cdktf/provider-google/lib/cloud-run-v2-service-iam-member";
+import { SecretManagerSecretVersion } from "@cdktf/provider-google/lib/secret-manager-secret-version";
 import { StorageBucket } from "@cdktf/provider-google/lib/storage-bucket";
 import { KeilaSecrets } from "./secrets";
 
@@ -11,7 +12,7 @@ export interface KeilaCloudRunConfig {
   serviceAccountEmail: string;
   secrets: KeilaSecrets;
   storageBucket: StorageBucket;
-  secretVersions: ITerraformDependable[];
+  secretVersions: SecretManagerSecretVersion[];
   iamBindings: ITerraformDependable[];
 }
 
@@ -27,12 +28,19 @@ export class KeilaCloudRun extends Construct {
       },
     });
 
+    const secretVersionHash = Fn.substr(
+      Fn.sha256(Fn.join(",", config.secretVersions.map((v) => v.id))),
+      0,
+      63
+    );
+
     this.service = new CloudRunV2Service(this, "service", {
       dependsOn: [...config.secretVersions, ...config.iamBindings],
       name: "keila",
       location: config.region,
       deletionProtection: false,
       template: {
+        labels: { "secret-version-hash": secretVersionHash },
         serviceAccount: config.serviceAccountEmail,
         volumes: [
           {
