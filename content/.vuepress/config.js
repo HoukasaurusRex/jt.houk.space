@@ -30,24 +30,57 @@ module.exports = {
   serviceWorker: true,
   evergreen: true,
   plugins: [
-    ['seo', {
-      siteTitle: (_, $site) => $site.title,
-      title: ($page, $site) => exists($page.title) || $site.title,
-      description: ($page, $site) => exists($page.frontmatter.description) || $site.metaDescription || $site.description,
-      author: (_, $site) => $site.themeConfig.author,
-      tags: ($page, $site) => exists($page.frontmatter.tags) || $site.tags,
-      twitterCard: $page => exists($page.frontmatter.image) ? 'summary_large_image' : 'summary',
-      type: $page => ['articles', 'posts', 'blog'].some(folder => $page.regularPath.startsWith('/' + folder)) ? 'article' : 'website',
-      url: (_, $site, path) => ($site.themeConfig.domain || '') + path,
-      image: ($page, $site) => exists($page.frontmatter.image) || $site.image,
-      publishedAt: $page => $page.frontmatter.created_at && new Date($page.frontmatter.created_at),
-      modifiedAt: $page => $page.updated_at && new Date($page.updated_at),
-      customMeta: (add, { $site, $page }) => {
-        add('twitter:image:src', exists($page.frontmatter.image) || $site.image)
-        add('twitter:creator', $site.themeConfig.author)
-        add('description', exists($page.frontmatter.description) || $site.metaDescription || $site.description)
-      },
-    }],
+    // Inline SEO plugin: vuepress-plugin-seo@0.2.0 uses `extendsPageData` which VuePress 1.x
+    // does not recognize (it expects `extendPageData`), so no OG tags were ever injected.
+    // Inline SEO plugin: vuepress-plugin-seo@0.2.0 uses `extendsPageData` which VuePress 1.x
+    // does not recognize (expects `extendPageData`), so no OG tags were ever injected.
+    // Also, VuePress SSR renders page meta from `frontmatter.meta` (plain objects), not
+    // `frontmatter.head` (head array format) — so this plugin writes to the correct array.
+    (_, context) => ({
+      name: 'seo',
+      extendPageData($page) {
+        const $site = context.siteConfig
+        const meta = $page.frontmatter.meta || []
+
+        const addMeta = (nameOrProp, content) => {
+          if (!content) return
+          const attribute = ['article:', 'og:'].some(type => nameOrProp.startsWith(type)) ? 'property' : 'name'
+          if (meta.findIndex(m => m[attribute] === nameOrProp) !== -1) return
+          meta.push({ [attribute]: nameOrProp, content })
+        }
+
+        const hostname = $site.themeConfig.hostname || ('https://' + $site.themeConfig.domain) || ''
+        const title = exists($page.frontmatter.title) || $page.title || $site.title
+        const description = exists($page.frontmatter.description) || exists($page.frontmatter.summary) || $site.metaDescription || $site.description
+        const image = exists($page.frontmatter.image) || $site.image
+        const url = hostname + $page.path
+        const type = ['articles', 'posts', 'blog'].some(f => ($page.regularPath || '').startsWith('/' + f)) ? 'article' : 'website'
+        const twitterCard = $page.frontmatter.image ? 'summary_large_image' : 'summary'
+        const publishedAt = $page.frontmatter.created_at && new Date($page.frontmatter.created_at).toISOString()
+
+        addMeta('og:site_name', $site.title)
+        addMeta('og:title', title)
+        addMeta('og:description', description)
+        addMeta('og:type', type)
+        addMeta('og:url', url)
+        addMeta('og:image', image)
+        addMeta('twitter:card', twitterCard)
+        addMeta('twitter:title', title)
+        addMeta('twitter:description', description)
+        addMeta('twitter:url', url)
+        addMeta('twitter:image', image)
+        addMeta('twitter:image:src', image)
+        addMeta('twitter:creator', $site.themeConfig.author)
+        addMeta('article:published_time', publishedAt)
+
+        if ($page.frontmatter.tags && Array.isArray($page.frontmatter.tags)) {
+          addMeta('twitter:label2', 'Filed under')
+          addMeta('twitter:data2', $page.frontmatter.tags.join(', '))
+        }
+
+        $page.frontmatter.meta = meta
+      }
+    }),
     ['vuepress-plugin-mailchimp', {
       endpoint: process.env.MC_API,
       title: 'Subscribe',
