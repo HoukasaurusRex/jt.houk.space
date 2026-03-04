@@ -62,7 +62,7 @@
 
 [[redirects]]
   from = "/api/subscribe"
-  to = "https://mail.houk.space/forms/nfrm_dQ7Pd7Y2"
+  to = "/.netlify/functions/subscribe"
   status = 200
   force = true
 
