@@ -16,7 +16,7 @@
     align-items="center"
   >
     <CLink isExternal :href="notification.link" d="flex" align-items="center" color="var(--background-color)" :_hover="{ color: 'var(--background-color)' }">
-      <CAlertIcon name="hand-holding-heart" min-height="30px" min-width="30px" />
+      <CAlertIcon name="hand-holding-heart" min-height="30px" min-width="30px" max-height="30px" max-width="30px" />
       <CBox max-width="600px" mx="1rem" >
         <CAlertTitle :mr="2" v-if="notification.title">{{notification.title}}</CAlertTitle>
         <CAlertDescription class="description" display="none">{{notification.description}}</CAlertDescription>
@@ -58,6 +58,12 @@ export default {
 .alert {
   &:hover {
     box-shadow: 3px 3px 5px rgba(0,0,0,0.15);
+  }
+  ::v-deep svg {
+    width: 30px;
+    height: 30px;
+    max-width: 30px;
+    max-height: 30px;
   }
 }
 
