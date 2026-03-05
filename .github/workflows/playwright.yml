@@ -27,8 +27,6 @@ jobs:
 
       - name: Build site
         run: yarn build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
 
       - name: Serve built site
         run: npx serve content/.vuepress/dist -p 8080 &

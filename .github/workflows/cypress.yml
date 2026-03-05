@@ -22,8 +22,6 @@ jobs:
 
       - name: Build site
         run: yarn build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
 
       - name: Serve build and run Cypress
         uses: cypress-io/github-action@v6

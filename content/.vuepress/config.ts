@@ -1,0 +1,101 @@
+import { defineUserConfig } from 'vuepress'
+import { viteBundler } from '@vuepress/bundler-vite'
+import { defaultTheme } from '@vuepress/theme-default'
+import { pwaPlugin } from '@vuepress/plugin-pwa'
+import { blogPlugin } from '@vuepress/plugin-blog'
+
+const isProd = process.env.NODE_ENV === 'production'
+
+export default defineUserConfig({
+  lang: 'en-US',
+  title: "JT's Space",
+  description: 'Software Engineer • Cloud Architect • DevOps',
+
+  // Exclude draft files
+  pagePatterns: ['**/*.md', '!**/*.draft.md', '!.vuepress', '!node_modules'],
+
+  bundler: viteBundler(),
+
+  head: [
+    ['link', { rel: 'icon', href: '/jt-face-logo.png' }],
+    ['link', { rel: 'manifest', href: '/manifest.json' }],
+    ['link', { rel: 'apple-touch-icon', href: '/icons/apple-touch-icon-152x152.png' }],
+    ['link', { rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: 'rgb(235, 141, 175)' }],
+    ['meta', { name: 'theme-color', content: 'rgb(235, 141, 175)' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }],
+    ['meta', { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }],
+    ['meta', { name: 'msapplication-TileColor', content: '#000000' }],
+    ['meta', { name: 'application-name', content: 'JT' }],
+    ['meta', { name: 'apple-mobile-web-app-title', content: 'JT' }],
+    ['meta', { name: 'msapplication-navbutton-color', content: 'rgb(235, 141, 175)' }],
+    ['meta', { name: 'msapplication-starturl', content: '/' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover' }],
+    ['script', {
+      'data-website-id': '486ef362-975e-4b9a-aa43-9579256aca2c',
+      src: '/umami.js',
+      async: '',
+      defer: '',
+    }],
+  ],
+
+  theme: defaultTheme({
+    repo: 'HoukasaurusRex/jt.houk.space',
+    navbar: [
+      { text: 'Articles', link: '/articles/' },
+      { text: 'About', link: '/about/' },
+      { text: 'RaW', link: 'https://rulesaswrittenshow.com' },
+      { text: 'Get In Touch', link: 'mailto:jt@houk.space?subject=Hello%20From%20Your%20Site&body=' },
+    ],
+    // No sidebar for blog/articles pages
+    sidebar: false,
+  }),
+
+  plugins: [
+    blogPlugin({
+      // Map frontmatter fields to blog post metadata
+      getInfo: ({ frontmatter, title }) => ({
+        title,
+        author: (frontmatter.author as string) || 'JT Houk',
+        date: new Date((frontmatter.date as string) || (frontmatter.created_at as string) || Date.now()),
+        category: [(frontmatter.category as string) || 'General'],
+        tag: (frontmatter.tags as string[]) || [],
+        excerpt: (frontmatter.summary as string) || '',
+      }),
+      // Only include published markdown files under articles/
+      filter: ({ filePathRelative }) =>
+        !!(filePathRelative && filePathRelative.startsWith('articles/') && !filePathRelative.endsWith('.draft.md')),
+      category: [
+        {
+          key: 'tag',
+          getter: page => (page.frontmatter.tags as string[]) || [],
+          path: '/tag/',
+          frontmatter: () => ({ title: 'Tags' }),
+          itemFrontmatter: tag => ({ title: `Tag: ${tag}` }),
+        },
+      ],
+      type: [
+        {
+          key: 'articles',
+          // Sort newest first using created_at or date
+          sorter: (a, b) => {
+            const aTime = new Date((a.frontmatter.created_at as string) || (a.frontmatter.date as string) || 0).getTime()
+            const bTime = new Date((b.frontmatter.created_at as string) || (b.frontmatter.date as string) || 0).getTime()
+            return bTime - aTime
+          },
+          filter: ({ filePathRelative }) =>
+            !!(filePathRelative && filePathRelative.startsWith('articles/')),
+          path: '/articles/',
+          frontmatter: () => ({ title: 'Articles' }),
+          // 5 posts per page, matching previous config
+          pageSize: 5,
+        },
+      ],
+      hotReload: !isProd,
+    }),
+
+    pwaPlugin({
+      skipWaiting: true,
+    }),
+  ],
+})
