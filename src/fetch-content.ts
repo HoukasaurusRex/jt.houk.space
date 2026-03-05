@@ -1,10 +1,7 @@
-import dotenv from 'dotenv-defaults'
 import { promises as fs } from 'fs'
-import fetch from 'node-fetch'
 import path from 'path'
 import { fetchToMarkdown } from 'fetch-to-markdown'
 
-dotenv.config()
 const contentAPI = process.env.CMS_API
 if (!contentAPI) throw new Error('CMS_API is not defined')
 const contentDir = path.join(`${__dirname}/../content`)

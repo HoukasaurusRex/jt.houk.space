@@ -4,6 +4,7 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import { defaultTheme } from '@vuepress/theme-default'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { blogPlugin } from '@vuepress/plugin-blog'
+import { seoPlugin } from '@vuepress/plugin-seo'
 import tailwindcss from '@tailwindcss/vite'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -105,6 +106,10 @@ export default defineUserConfig({
 
     pwaPlugin({
       skipWaiting: true,
+    }),
+
+    seoPlugin({
+      hostname: 'https://jt.houk.space',
     }),
   ],
 })
