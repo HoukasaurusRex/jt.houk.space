@@ -7,75 +7,69 @@
       <Laser class="laser" :style="profileLoadedLaserStyles" data-cy="laser" />
     </div>
     <main class="landing">
-      <h1 class="typewriter">{{title}}</h1>
-      <h2 class="description">{{description}}</h2>
-        <div class="spotify-card" data-cy="spotify-card">
-          <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
-              <transition name="fade">
-                <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="Currently listening on Spotify">
-              </transition>
-          </a>
-        </div>
+      <h1 class="typewriter">{{ title }}</h1>
+      <h2 class="description">{{ description }}</h2>
+      <div class="spotify-card" data-cy="spotify-card">
+        <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
+          <transition name="fade">
+            <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="Currently listening on Spotify">
+          </transition>
+        </a>
+      </div>
     </main>
     <RightArrow class="arrow" data-cy="cta-arrow"/>
   </div>
 </template>
 
-<script>
-import RightArrow from '@theme/components/RightArrow'
-import Laser from '@theme/components/Laser'
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { usePageData, useSiteData } from '@vuepress/client'
+import RightArrow from '../components/RightArrow.vue'
+import Laser from '../components/Laser.vue'
 
-export default {
-  name: 'Landing',
-  components: { RightArrow, Laser },
-  data() {
-    return {
-      profileImgLoaded: false,
-      spotifyImgLoaded: false,
-    }
-  },
-  computed: {
-    title() {
-      return this.$page.frontmatter.heroText || this.$page.frontmatter.title || this.$site.title
-    },
-    description() {
-      return this.$site.description
-    },
-    isMobileWidth() {
-      return typeof window !== 'undefined' && window.innerWidth <= 425
-    },
-    spotifyCardTheme() {
-      return this.isMobileWidth ? 'natemoo-re' : 'default'
-    },
-    spotifyCard() {
-      return `https://spotify-github-profile.kittinanx.com/api/view?uid=spacemanjohn&cover_image=true&theme=${this.spotifyCardTheme}`
-    },
-    profileLoadedStyles() {
-      return this.profileImgLoaded ? {
-        transform: 'translateX(0)'
-      } : {
-        transform: 'translateX(-250px)'
-      }
-    },
-    profileLoadedLaserStyles() {
-      return this.profileImgLoaded ? {
-        transform: 'translateX(0)'
-      } : {
-        transform: 'translateX(250px)'
-      }
-    }
-  },
-  methods: {
-    onLoadProfileImg() {
-      this.profileImgLoaded = true
-      setTimeout(() => {
-        this.$refs.profileImg.width = `${this.$refs.profileImg.height * (610 / 725)}`
-      }, 500)
-    },
-    onLoadSpotifyImg() {
-      this.spotifyImgLoaded = true
-    }
-  }
+const page = usePageData()
+const site = useSiteData()
+
+const profileImgLoaded = ref(false)
+const spotifyImgLoaded = ref(false)
+const profileImg = ref<HTMLImageElement | null>(null)
+
+const title = computed(() =>
+  (page.value.frontmatter.heroText as string | undefined)
+  ?? (page.value.frontmatter.title as string | undefined)
+  ?? site.value.title
+)
+const description = computed(() => site.value.description)
+
+const isMobileWidth = computed(() =>
+  typeof window !== 'undefined' && window.innerWidth <= 425
+)
+const spotifyCardTheme = computed(() => isMobileWidth.value ? 'natemoo-re' : 'default')
+const spotifyCard = computed(() =>
+  `https://spotify-github-profile.kittinanx.com/api/view?uid=spacemanjohn&cover_image=true&theme=${spotifyCardTheme.value}`
+)
+
+const profileLoadedStyles = computed(() =>
+  profileImgLoaded.value
+    ? { transform: 'translateX(0)' }
+    : { transform: 'translateX(-250px)' }
+)
+const profileLoadedLaserStyles = computed(() =>
+  profileImgLoaded.value
+    ? { transform: 'translateX(0)' }
+    : { transform: 'translateX(250px)' }
+)
+
+function onLoadProfileImg() {
+  profileImgLoaded.value = true
+  setTimeout(() => {
+    const img = profileImg.value
+    if (img) img.width = img.height * (610 / 725)
+  }, 500)
+}
+
+function onLoadSpotifyImg() {
+  spotifyImgLoaded.value = true
 }
 </script>
 
@@ -139,5 +133,4 @@ export default {
     max-height: 320px;
   }
 }
-
 </style>

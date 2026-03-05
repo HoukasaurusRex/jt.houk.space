@@ -1,18 +1,30 @@
 import { defineClientConfig } from 'vuepress/client'
+import { defineAsyncComponent } from 'vue'
 import './theme/styles/index.scss'
 
-// Global components that were previously auto-registered via the blog theme
-// are now explicitly registered here. Component rewrites (Chakra → Tailwind)
-// happen in issues #85–#88; stubs are registered now to keep the build green.
+// Root-level components (rendered outside the page layout)
+import Notification from './theme/components/Notification.vue'
+
+// Global components registered for use in Markdown files
+const Newsletter = defineAsyncComponent(() => import('./theme/global-components/Newsletter.vue'))
+const Comments = defineAsyncComponent(() => import('./theme/global-components/Comments.vue'))
+const Cards = defineAsyncComponent(() => import('./theme/global-components/Cards.vue'))
+const Card = defineAsyncComponent(() => import('./theme/components/Card.vue'))
+const Landing = defineAsyncComponent(() => import('./theme/global-components/Landing.vue'))
 
 export default defineClientConfig({
   enhance({ app }) {
-    // Chakra UI and vue-disqus are removed in issues #85 and #89.
-    // Dark mode composable is added in issue #87.
-    // Component registrations will be added as each component is rewritten.
-    void app
+    app.component('Newsletter', Newsletter)
+    app.component('Comments', Comments)
+    app.component('Cards', Cards)
+    app.component('Card', Card)
+    app.component('Landing', Landing)
   },
+
   setup() {
-    // Composable hooks (e.g. useColorMode) will be added here in issue #87.
+    // Dark mode composable will be added here in issue #87
   },
+
+  // Render Notification banner at root so it appears on every page
+  rootComponents: [Notification],
 })

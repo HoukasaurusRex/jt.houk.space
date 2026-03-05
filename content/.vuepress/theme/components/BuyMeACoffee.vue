@@ -34,10 +34,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BuyMeACoffee'
-}
+<script setup lang="ts">
+// Pure presentational component — no props or state needed
 </script>
 
 <style scoped>

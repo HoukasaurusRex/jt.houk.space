@@ -2,153 +2,77 @@ html,
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  .post-tag {
-    a:hover {
-      background-color: var(--accent-color);
-      &::after {
-        border-left-color: var(--accent-color);
-      }
+  a {
+    color: var(--accent-color);
+  }
+}
+
+/* VuePress 2 layout */
+.vp-navbar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  a {
+    color: var(--text-color);
+    &:hover,
+    &.router-link-active {
+      color: var(--accent-color);
     }
+  }
+}
+
+.vp-page {
+  background-color: var(--foreground-color);
+  min-height: 100vh;
+  color: var(--text-color);
+  a {
+    text-decoration: none;
+  }
+}
+
+.vp-doc {
+  color: var(--text-color);
+  img {
+    border-radius: 5px;
   }
   a {
     color: var(--accent-color);
   }
 }
-#vuepress-theme-blog__global-layout {
+
+.vp-footer {
+  min-height: 72px;
+  padding: 14px 32px;
+}
+
+.vp-toc {
   a {
-    text-decoration: none;
-  }
-  background-color: var(--foreground-color);
-  min-height: 100vh;
-  color: var(--text-color);
-  #header,
-  .mobile-header-bar,
-  .mobile-menu-wrapper {
-    background-color: var(--background-color);
     color: var(--text-color);
-    a {
-      color: var(--text-color);
-    }
-    .mobile-home-link {
-      color: var(--text-color);
-    }
-    .nav {
-      a:hover,
-      .router-link-active {
-        border-bottom: 2px solid var(--accent-color);
-        color: var(--accent-color);
-      }
-    }
-    .search-box {
-      .suggestions {
-        background-color: var(--background-color);
-        .suggestion:hover {
-          background-color: var(--foreground-color);
-        }
-      }
-    }
   }
-  .content-wrapper {
-    min-height: calc(100vh - 72px - 100px - 20px);
-    .content__default {
-      img {
-        border-radius: 5px;
-      }
-    }
-    .ui-post-title,
-    .ui-post-meta,
-    .ui-post-summary {
-      color: var(--text-color);
-      a {
-        color: var(--text-color);
-        &:hover {
-          color: var(--accent-color);
-        }
-      }
-    }
-    .post-tag {
-      background-color: var(--foreground-color);
-      border-radius: 3px;
-      &:hover {
-        background-color: var(--accent-color);
-        &::after {
-          border-left: 10px solid var(--accent-color);
-        }
-      }
-      a {
-        &::after {
-          background: var(--foreground-color);
-        }
-      }
-    }
-    .pagination {
-      a {
-        background-color: var(--foreground-color);
-      }
-      .active {
-        a {
-          background-color: var(--accent-color);
-        }
-      }
-    }
+  .active a {
+    color: var(--accent-color);
   }
-  .vuepress-blog-theme-content {
-    background-color: var(--foreground-color);
-    border-radius: 5px;
-    color: var(--text-color);
-    padding: 0px;
-  }
-  .footer {
-    min-height: 72px;
-    height: 72px;
-    padding: 14px 32px;
-  }
-  button {
-    color: unset;
-  }
-  .fade-enter-active {
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .fade-enter-to {
-    opacity: 1;
-  }
-  
-  .fade-enter {
-    opacity: 0;
-  }
-  .vuepress-toc {
-    a {
-      color: var(--text-color);
-    }
-    .active {
-      a {
-        color: var(--accent-color);
-      }
-    }
-  }
+}
+
+/* Fade transition (used by Landing profile image) */
+.fade-enter-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-enter-from {
+  opacity: 0;
 }
 
 .timeline-Widget {
   max-width: 300px;
 }
 
-@media (min-width: 720px) {
-  #vuepress-theme-blog__global-layout {
-    .content-wrapper {
-      min-height: calc(100vh - 72px - 160px - 80px);
-    }
-  }
-}
-
 @media (min-width: 957px) {
-  #vuepress-theme-blog__global-layout {
+  .vp-page {
     background-color: var(--background-color);
-
-    .vuepress-blog-theme-content {
-      padding: 1.5rem;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-    }
   }
 }
 
@@ -158,19 +82,8 @@ body {
     /* -webkit-fill-available correctly excludes Safari's dynamic chrome */
     height: -webkit-fill-available;
   }
-  #vuepress-theme-blog__global-layout {
+  .vp-page {
     min-height: -webkit-fill-available;
-    min-height: 100dvh; /* dvh tracks the dynamic viewport (iOS 15.4+) */
-
-    .content-wrapper {
-      /* dvh removes the need for the old 114px browser-chrome hack */
-      min-height: calc(100dvh - 72px - 100px - 20px);
-    }
-
-    .footer {
-      /* extend footer background behind the home indicator */
-      height: auto;
-      padding-bottom: calc(14px + env(safe-area-inset-bottom));
-    }
+    min-height: 100dvh;
   }
 }

@@ -1,23 +1,10 @@
 <template>
-  <CThemeProvider class="child-theme-post" >
-    <!-- <CReset /> -->
-    <Notification />
-    <Post />
-  </CThemeProvider>
+  <!-- Uses @vuepress/theme-default Layout for post pages.
+       CThemeProvider (Chakra UI) removed — Tailwind handles styling.
+       Notification banner is rendered via rootComponents in client.ts. -->
+  <Layout />
 </template>
 
-<script>
-import { CThemeProvider, CReset } from '@chakra-ui/vue'
-import Post from '@parent-theme/layouts/Post.vue'
-import Notification from '@theme/components/Notification.vue'
-
-export default {
-  name: 'ChakraPost',
-  components: {
-    CThemeProvider,
-    CReset,
-    Post,
-    Notification
-  }
-}
+<script setup lang="ts">
+import { Layout } from '@vuepress/theme-default/client'
 </script>
