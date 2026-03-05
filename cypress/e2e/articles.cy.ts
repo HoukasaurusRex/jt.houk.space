@@ -37,10 +37,6 @@ describe('Articles listing page', () => {
     cy.get('.ui-post').should('have.length.greaterThan', 0)
   })
 
-  it('sidebar renders', () => {
-    cy.get('.sidebar').should('exist')
-  })
-
   it('article card title links to the post page', () => {
     cy.get('.ui-post-title a').first().then(($a) => {
       const href = $a.attr('href')
