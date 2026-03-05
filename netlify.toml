@@ -6,10 +6,12 @@
 # Production environment variables
 [context.production.environment]
   NODE_ENV = "production"
+  NODE_VERSION = "22"
 
 # Deploy preview environment variables
 [context.deploy-preview.environment]
   NODE_ENV = "production"
+  NODE_VERSION = "22"
 
 # Security headers - Applied to all pages
 [[headers]]
