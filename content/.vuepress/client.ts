@@ -1,6 +1,7 @@
 import { defineClientConfig } from 'vuepress/client'
 import { defineAsyncComponent } from 'vue'
 import './theme/styles/index.scss'
+import { useColorMode } from './theme/composables/useColorMode'
 
 // Root-level components (rendered outside the page layout)
 import Notification from './theme/components/Notification.vue'
@@ -22,7 +23,7 @@ export default defineClientConfig({
   },
 
   setup() {
-    // Dark mode composable will be added here in issue #87
+    useColorMode()
   },
 
   // Render Notification banner at root so it appears on every page
