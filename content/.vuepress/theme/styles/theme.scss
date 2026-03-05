@@ -53,6 +53,18 @@ body {
   }
 }
 
+/* Undo VP2 heading anchor-scroll normalization for the first visible heading.
+   VP2 applies margin-top: -(navbar-height) + 0.5rem to all headings so anchor
+   links land below the fixed navbar. This also pulls the *first* heading on a
+   page behind the navbar — override it so the first heading sits flush below. */
+[vp-content] {
+  h1:first-child,
+  h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
 /* Fade transition (used by Landing profile image) */
 .fade-enter-active {
   transition: opacity 0.3s ease-in-out;

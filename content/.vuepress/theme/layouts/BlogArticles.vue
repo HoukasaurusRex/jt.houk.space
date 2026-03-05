@@ -33,7 +33,7 @@ function formatDate(date: Date | string): string {
 <style lang="scss" scoped>
 .article-list {
   list-style: none;
-  padding: 0;
+  padding: 0.5rem 0 0;
   margin: 0;
 }
 

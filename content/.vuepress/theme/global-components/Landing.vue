@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="landing-hero">
     <div class="profile-img" :style="profileLoadedStyles" data-cy="profile-img">
       <transition name="fade">
-        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" height="100%" width="0" alt="JT Houk"/>
+        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" alt="JT Houk"/>
       </transition>
       <Laser class="laser" :style="profileLoadedLaserStyles" data-cy="laser" />
     </div>
@@ -12,7 +12,7 @@
       <div class="spotify-card" data-cy="spotify-card">
         <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
           <transition name="fade">
-            <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="Currently listening on Spotify">
+            <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" alt="Currently listening on Spotify">
           </transition>
         </a>
       </div>
@@ -62,14 +62,10 @@ const profileLoadedLaserStyles = computed(() =>
 
 function onLoadProfileImg() {
   profileImgLoaded.value = true
-  setTimeout(() => {
-    const img = profileImg.value
-    if (img) img.width = img.height * (610 / 725)
-  }, 500)
 }
 
 onMounted(() => {
-  // Image may already be cached — @load won't fire after hydration
+  // Image may already be cached — @load won't fire after SSR hydration
   const img = profileImg.value
   if (img?.complete && img.naturalWidth > 0) onLoadProfileImg()
 })
@@ -80,8 +76,14 @@ function onLoadSpotifyImg() {
 </script>
 
 <style lang="scss" scoped>
+.landing-hero {
+  position: relative;
+  min-height: calc(100vh - var(--navbar-height));
+}
+
 .landing {
   margin: 0 auto;
+  padding-top: 2rem;
   text-align: center;
 }
 
@@ -97,6 +99,8 @@ function onLoadSpotifyImg() {
   align-items: center;
   transition: all 0.1s ease;
   img {
+    height: 100%;
+    width: auto;
     transition: all 0.1s ease;
     filter: drop-shadow(2px 5px 5px #222);
   }
@@ -117,6 +121,7 @@ function onLoadSpotifyImg() {
   right: 20vw;
   background-color: var(--accent-color);
   padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
   border-radius: 5px;
   box-shadow: 1px 1px 2px #222;
   transition: all 0.15s ease;
