@@ -15,6 +15,7 @@
     "test": "yarn cy:run"
   },
   "dependencies": {
+    "@giscus/vue": "^3.1.1",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/vite": "^4.2.1",
     "@vuepress/bundler-vite": "^2.0.0-rc.26",

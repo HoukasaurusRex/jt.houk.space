@@ -1,15 +1,37 @@
 <template>
-  <!-- Giscus will replace this container in issue #89.
-       The #disqus_thread id is preserved for Cypress test compatibility
-       during the transition period. -->
+  <!-- #disqus_thread id preserved for Cypress test compatibility -->
   <div id="disqus_thread" class="comments-container">
-    <p class="comments-placeholder">Comments coming soon.</p>
+    <GiscusComponent
+      v-if="mounted"
+      repo="HoukasaurusRex/jt.houk.space"
+      repo-id="MDEwOlJlcG9zaXRvcnkxOTA3MTk5NzM="
+      category="General"
+      category-id="DIC_kwDOC14n5c4CyAto"
+      mapping="pathname"
+      strict="0"
+      reactions-enabled="1"
+      emit-metadata="0"
+      input-position="bottom"
+      :theme="giscusTheme"
+      lang="en"
+      loading="lazy"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-// Comments component — currently a placeholder.
-// Giscus (GitHub Discussions web component) integration: issue #89
+import { ref, computed, onMounted } from 'vue'
+import GiscusComponent from '@giscus/vue'
+import { useColorMode } from '../composables/useColorMode'
+
+const { mode } = useColorMode()
+const mounted = ref(false)
+
+onMounted(() => {
+  mounted.value = true
+})
+
+const giscusTheme = computed(() => mode.value === 'dark' ? 'dark' : 'light')
 </script>
 
 <style lang="scss" scoped>
@@ -17,11 +39,5 @@
   margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
-}
-
-.comments-placeholder {
-  color: var(--text-color);
-  opacity: 0.5;
-  font-style: italic;
 }
 </style>
