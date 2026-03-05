@@ -8,6 +8,8 @@
     "fetch": "ts-node src/fetch-content.ts",
     "new-journal-entry": "ts-node src/new-journal-entry.ts",
     "lint": "eslint --quiet --fix",
+    "pw:test": "PLAYWRIGHT_BASE_URL=http://localhost:3000 node_modules/.bin/playwright test",
+    "pw:update": "PLAYWRIGHT_BASE_URL=http://localhost:3000 node_modules/.bin/playwright test --update-snapshots",
     "test": "echo 'No tests specified'"
   },
   "dependencies": {
@@ -33,6 +35,7 @@
   },
   "devDependencies": {
     "@netlify/functions": "^5.1.2",
+    "@playwright/test": "^1.58.2",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "eslint": "^9.9.0",
