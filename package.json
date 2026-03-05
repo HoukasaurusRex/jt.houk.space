@@ -10,6 +10,8 @@
     "lint": "eslint --quiet --fix",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "pw:test": "playwright test",
+    "pw:update": "playwright test --update-snapshots",
     "test": "yarn cy:run"
   },
   "dependencies": {
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@netlify/functions": "^5.1.2",
+    "@playwright/test": "^1.58.2",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "cypress": "^15.11.0",
