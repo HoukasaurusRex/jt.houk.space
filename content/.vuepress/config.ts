@@ -1,8 +1,10 @@
+import path from 'node:path'
 import { defineUserConfig } from 'vuepress'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { defaultTheme } from '@vuepress/theme-default'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { blogPlugin } from '@vuepress/plugin-blog'
+import tailwindcss from '@tailwindcss/vite'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -14,7 +16,14 @@ export default defineUserConfig({
   // Exclude draft files
   pagePatterns: ['**/*.md', '!**/*.draft.md', '!.vuepress', '!node_modules'],
 
-  bundler: viteBundler(),
+  // VuePress 2 client config (replaces enhanceApp.js)
+  clientConfigFile: path.resolve(__dirname, './client.ts'),
+
+  bundler: viteBundler({
+    viteOptions: {
+      plugins: [tailwindcss()],
+    },
+  }),
 
   head: [
     ['link', { rel: 'icon', href: '/jt-face-logo.png' }],
