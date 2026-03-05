@@ -8,7 +8,9 @@
     "fetch": "ts-node src/fetch-content.ts",
     "new-journal-entry": "ts-node src/new-journal-entry.ts",
     "lint": "eslint --quiet --fix",
-    "test": "echo 'No tests specified'"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "yarn cy:run"
   },
   "dependencies": {
     "@chakra-ui/vue": "^0.13.1",
@@ -35,12 +37,14 @@
     "@netlify/functions": "^5.1.2",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
+    "cypress": "^15.11.0",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.27.0",
     "prettier": "^3.3.3",
     "sass": "^1.93.2",
+    "serve": "^14.2.6",
     "stylelint": "^16.8.2"
   },
   "engines": {
