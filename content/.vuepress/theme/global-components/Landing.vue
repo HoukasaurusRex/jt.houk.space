@@ -1,24 +1,23 @@
 <template>
   <div>
-    <div class="profile-img" :style="profileLoadedStyles">
+    <div class="profile-img" :style="profileLoadedStyles" data-cy="profile-img">
       <transition name="fade">
-        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" height="100%" width="0" alt=""/>
+        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" height="100%" width="0" alt="JT Houk"/>
       </transition>
-      <Laser class="laser" :style="profileLoadedLaserStyles" />
-      <!-- <a v-if="!isMobileWidth" class="twitter-timeline" href="https://twitter.com/HoukasaurusRex" data-tweet-limit="1"></a> -->
+      <Laser class="laser" :style="profileLoadedLaserStyles" data-cy="laser" />
     </div>
     <main class="landing">
       <h1 class="typewriter">{{title}}</h1>
       <h2 class="description">{{description}}</h2>
-        <div class="spotify-card">
+        <div class="spotify-card" data-cy="spotify-card">
           <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
               <transition name="fade">
-                <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="">
+                <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="Currently listening on Spotify">
               </transition>
           </a>
         </div>
     </main>
-    <RightArrow class="arrow"/>
+    <RightArrow class="arrow" data-cy="cta-arrow"/>
   </div>
 </template>
 
