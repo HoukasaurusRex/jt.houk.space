@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { usePageData, useSiteData } from '@vuepress/client'
 import RightArrow from '../components/RightArrow.vue'
 import Laser from '../components/Laser.vue'
@@ -68,6 +68,12 @@ function onLoadProfileImg() {
   }, 500)
 }
 
+onMounted(() => {
+  // Image may already be cached — @load won't fire after hydration
+  const img = profileImg.value
+  if (img?.complete && img.naturalWidth > 0) onLoadProfileImg()
+})
+
 function onLoadSpotifyImg() {
   spotifyImgLoaded.value = true
 }
@@ -110,7 +116,7 @@ function onLoadSpotifyImg() {
   top: 40%;
   right: 20vw;
   background-color: var(--accent-color);
-  padding: 0.25rem 0.5rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 5px;
   box-shadow: 1px 1px 2px #222;
   transition: all 0.15s ease;

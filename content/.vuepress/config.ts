@@ -96,9 +96,8 @@ export default defineUserConfig({
           filter: ({ filePathRelative }) =>
             !!(filePathRelative && filePathRelative.startsWith('articles/')),
           path: '/articles/',
+          layout: 'BlogArticles',
           frontmatter: () => ({ title: 'Articles' }),
-          // 5 posts per page, matching previous config
-          pageSize: 5,
         },
       ],
       hotReload: !isProd,
