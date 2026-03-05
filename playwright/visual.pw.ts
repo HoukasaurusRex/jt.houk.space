@@ -4,8 +4,11 @@ import { test, expect } from '@playwright/test'
 const DYNAMIC_MASKS = [
   // Spotify card image (fetches live data)
   { selector: '[data-cy="spotify-card"]' },
-  // Footer copyright year
+  // Footer copyright year (VuePress 2 uses .vp-footer)
   { selector: '.footer' },
+  { selector: '.vp-footer' },
+  // Notification banner: appears after client-side onMounted (timing varies)
+  { selector: '.alert' },
 ]
 
 async function getMasks(page: import('@playwright/test').Page) {
@@ -19,6 +22,14 @@ async function getMasks(page: import('@playwright/test').Page) {
   }
   return masks
 }
+
+// Block service worker on all tests to prevent PWA caching from affecting screenshots
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    // Prevent service worker registration
+    Object.defineProperty(navigator, 'serviceWorker', { get: () => undefined })
+  })
+})
 
 test.describe('Visual regression — Landing page', () => {
   test.beforeEach(async ({ page }) => {

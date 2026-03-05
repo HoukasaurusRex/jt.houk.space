@@ -10,8 +10,8 @@
     "lint": "eslint --quiet --fix",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "pw:test": "playwright test",
-    "pw:update": "playwright test --update-snapshots",
+    "pw:test": "node --env-file=.env.defaults node_modules/.bin/playwright test",
+    "pw:update": "node --env-file=.env.defaults node_modules/.bin/playwright test --update-snapshots",
     "test": "yarn cy:run"
   },
   "dependencies": {
