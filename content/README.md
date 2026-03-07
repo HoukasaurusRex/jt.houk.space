@@ -3,7 +3,6 @@
   action: null
   created_at: "2020-03-23T09:07:14.411Z"
   updated_at: "2021-02-23T14:24:18.065Z"
-  home: true
   heroText: "< JT_Houk />"
   actionText: "Articles"
   actionLink: "/articles/"

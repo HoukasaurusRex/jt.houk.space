@@ -1,88 +1,90 @@
 <template>
-  <div>
-    <div class="profile-img" :style="profileLoadedStyles">
+  <div class="landing-hero">
+    <div class="profile-img" :style="profileLoadedStyles" data-cy="profile-img">
       <transition name="fade">
-        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" height="100%" width="0" alt=""/>
+        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" alt="JT Houk"/>
       </transition>
-      <Laser class="laser" :style="profileLoadedLaserStyles" />
-      <!-- <a v-if="!isMobileWidth" class="twitter-timeline" href="https://twitter.com/HoukasaurusRex" data-tweet-limit="1"></a> -->
+      <Laser class="laser" :style="profileLoadedLaserStyles" data-cy="laser" />
     </div>
     <main class="landing">
-      <h1 class="typewriter">{{title}}</h1>
-      <h2 class="description">{{description}}</h2>
-        <div class="spotify-card">
-          <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
-              <transition name="fade">
-                <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" height="100%" alt="">
-              </transition>
-          </a>
-        </div>
+      <h1 class="typewriter">{{ title }}</h1>
+      <h2 class="description">{{ description }}</h2>
+      <div class="spotify-card" data-cy="spotify-card">
+        <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
+          <transition name="fade">
+            <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" alt="Currently listening on Spotify">
+          </transition>
+        </a>
+      </div>
     </main>
-    <RightArrow class="arrow"/>
+    <RightArrow class="arrow" data-cy="cta-arrow"/>
   </div>
 </template>
 
-<script>
-import RightArrow from '@theme/components/RightArrow'
-import Laser from '@theme/components/Laser'
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { usePageData, useSiteData } from '@vuepress/client'
+import RightArrow from '../components/RightArrow.vue'
+import Laser from '../components/Laser.vue'
 
-export default {
-  name: 'Landing',
-  components: { RightArrow, Laser },
-  data() {
-    return {
-      profileImgLoaded: false,
-      spotifyImgLoaded: false,
-    }
-  },
-  computed: {
-    title() {
-      return this.$page.frontmatter.heroText || this.$page.frontmatter.title || this.$site.title
-    },
-    description() {
-      return this.$site.description
-    },
-    isMobileWidth() {
-      return typeof window !== 'undefined' && window.innerWidth <= 425
-    },
-    spotifyCardTheme() {
-      return this.isMobileWidth ? 'natemoo-re' : 'default'
-    },
-    spotifyCard() {
-      return `https://spotify-github-profile.kittinanx.com/api/view?uid=spacemanjohn&cover_image=true&theme=${this.spotifyCardTheme}`
-    },
-    profileLoadedStyles() {
-      return this.profileImgLoaded ? {
-        transform: 'translateX(0)'
-      } : {
-        transform: 'translateX(-250px)'
-      }
-    },
-    profileLoadedLaserStyles() {
-      return this.profileImgLoaded ? {
-        transform: 'translateX(0)'
-      } : {
-        transform: 'translateX(250px)'
-      }
-    }
-  },
-  methods: {
-    onLoadProfileImg() {
-      this.profileImgLoaded = true
-      setTimeout(() => {
-        this.$refs.profileImg.width = `${this.$refs.profileImg.height * (610 / 725)}`
-      }, 500)
-    },
-    onLoadSpotifyImg() {
-      this.spotifyImgLoaded = true
-    }
-  }
+const page = usePageData()
+const site = useSiteData()
+
+const profileImgLoaded = ref(false)
+const spotifyImgLoaded = ref(false)
+const profileImg = ref<HTMLImageElement | null>(null)
+
+const title = computed(() =>
+  (page.value.frontmatter.heroText as string | undefined)
+  ?? (page.value.frontmatter.title as string | undefined)
+  ?? site.value.title
+)
+const description = computed(() => site.value.description)
+
+const isMobileWidth = computed(() =>
+  typeof window !== 'undefined' && window.innerWidth <= 425
+)
+const spotifyCardTheme = computed(() => isMobileWidth.value ? 'natemoo-re' : 'default')
+const spotifyCard = computed(() =>
+  `https://spotify-github-profile.kittinanx.com/api/view?uid=spacemanjohn&cover_image=true&theme=${spotifyCardTheme.value}`
+)
+
+const profileLoadedStyles = computed(() =>
+  profileImgLoaded.value
+    ? { transform: 'translateX(0)' }
+    : { transform: 'translateX(-250px)' }
+)
+const profileLoadedLaserStyles = computed(() =>
+  profileImgLoaded.value
+    ? { transform: 'translateX(0)' }
+    : { transform: 'translateX(250px)' }
+)
+
+function onLoadProfileImg() {
+  profileImgLoaded.value = true
+}
+
+onMounted(() => {
+  // Image may already be cached — @load won't fire after SSR hydration
+  const img = profileImg.value
+  if (img?.complete && img.naturalWidth > 0) onLoadProfileImg()
+})
+
+function onLoadSpotifyImg() {
+  spotifyImgLoaded.value = true
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.landing-hero {
+  position: relative;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
+}
+
 .landing {
   margin: 0 auto;
+  padding-top: 2rem;
   text-align: center;
 }
 
@@ -91,13 +93,14 @@ export default {
   width: calc(100vw + 100px);
   position: absolute;
   left: -100px;
-  bottom: 0;
-  margin-bottom: 72px;
+  bottom: -70px;
   opacity: 0.8;
   display: flex;
   align-items: center;
   transition: all 0.1s ease;
   img {
+    height: 100%;
+    width: auto;
     transition: all 0.1s ease;
     filter: drop-shadow(2px 5px 5px #222);
   }
@@ -117,7 +120,11 @@ export default {
   top: 40%;
   right: 20vw;
   background-color: var(--accent-color);
+  background-image: none;
+  width: 4em;
+  height: 1.5em;
   padding: 0.25rem 0.5rem;
+  white-space: nowrap;
   border-radius: 5px;
   box-shadow: 1px 1px 2px #222;
   transition: all 0.15s ease;
@@ -125,6 +132,10 @@ export default {
   &:hover {
     box-shadow: 1.5px 1.5px 3px #222;
     transform: scale(1.01);
+  }
+  :deep(a) {
+    background-image: none;
+    text-decoration: none;
   }
 }
 
@@ -136,9 +147,10 @@ export default {
   min-height: 80px;
   min-width: 290px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
   img {
     max-height: 320px;
   }
 }
-
 </style>

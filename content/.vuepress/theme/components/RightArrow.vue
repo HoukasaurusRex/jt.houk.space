@@ -1,41 +1,30 @@
 <template>
-  <router-link class="right-arrow" :to="link" >{{text}} <span class="move">→</span></router-link>
+  <router-link class="right-arrow" :to="link">
+    {{ text }} <span class="move">→</span>
+  </router-link>
 </template>
 
-<script>
-export default {
-  name: 'RightArrow',
-  props: {
-    actionLink: {
-      type: String
-    },
-    actionText: {
-      type: String
-    }
-  },
-  computed: {
-    link() {
-      return this.url || this.$page.frontmatter.actionLink || '/articles/'
-    },
-    text() {
-      return this.name || this.$page.frontmatter.actionText || 'Articles'
-    }
-  }
-}
+<script setup lang="ts">
+import { computed } from 'vue'
+import { usePageData } from '@vuepress/client'
+
+const page = usePageData()
+
+const link = computed(() =>
+  (page.value.frontmatter.actionLink as string | undefined) ?? '/articles/'
+)
+const text = computed(() =>
+  (page.value.frontmatter.actionText as string | undefined) ?? 'Articles'
+)
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 @keyframes move {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(10px); }
+  100% { transform: translateX(0); }
 }
+
 .right-arrow {
   text-align: right;
   align-self: center;
@@ -43,11 +32,10 @@ export default {
   color: var(--text-color);
   &:hover {
     color: var(--text-color);
-    .move {
-      animation: move 1s ease-in-out infinite;
-    }
+    .move { animation: move 1s ease-in-out infinite; }
   }
 }
+
 .move {
   position: absolute;
   top: 5px;

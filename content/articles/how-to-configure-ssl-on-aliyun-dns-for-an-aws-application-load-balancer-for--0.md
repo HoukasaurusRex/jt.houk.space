@@ -113,5 +113,3 @@ Once your certificate has been issued, you can safely delete your \_dnsauth TXT 
 Hopefully this article will help someone on their windy path to security on Chinese IAAS providers. Of course, feel free to reach out to me if you have any questions or suggest future topics for web development in China.
 
 
-<Newsletter />
-<Comments />

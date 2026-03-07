@@ -1,0 +1,36 @@
+name: Cypress E2E
+
+on:
+  push:
+    branches: [master, vp2-upgrade]
+  pull_request:
+    branches: [master]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build site
+        run: yarn build
+
+      - name: Serve build and run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx serve content/.vuepress/dist -l 8080
+          wait-on: http://localhost:8080
+          wait-on-timeout: 60
+          install: false
+        env:
+          CYPRESS_BASE_URL: http://localhost:8080

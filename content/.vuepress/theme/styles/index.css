@@ -1,0 +1,21 @@
+/* Tailwind CSS v4 — must come first so theme tokens can override */
+@import 'tailwindcss';
+
+/* Bridge existing CSS custom properties into Tailwind theme tokens */
+@theme {
+  --color-accent: var(--accent-color);
+  --color-background: var(--background-color);
+  --color-foreground: var(--foreground-color);
+  --color-text: var(--text-color);
+  --color-border: var(--border-color);
+}
+
+/* Dark mode: respond to VP2's data-theme attribute */
+@variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Tailwind forms plugin — resets <input>/<button> base styles */
+@plugin '@tailwindcss/forms';
+
+@import './dynamic.css';
+@import './theme.css';
+@import './typewriter.css';
