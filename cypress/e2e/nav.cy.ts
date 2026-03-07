@@ -29,7 +29,7 @@ describe('Navigation and layout', () => {
   context('Notification banner', () => {
     beforeEach(() => {
       cy.clearLocalStorage()
-      cy.visit('/articles/')
+      cy.visit('/articles/agile-cooking')
     })
 
     it('renders the notification title on article pages', () => {
@@ -38,7 +38,12 @@ describe('Navigation and layout', () => {
 
     it('notification is hidden on landing page', () => {
       cy.visit('/')
-      cy.get('.alert').should('not.be.visible')
+      cy.get('.alert').should('not.exist')
+    })
+
+    it('notification is hidden on articles listing', () => {
+      cy.visit('/articles/')
+      cy.get('.alert').should('not.exist')
     })
 
     it('renders the notification description on desktop', () => {

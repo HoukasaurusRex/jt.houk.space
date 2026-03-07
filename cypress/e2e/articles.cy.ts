@@ -25,14 +25,14 @@ describe('Articles listing page', () => {
   })
 
   it('article card title links to the post page', () => {
-    cy.get('.card-link').first().then(($a) => {
+    cy.get('.card-title-link').first().then(($a) => {
       const href = $a.attr('href')
       expect(href).to.match(/\/articles\/.+/)
     })
   })
 
   it('clicking an article card navigates to the post', () => {
-    cy.get('.card-link').first().click()
+    cy.get('.card-title-link').first().click()
     cy.url().should('match', /\/articles\/.+/)
   })
 })
