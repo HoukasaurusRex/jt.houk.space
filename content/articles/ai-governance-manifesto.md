@@ -221,6 +221,4 @@ The people in the room.
 | [LGPD](https://www.gov.br/secretaria-geral/pt-br/legislacao/lei/2018-1/2018_lei-13709) | Brazil | Consent and legitimate interest as legal bases, data subject rights, data protection officer requirements |
 | [PIPEDA](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/) | Canada | Accountability, consent, limiting collection, safeguards, individual access rights |
 
-<Newsletter />
 
-<Comments />

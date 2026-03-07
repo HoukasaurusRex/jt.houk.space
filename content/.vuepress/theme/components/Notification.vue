@@ -10,15 +10,15 @@
       rel="noopener noreferrer"
       class="alert-link"
     >
-      <!-- Heart icon (inline SVG — replaces FontAwesome faHandHoldingHeart) -->
       <svg
         class="alert-icon"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 576 512"
+        preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
         fill="currentColor"
       >
-        <path d="M163.9 136.9c-29.4-29.8-29.4-78.2 0-108s77-29.8 106.4 0l17.7 18 17.7-18c29.4-29.8 77-29.8 106.4 0 29.4 29.8 29.4 78.2 0 108L310.5 240.1c-6.2 6.3-14.3 9.4-22.5 9.4s-16.3-3.1-22.5-9.4L163.9 136.9zM568 336c13.3 0 24 10.7 24 24s-10.7 24-24 24H441.9c-3.4 26.4-25.8 47.2-53.6 47.2l-48 0c-27.6 0-50-20.9-53.4-47.4L152.1 384H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H152l0-24c0-30.9 25.1-56 56-56l240 0c30.9 0 56 25.1 56 56l0 24H568z"/>
+        <path d="M163.9 136.9c-29.4-29.8-29.4-78.2 0-108s77-29.8 106.4 0l17.7 18 17.7-18c29.4-29.8 77-29.8 106.4 0s29.4 78.2 0 108L310.5 240.1c-6.2 6.3-14.3 9.4-22.5 9.4s-16.3-3.1-22.5-9.4L163.9 136.9zM568.2 336.3c13.1 17.8 9.3 42.8-8.5 55.9L433.1 485.5c-23.4 17.2-51.6 26.5-80.7 26.5L192 512 32 512c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l36.8 0 44.9-36c22.7-18.2 50.9-28 80-28l78.3 0 16 0 64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0-16 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l120.6 0 119.7-88.2c17.8-13.1 42.8-9.3 55.9 8.5zM193.6 384c0 0 0 0 0 0l-.9 0c.3 0 .6 0 .9 0z"/>
       </svg>
       <div class="alert-body">
         <strong v-if="notification.title" class="alert-title">{{ notification.title }}</strong>
@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-// Notification data — configurable here until a proper config API is wired up
 const notification = {
   id: 'irc-donate-gaza',
   title: 'Help families in Gaza',
@@ -53,7 +52,7 @@ onMounted(() => {
       isClosed.value = true
     }
   } catch {
-    // SSR / private browsing — ignore
+    // SSR / private browsing
   }
 })
 
@@ -67,10 +66,10 @@ function close() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .alert {
   position: fixed;
-  top: 3.6rem;
+  top: var(--navbar-height);
   left: 0;
   right: 0;
   z-index: 50;
@@ -78,6 +77,7 @@ function close() {
   align-items: center;
   justify-content: center;
   padding: 0.3rem 1rem;
+  font-size: 0.75rem;
   background: var(--text-color);
   color: var(--background-color);
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
@@ -91,7 +91,7 @@ function close() {
 .alert-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   color: inherit;
   text-decoration: none;
 }
@@ -105,11 +105,13 @@ function close() {
 
 .alert-body {
   max-width: 600px;
-  margin: 0 1rem;
+  margin: 0 0.75rem;
 }
 
 .alert-title {
-  margin-right: 0.5rem;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.1rem;
 }
 
 .description {
@@ -123,17 +125,14 @@ function close() {
   border: none;
   cursor: pointer;
   color: inherit;
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1;
   padding: 0.25rem 0.5rem;
 }
 
 @media (min-width: 720px) {
-  .alert {
-    top: 3.8rem;
-  }
   .description {
-    display: inline;
+    display: block;
   }
 }
 

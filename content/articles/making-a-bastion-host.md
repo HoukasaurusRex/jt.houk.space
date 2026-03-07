@@ -106,9 +106,12 @@ In medieval architecture, a bastion is a protrusion from a fortification that pr
 
 ## How to Create a Bastion Host
 
+<figure>
+
 [![bastion architecture diagram](https://res.cloudinary.com/jthouk/image/upload/v1617108011/basic_bastion_architecture_18f50f70b7.png)](https://app.cloudcraft.co/view/7ec0535f-8eb2-4eec-83d4-b80277caf0c4?key=Z8wC-Wi74NIcMsXeWXZXZA)
 
 <figcaption align="center">The architecture we will be creating</figcaption>
+</figure>
 
 
 ### Deploying the Server
@@ -194,5 +197,3 @@ By creating an EC2 instance in our database VPC in a public subnet, configuring 
 A [fully deployable example](https://github.com/HoukasaurusRex/article-code-examples/tree/master/src/making-a-bastion-host) is available on Github using the AWS CDK for a quickstart to test the infrastructure discussed in this article.
 
 If you would like alternative solutions for specific vendors, databases, or local machines, please leave a comment and I'll add it to the repository!
-<Newsletter />
-<Comments />

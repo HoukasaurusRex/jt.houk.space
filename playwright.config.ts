@@ -10,8 +10,6 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000',
-    // 5% diff ratio allows minor hydration/antialiasing differences between runs
-    toHaveScreenshot: { maxDiffPixelRatio: 0.05 },
   },
   projects: [
     {
@@ -19,6 +17,4 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  // Snapshots live next to each spec file (committed to git)
-  snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
 })

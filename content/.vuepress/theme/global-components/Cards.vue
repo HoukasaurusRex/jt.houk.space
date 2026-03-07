@@ -34,7 +34,7 @@ const filteredRoutes = computed<CardItem[]>(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));

@@ -2,7 +2,7 @@
 // Add custom commands or global hooks here.
 
 // Suppress Cypress's default behavior of failing on uncaught exceptions
-// from third-party scripts (Disqus, Umami, Spotify embed).
+// from third-party scripts (Giscus, Umami, Spotify embed).
 Cypress.on('uncaught:exception', (err) => {
   // Return false to prevent the test from failing on third-party errors
   if (

@@ -16,7 +16,7 @@
 // Pure SVG component — no props or state needed
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .svg-laser {
   height: fit-content;
   width: 100%;

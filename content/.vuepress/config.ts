@@ -5,6 +5,7 @@ import { defaultTheme } from '@vuepress/theme-default'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { blogPlugin } from '@vuepress/plugin-blog'
 import { seoPlugin } from '@vuepress/plugin-seo'
+import { searchPlugin } from '@vuepress/plugin-search'
 import tailwindcss from '@tailwindcss/vite'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -41,6 +42,7 @@ export default defineUserConfig({
     ['meta', { name: 'msapplication-navbutton-color', content: 'rgb(235, 141, 175)' }],
     ['meta', { name: 'msapplication-starturl', content: '/' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap' }],
     ['script', {
       'data-website-id': '486ef362-975e-4b9a-aa43-9579256aca2c',
       src: '/umami.js',
@@ -57,9 +59,20 @@ export default defineUserConfig({
       { text: 'RaW', link: 'https://rulesaswrittenshow.com' },
       { text: 'Get In Touch', link: 'mailto:jt@houk.space?subject=Hello%20From%20Your%20Site&body=' },
     ],
-    // No sidebar for blog/articles pages
     sidebar: false,
+    editLink: false,
+    contributors: false,
+    lastUpdated: false,
+    themePlugins: {
+      mediumZoom: false,
+    },
   }),
+
+  extendsPage(page) {
+    if (page.filePathRelative?.startsWith('articles/') && !page.frontmatter.layout) {
+      page.frontmatter.layout = 'Post'
+    }
+  },
 
   plugins: [
     blogPlugin({
@@ -71,6 +84,8 @@ export default defineUserConfig({
         category: [(frontmatter.category as string) || 'General'],
         tag: (frontmatter.tags as string[]) || [],
         excerpt: (frontmatter.summary as string) || '',
+        image: (frontmatter.image as string) || '',
+        location: (frontmatter.location as string) || '',
       }),
       // Only include published markdown files under articles/
       filter: ({ filePathRelative }) =>
@@ -80,6 +95,8 @@ export default defineUserConfig({
           key: 'tag',
           getter: page => (page.frontmatter.tags as string[]) || [],
           path: '/tag/',
+          layout: 'BlogArticles',
+          itemLayout: 'BlogArticles',
           frontmatter: () => ({ title: 'Tags' }),
           itemFrontmatter: tag => ({ title: `Tag: ${tag}` }),
         },
@@ -110,5 +127,7 @@ export default defineUserConfig({
     seoPlugin({
       hostname: 'https://jt.houk.space',
     }),
+
+    searchPlugin({}),
   ],
 })

@@ -1,6 +1,5 @@
 <template>
-  <!-- #disqus_thread id preserved for Cypress test compatibility -->
-  <div id="disqus_thread" class="comments-container">
+  <div id="comments" class="comments-container">
     <GiscusComponent
       v-if="mounted"
       repo="HoukasaurusRex/jt.houk.space"
@@ -22,19 +21,19 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import GiscusComponent from '@giscus/vue'
-import { useColorMode } from '../composables/useColorMode'
+import { useDarkMode } from '@vuepress/theme-default/client'
 
-const { mode } = useColorMode()
+const isDark = useDarkMode()
 const mounted = ref(false)
 
 onMounted(() => {
   mounted.value = true
 })
 
-const giscusTheme = computed(() => mode.value === 'dark' ? 'dark' : 'light')
+const giscusTheme = computed(() => isDark.value ? 'dark' : 'light')
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .comments-container {
   margin-top: 2rem;
   padding-top: 1rem;

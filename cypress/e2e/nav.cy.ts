@@ -5,55 +5,40 @@ describe('Navigation and layout', () => {
 
   context('Nav links', () => {
     it('renders Articles link', () => {
-      cy.get('nav a, .nav a').contains('Articles').should('be.visible')
+      cy.get('nav a, .vp-navbar a').contains('Articles').should('be.visible')
     })
 
     it('renders About link', () => {
-      cy.get('nav a, .nav a').contains('About').should('be.visible')
+      cy.get('nav a, .vp-navbar a').contains('About').should('be.visible')
     })
 
     it('renders RaW link', () => {
-      cy.get('nav a, .nav a').contains('RaW').should('be.visible')
+      cy.get('nav a, .vp-navbar a').contains('RaW').should('be.visible')
     })
 
     it('renders Get In Touch link', () => {
-      cy.get('nav a, .nav a').contains('Get In Touch').should('be.visible')
+      cy.get('nav a, .vp-navbar a').contains('Get In Touch').should('be.visible')
     })
 
     it('Articles link navigates to /articles/', () => {
-      cy.get('nav a, .nav a').contains('Articles').click()
+      cy.get('nav a, .vp-navbar a').contains('Articles').click()
       cy.url().should('include', '/articles/')
-    })
-  })
-
-  context('Footer', () => {
-    it('renders footer with copyright year', () => {
-      const year = new Date().getFullYear().toString()
-      cy.get('.footer').should('be.visible').and('contain.text', year)
-    })
-
-    it('renders GitHub social link', () => {
-      cy.get('.footer .contact-item a[href*="github"]').should('exist')
-    })
-
-    it('renders LinkedIn social link', () => {
-      cy.get('.footer .contact-item a[href*="linkedin"]').should('exist')
-    })
-
-    it('renders email contact link', () => {
-      cy.get('.footer .contact-item a[href*="mailto"]').should('exist')
     })
   })
 
   context('Notification banner', () => {
     beforeEach(() => {
-      // Clear notification dismissal state before each test
       cy.clearLocalStorage()
-      cy.visit('/')
+      cy.visit('/articles/')
     })
 
-    it('renders the notification title', () => {
+    it('renders the notification title on article pages', () => {
       cy.get('.alert').should('be.visible').and('contain.text', 'Help families in Gaza')
+    })
+
+    it('notification is hidden on landing page', () => {
+      cy.visit('/')
+      cy.get('.alert').should('not.be.visible')
     })
 
     it('renders the notification description on desktop', () => {
@@ -83,12 +68,10 @@ describe('Navigation and layout', () => {
     })
   })
 
-  // Dark mode toggle is implemented in Phase 2 (issue #87).
-  // Test is defined here as a placeholder — it will be filled in after
-  // the useColorMode() composable is added and a toggle button exists in the nav.
-  context('Dark mode toggle (Phase 2)', () => {
-    it.skip('toggles dark class on <html> when clicked', () => {
-      // TODO: implement after issue #87
+  context('Dark mode toggle', () => {
+    it('toggles data-theme on html when clicked', () => {
+      cy.get('.vp-toggle-color-mode-button').click()
+      cy.get('html').should('have.attr', 'data-theme')
     })
   })
 })

@@ -18,7 +18,7 @@ const text = computed(() =>
 )
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 @keyframes move {
   0%   { transform: translateX(0); }
   50%  { transform: translateX(10px); }

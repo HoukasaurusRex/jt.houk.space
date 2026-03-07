@@ -61,12 +61,11 @@ async function onSubmit() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .newsletter {
   max-width: 420px;
   background-color: var(--background-color);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
   margin: auto;
   padding: 30px;
   border-radius: 4px;

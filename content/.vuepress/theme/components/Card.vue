@@ -17,7 +17,7 @@ withDefaults(defineProps<{
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .card {
   .card__title {
     color: var(--text-color);

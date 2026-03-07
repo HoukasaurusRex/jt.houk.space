@@ -75,10 +75,11 @@ function onLoadSpotifyImg() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .landing-hero {
   position: relative;
-  min-height: calc(100vh - var(--navbar-height));
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
 }
 
 .landing {
@@ -92,8 +93,7 @@ function onLoadSpotifyImg() {
   width: calc(100vw + 100px);
   position: absolute;
   left: -100px;
-  bottom: 0;
-  margin-bottom: 72px;
+  bottom: -70px;
   opacity: 0.8;
   display: flex;
   align-items: center;
@@ -120,8 +120,11 @@ function onLoadSpotifyImg() {
   top: 40%;
   right: 20vw;
   background-color: var(--accent-color);
-  padding: 0.75rem 1.5rem;
-  font-size: 1.25rem;
+  background-image: none;
+  width: 4em;
+  height: 1.5em;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
   border-radius: 5px;
   box-shadow: 1px 1px 2px #222;
   transition: all 0.15s ease;
@@ -129,6 +132,10 @@ function onLoadSpotifyImg() {
   &:hover {
     box-shadow: 1.5px 1.5px 3px #222;
     transform: scale(1.01);
+  }
+  :deep(a) {
+    background-image: none;
+    text-decoration: none;
   }
 }
 
@@ -140,6 +147,8 @@ function onLoadSpotifyImg() {
   min-height: 80px;
   min-width: 290px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
   img {
     max-height: 320px;
   }
