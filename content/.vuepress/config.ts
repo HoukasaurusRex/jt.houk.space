@@ -126,6 +126,12 @@ export default defineUserConfig({
 
     seoPlugin({
       hostname: 'https://jt.houk.space',
+      ogp: (ogp, page) => ({
+        ...ogp,
+        'og:image': page.frontmatter.image
+          ? [page.frontmatter.image as string]
+          : ogp['og:image'] || [],
+      }),
     }),
 
     searchPlugin({}),
