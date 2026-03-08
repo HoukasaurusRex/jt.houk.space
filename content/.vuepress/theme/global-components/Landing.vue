@@ -87,6 +87,9 @@ function onLoadSpotifyImg() {
   margin: 0 auto;
   padding-top: 2rem;
   text-align: center;
+  h1 {
+    margin-top: 2.75rem;
+  }
 }
 
 .profile-img {

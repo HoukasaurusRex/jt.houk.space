@@ -44,6 +44,7 @@ body {
     height: var(--navbar-height);
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 }
 
@@ -81,6 +82,10 @@ h2 {
 
 /* Landing page: hero fills the viewport exactly, full width, hide page chrome */
 .vp-page:has(.landing-hero) {
+  min-height: unset;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   padding-bottom: 0;
 
   [vp-content] {
