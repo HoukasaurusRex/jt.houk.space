@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "jt-mcp": {
+      "command": "npx",
+      "args": ["-y", "@houkasaurusrex/jt-mcp-server"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "NETLIFY_AUTH_TOKEN": "${NETLIFY_AUTH_TOKEN}"
+      }
+    }
+  }
+}

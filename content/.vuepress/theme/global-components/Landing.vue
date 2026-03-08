@@ -2,7 +2,7 @@
   <div class="landing-hero">
     <div class="profile-img" :style="profileLoadedStyles" data-cy="profile-img">
       <transition name="fade">
-        <img ref="profileImg" v-show="profileImgLoaded" @load="onLoadProfileImg" src="/jt-face-right.webp" alt="JT Houk"/>
+        <img v-show="profileImgLoaded" ref="profileImg" src="/jt-face-right.webp" alt="JT Houk" @load="onLoadProfileImg"/>
       </transition>
       <Laser class="laser" :style="profileLoadedLaserStyles" data-cy="laser" />
     </div>
@@ -12,7 +12,7 @@
       <div class="spotify-card" data-cy="spotify-card">
         <a href="https://open.spotify.com/playlist/4bTtFYlmWGoiw8wtUsQPHO?si=qimf3FqaT9-hOwiqXDEAEg" target="_blank" rel="noopener">
           <transition name="fade">
-            <img v-show="spotifyImgLoaded" @load="onLoadSpotifyImg" :src="spotifyCard" alt="Currently listening on Spotify">
+            <img v-show="spotifyImgLoaded" :src="spotifyCard" alt="Currently listening on Spotify" @load="onLoadSpotifyImg">
           </transition>
         </a>
       </div>
@@ -125,7 +125,7 @@ function onLoadSpotifyImg() {
   background-color: var(--accent-color);
   background-image: none;
   width: 4em;
-  height: 1.5em;
+  height: 1.6em;
   padding: 0.25rem 0.5rem;
   white-space: nowrap;
   border-radius: 5px;
@@ -149,7 +149,7 @@ function onLoadSpotifyImg() {
 .spotify-card {
   min-height: 80px;
   min-width: 290px;
-  margin: 0 auto;
+  margin: 4.5rem auto;
   display: flex;
   justify-content: center;
   img {

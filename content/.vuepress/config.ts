@@ -13,7 +13,7 @@ const isProd = process.env.NODE_ENV === 'production'
 export default defineUserConfig({
   lang: 'en-US',
   title: "JT's Space",
-  description: 'Software Engineer • Cloud Architect • DevOps',
+  description: 'Dev Blogger • GM • Tinkerer',
 
   // Exclude draft files
   pagePatterns: ['**/*.md', '!**/*.draft.md', '!.vuepress', '!node_modules'],
@@ -57,7 +57,7 @@ export default defineUserConfig({
       { text: 'Articles', link: '/articles/' },
       { text: 'About', link: '/about/' },
       { text: 'RaW', link: 'https://rulesaswrittenshow.com' },
-      { text: 'Get In Touch', link: 'mailto:jt@houk.space?subject=Hello%20From%20Your%20Site&body=' },
+      // { text: 'Get In Touch', link: 'mailto:jt@houk.space?subject=Hello%20From%20Your%20Site&body=' },
     ],
     sidebar: false,
     editLink: false,
