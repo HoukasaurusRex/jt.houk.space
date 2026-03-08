@@ -42,6 +42,10 @@ body {
   }
 }
 
+.vp-toggle-sidebar-button {
+  top: calc((var(--navbar-height) - 2.45rem) / 2) !important;
+}
+
 /* PT Serif for all text (user preference) */
 html, body, input, button, select, textarea {
   font-family: "PT Serif", serif;
@@ -76,11 +80,23 @@ h2 {
 
 /* Landing page: hero fills the viewport exactly, full width, hide page chrome */
 .vp-page:has(.landing-hero) {
-  padding-bottom: 0;
+  min-height: unset;
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: 100dvh;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-top: var(--navbar-height);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 
   [vp-content] {
     max-width: none;
     padding: 0;
+    height: 100%;
+  }
+
+  #content {
+    height: 100%;
   }
 
   .vp-page-meta,
