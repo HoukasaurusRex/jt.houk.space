@@ -82,6 +82,7 @@ h2 {
 .vp-page:has(.landing-hero) {
   min-height: unset;
   height: 100vh;
+  height: -webkit-fill-available;
   height: 100dvh;
   box-sizing: border-box;
   overflow: hidden;
@@ -91,6 +92,11 @@ h2 {
   [vp-content] {
     max-width: none;
     padding: 0;
+    height: 100%;
+  }
+
+  #content {
+    height: 100%;
   }
 
   .vp-page-meta,
