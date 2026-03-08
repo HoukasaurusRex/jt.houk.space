@@ -121,11 +121,19 @@ export default defineUserConfig({
     }),
 
     pwaPlugin({
-      skipWaiting: true,
+      showInstall: false,
+      update: 'force',
+      cacheHTML: true,
+      themeColor: '#eb8daf',
+      favicon: '/jt-face-logo.png',
     }),
 
     seoPlugin({
       hostname: 'https://jt.houk.space',
+      ogp: (ogp, page) => ({
+        ...ogp,
+        'og:image': (page.frontmatter.image as string) || ogp['og:image'],
+      }),
     }),
 
     searchPlugin({}),
