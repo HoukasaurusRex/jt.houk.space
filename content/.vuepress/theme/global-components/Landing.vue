@@ -78,8 +78,7 @@ function onLoadSpotifyImg() {
 <style scoped>
 .landing-hero {
   position: relative;
-  height: calc(100vh - var(--navbar-height));
-  height: calc(100dvh - var(--navbar-height));
+  height: 100%;
   overflow: hidden;
 }
 
