@@ -120,17 +120,13 @@ export default defineUserConfig({
       hotReload: !isProd,
     }),
 
-    pwaPlugin({
-      skipWaiting: true,
-    }),
+    pwaPlugin({}),
 
     seoPlugin({
       hostname: 'https://jt.houk.space',
       ogp: (ogp, page) => ({
         ...ogp,
-        'og:image': page.frontmatter.image
-          ? [page.frontmatter.image as string]
-          : ogp['og:image'] || [],
+        'og:image': (page.frontmatter.image as string) || ogp['og:image'],
       }),
     }),
 
