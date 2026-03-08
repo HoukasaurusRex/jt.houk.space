@@ -171,6 +171,35 @@ test.describe('Dark mode', () => {
   })
 })
 
+test.describe('Mobile viewport', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.route('**spotify-github-profile.kittinanx.com/**', route =>
+      route.fulfill({ status: 200, contentType: 'image/png', body: Buffer.alloc(0) })
+    )
+  })
+
+  test('landing page fills viewport without scroll', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    const scrollHeight = await page.evaluate(() => document.body.scrollHeight)
+    const viewport = page.viewportSize()
+    expect(scrollHeight).toBeLessThanOrEqual(viewport!.height + 1)
+  })
+
+  test('hamburger button is vertically centered in navbar', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    const navbar = page.locator('.vp-navbar')
+    const button = page.locator('.vp-toggle-sidebar-button')
+    const navbarBox = await navbar.boundingBox()
+    const buttonBox = await button.boundingBox()
+    const navbarCenter = navbarBox!.y + navbarBox!.height / 2
+    const buttonCenter = buttonBox!.y + buttonBox!.height / 2
+    expect(Math.abs(navbarCenter - buttonCenter)).toBeLessThan(5)
+  })
+})
+
 test.describe('Typography', () => {
   test('h2 has no border-bottom', async ({ page }) => {
     await page.goto('/articles/agile-cooking')

@@ -40,12 +40,10 @@ body {
   &:hover {
     box-shadow: 0 5px 20px rgba(0, 0, 0, .08), 0 6px 6px rgba(0, 0, 0, .1);
   }
-  .toggle-navbar-button {
-    height: var(--navbar-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+}
+
+.vp-toggle-sidebar-button {
+  top: calc((var(--navbar-height) - 2.45rem) / 2) !important;
 }
 
 /* PT Serif for all text (user preference) */
@@ -86,6 +84,7 @@ h2 {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  padding-top: 0;
   padding-bottom: 0;
 
   [vp-content] {
