@@ -9,9 +9,9 @@
   --text-color-75: hsla(180, 33%, 10%, 0.75);
 }
 
-// Dark theme colors
+/* Dark theme colors — OS preference (no JS, no flash) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --background-color: hsl(0, 0%, 10%);
     --foreground-color: hsl(0, 0%, 13%);
     --text-color: hsla(0, 0%, 90%, 1);
@@ -19,5 +19,18 @@
     --red: hsl(327, 70%, 75%);
     --green: hsl(83, 70%, 75%);
     --blue: hsl(202, 70%, 75%);
+    --border-color: rgba(255, 255, 255, .08);
   }
+}
+
+/* Dark theme colors — VP2 toggle via data-theme attribute */
+[data-theme='dark'] {
+  --background-color: hsl(0, 0%, 10%);
+  --foreground-color: hsl(0, 0%, 13%);
+  --text-color: hsla(0, 0%, 90%, 1);
+  --text-color-75: hsla(0, 0%, 90%, 0.75);
+  --red: hsl(327, 70%, 75%);
+  --green: hsl(83, 70%, 75%);
+  --blue: hsl(202, 70%, 75%);
+  --border-color: rgba(255, 255, 255, .08);
 }

@@ -1,0 +1,222 @@
+html,
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  a {
+    color: var(--accent-color);
+    transition: color 0.2s ease;
+  }
+}
+
+:root {
+  font-size: 110%;
+  --navbar-height: 80px;
+
+  /* Map VP2 theme variables to custom theme */
+  --vp-navbar-c-bg: var(--background-color);
+  --vp-sidebar-c-bg: var(--foreground-color);
+  --vp-c-bg: var(--background-color);
+  --vp-c-bg-alt: var(--foreground-color);
+  --vp-c-accent: var(--accent-color);
+  --vp-c-accent-bg: var(--accent-color);
+  --vp-c-accent-hover: var(--accent-color);
+  --vp-t-color: 0.3s ease;
+  --border-color: rgba(0, 0, 0, .08);
+}
+
+.vp-navbar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .03), 0 6px 6px rgba(0, 0, 0, .05);
+  border-bottom: none;
+  transition: all 1s cubic-bezier(.25, .8, .25, 1);
+  a {
+    color: var(--text-color);
+    &:hover,
+    &.router-link-active {
+      color: var(--accent-color);
+    }
+  }
+  &:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .08), 0 6px 6px rgba(0, 0, 0, .1);
+  }
+}
+
+/* PT Serif for all text (user preference) */
+html, body, input, button, select, textarea {
+  font-family: "PT Serif", serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "PT Serif", serif;
+}
+
+h1 {
+  margin-top: 1rem;
+}
+
+h2 {
+  padding-bottom: .7rem;
+  border-bottom: none;
+}
+
+.vp-page {
+  background-color: var(--foreground-color);
+  min-height: 100vh;
+  color: var(--text-color);
+  a {
+    text-decoration: none;
+  }
+}
+
+/* Override VP2 normalize.scss link underlines (must match :not() specificity) */
+[vp-content] a:not(.header-anchor) {
+  text-decoration: none;
+}
+
+/* Landing page: hero fills the viewport exactly, full width, hide page chrome */
+.vp-page:has(.landing-hero) {
+  padding-bottom: 0;
+
+  [vp-content] {
+    max-width: none;
+    padding: 0;
+  }
+
+  .vp-page-meta,
+  .vp-page-nav {
+    display: none;
+  }
+}
+
+/* Remove heading offset padding inside article feed cards */
+.articles-feed h2,
+.articles-feed h3 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.vp-doc {
+  color: var(--text-color);
+  img {
+    border-radius: 5px;
+  }
+  a {
+    color: var(--accent-color);
+  }
+}
+
+.vp-page-meta {
+  display: none;
+}
+
+/* Floating right-side TOC for article pages */
+.floating-toc {
+  position: fixed;
+  top: calc(var(--navbar-height));
+  right: 0.6rem;
+  width: 220px;
+  max-height: calc(100vh - var(--navbar-height) - 2rem);
+  overflow-y: auto;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  z-index: 5;
+
+  & > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--border-color);
+  }
+
+  & li {
+    position: relative;
+    line-height: 1.25rem;
+    padding: .1rem .6rem .1rem 1.5rem;
+  }
+
+  & li.active::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--accent-color);
+  }
+
+  & a {
+    color: var(--text-color-75, #888);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  & li.active > a {
+    color: var(--accent-color);
+  }
+
+  & .toc-child {
+    padding-left: 2.25rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  .floating-toc {
+    display: none;
+  }
+}
+
+.floating-toc::-webkit-scrollbar {
+  width: 3px;
+}
+
+.floating-toc::-webkit-scrollbar-thumb {
+  background: var(--text-color-75, #888);
+  border-radius: 3px;
+}
+
+/* Undo VP2 heading anchor-scroll normalization for the first visible heading */
+[vp-content] {
+  h1:first-child,
+  h2:first-child {
+    margin-top: 1rem;
+    padding-top: 0;
+  }
+}
+
+/* Fade transition (used by Landing profile image) */
+.fade-enter-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.timeline-Widget {
+  max-width: 300px;
+}
+
+@media (min-width: 957px) {
+  .vp-page {
+    background-color: var(--background-color);
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  html {
+    height: -webkit-fill-available;
+  }
+  .vp-page {
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
+  }
+}

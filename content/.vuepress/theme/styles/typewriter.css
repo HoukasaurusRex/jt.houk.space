@@ -2,7 +2,7 @@
   position: relative;
   top: 50%;  
   width: 7em;
-  margin: 0 auto;
+  margin: 2.5rem auto 0;
   border-right: 2px solid var(--text-color-75);
   font-size: 180%;
   text-align: center;

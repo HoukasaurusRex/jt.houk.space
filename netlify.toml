@@ -1,22 +1,24 @@
 # Build settings
 [build]
-  command = "yarn build"
+  command = "corepack enable && yarn install --immutable && yarn build"
   publish = "content/.vuepress/dist"
 
 # Production environment variables
 [context.production.environment]
   NODE_ENV = "production"
+  NODE_VERSION = "22"
 
 # Deploy preview environment variables
 [context.deploy-preview.environment]
   NODE_ENV = "production"
+  NODE_VERSION = "22"
 
 # Security headers - Applied to all pages
 [[headers]]
   for = "/*"
   [headers.values]
     # Content Security Policy
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api-gateway.umami.dev https://mail.houk.space; frame-ancestors 'self';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://giscus.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api-gateway.umami.dev https://mail.houk.space https://api.github.com; frame-src https://giscus.app; frame-ancestors 'self';"
 
     # Prevent MIME type sniffing
     X-Content-Type-Options = "nosniff"
@@ -75,8 +77,8 @@
     on404 = "error"
 
     # Change this key to restart from scratch
-    # Updated to v8 after taxonomy restructure (Mar 2026)
-    cacheKey = "v8"
+    # Updated to v9 after VuePress 2 migration (Mar 2026)
+    cacheKey = "v9"
 
     # Extra diagnostic logging for development
     debugMode = false

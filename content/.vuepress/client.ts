@@ -1,0 +1,29 @@
+import { defineClientConfig } from 'vuepress/client'
+import { defineAsyncComponent } from 'vue'
+import './theme/styles/index.css'
+
+// Custom layouts
+import BlogArticles from './theme/layouts/BlogArticles.vue'
+import Post from './theme/layouts/Post.vue'
+
+// Global components registered for use in Markdown files
+const Cards = defineAsyncComponent(() => import('./theme/global-components/Cards.vue'))
+const Card = defineAsyncComponent(() => import('./theme/components/Card.vue'))
+import Landing from './theme/global-components/Landing.vue'
+
+export default defineClientConfig({
+  layouts: {
+    BlogArticles,
+    Post,
+  },
+
+  enhance({ app }) {
+    app.component('Cards', Cards)
+    app.component('Card', Card)
+    app.component('Landing', Landing)
+  },
+
+  setup() {},
+
+  rootComponents: [],
+})

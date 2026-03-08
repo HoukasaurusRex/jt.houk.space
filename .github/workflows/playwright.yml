@@ -1,0 +1,48 @@
+name: Playwright Visual Regression
+
+on:
+  push:
+    branches: [master, vp2-upgrade]
+  pull_request:
+    branches: [master]
+
+jobs:
+  playwright:
+    name: Playwright snapshots
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Build site
+        run: yarn build
+
+      - name: Serve built site
+        run: npx serve content/.vuepress/dist -p 8080 &
+        env:
+          PORT: 8080
+
+      - name: Run Playwright tests
+        run: yarn pw:test
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:8080
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

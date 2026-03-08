@@ -68,5 +68,14 @@ dist/
 .theme
 .temp
 .cache
+# Playwright
 playwright-report
 test-results
+# snapshot actual/diff outputs are gitignored; only the baseline PNGs are committed
+playwright/**/*.pw.ts-snapshots/*-actual.png
+playwright/**/*.pw.ts-snapshots/*-diff.png
+
+# Cypress
+cypress/screenshots
+cypress/videos
+cypress/downloads
