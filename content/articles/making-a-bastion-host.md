@@ -1,97 +1,15 @@
 ---
-id: 8
-category: "coding"
-Title: null
-created_at: "2021-03-30T09:07:50.583Z"
-updated_at: "2021-07-09T06:56:01.311Z"
 title: "Making a Bastion Host"
+created_at: "2021-03-30"
+updated_at: "2021-07-09T06:56:01.311Z"
 tags:
-  - "coding"
-  - "cloud architecture"
-  - "aws"
-  - "vpc"
-  - "ssh"
-description: null
-status: "published"
+  - "cloud"
+  - "devops"
+  - "tutorial"
 summary: "Connecting to a database in a VPC might be a little daunting, but with a simple design borrowed from medieval architecture you can create a secure connection locally without sacrificing security."
 author: "JT Houk"
 location: "Beijing"
-date: "2021-03-30"
 image: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
-images:
-  -
-    id: 32
-    name: "cliff-fort-bastion.jpg"
-    hash: "cliff_fort_bastion_17bcfc7190"
-    sha256: null
-    ext: ".jpg"
-    mime: "image/jpeg"
-    size: 261.57
-    url: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/cliff_fort_bastion_17bcfc7190.jpg"
-    provider: "cloudinary"
-    provider_metadata:
-      public_id: "cliff_fort_bastion_17bcfc7190"
-      resource_type: "image"
-    created_at: "2021-03-30T11:40:06.437Z"
-    updated_at: "2021-03-30T11:40:06.467Z"
-    alternativeText: ""
-    caption: ""
-    width: 1600
-    height: 1067
-    formats:
-      large:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/large_cliff_fort_bastion_17bcfc7190.jpg"
-        hash: "large_cliff_fort_bastion_17bcfc7190"
-        mime: "image/jpeg"
-        name: "large_cliff-fort-bastion.jpg"
-        path: null
-        size: 157.89
-        width: 1000
-        height: 667
-        provider_metadata:
-          public_id: "large_cliff_fort_bastion_17bcfc7190"
-          resource_type: "image"
-      small:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104406/small_cliff_fort_bastion_17bcfc7190.jpg"
-        hash: "small_cliff_fort_bastion_17bcfc7190"
-        mime: "image/jpeg"
-        name: "small_cliff-fort-bastion.jpg"
-        path: null
-        size: 42.83
-        width: 500
-        height: 333
-        provider_metadata:
-          public_id: "small_cliff_fort_bastion_17bcfc7190"
-          resource_type: "image"
-      medium:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1617104405/medium_cliff_fort_bastion_17bcfc7190.jpg"
-        hash: "medium_cliff_fort_bastion_17bcfc7190"
-        mime: "image/jpeg"
-        name: "medium_cliff-fort-bastion.jpg"
-        path: null
-        size: 90.1
-        width: 750
-        height: 500
-        provider_metadata:
-          public_id: "medium_cliff_fort_bastion_17bcfc7190"
-          resource_type: "image"
-        thumbnail: 
-          ext: ".jpg"
-          url: "https://res.cloudinary.com/jthouk/image/upload/v1617104404/thumbnail_cliff_fort_bastion_17bcfc7190.jpg"
-          hash: "thumbnail_cliff_fort_bastion_17bcfc7190"
-          mime: "image/jpeg"
-          name: "thumbnail_cliff-fort-bastion.jpg"
-          path: null
-          size: 10.68
-          width: 234
-          height: 156
-          provider_metadata: 
-            public_id: "thumbnail_cliff_fort_bastion_17bcfc7190"
-            resource_type: "image"
-      previewUrl: null
 
 ---
 If we follow good security practices and deploy our database in a private subnet, direct database access is closed off from the wider internet. This is great for security, but can be frustrating when we just need to run some quick SQL commands from our local machines, connect a server that's not in the same network, or download some data without creating an API for this singular purpose. Luckily, we can get around this without exposing our database to the public internet with a "bastion host".

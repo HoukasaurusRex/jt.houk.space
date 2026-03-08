@@ -1,25 +1,13 @@
 ---
-category: "technology"
-created_at: "2026-02-26T00:00:00.000Z"
-updated_at: "2026-02-26T00:00:00.000Z"
 title: "The People In The Room: A Manifesto for AI Governance"
+created_at: "2026-02-26"
 tags:
   - "ai"
-  - "ethics"
-  - "governance"
-  - "privacy"
-  - "surveillance"
-  - "policy"
-status: "published"
+  - "opinion"
 summary: "A call to action for the engineers, designers, and product people building AI systems, the people in the room when it gets built."
 author: "JT Houk"
 location: "Montreal"
-date: "2026-02-26"
 image: "https://res.cloudinary.com/doyxsswbb/image/upload/w_1200,c_limit,f_auto,q_auto/v1772142953/Person_in_White_Shirt_Mirror_qe6ufg.jpg"
-image_credit: "Photo by <a href='https://unsplash.com/@theblowup'>the blowup</a> on Unsplash"
-images:
-  - url: "https://res.cloudinary.com/doyxsswbb/image/upload/w_1200,c_limit,f_auto,q_auto/v1772142953/Person_in_White_Shirt_Mirror_qe6ufg.jpg"
-    credit: "Photo by the blowup on Unsplash"
 
 ---
 

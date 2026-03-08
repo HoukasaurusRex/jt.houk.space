@@ -80,7 +80,7 @@ export default defineUserConfig({
       getInfo: ({ frontmatter, title }) => ({
         title,
         author: (frontmatter.author as string) || 'JT Houk',
-        date: new Date((frontmatter.date as string) || (frontmatter.created_at as string) || Date.now()),
+        date: new Date((frontmatter.created_at as string) || Date.now()),
         category: [(frontmatter.category as string) || 'General'],
         tag: (frontmatter.tags as string[]) || [],
         excerpt: (frontmatter.summary as string) || '',
@@ -104,10 +104,10 @@ export default defineUserConfig({
       type: [
         {
           key: 'articles',
-          // Sort newest first using created_at or date
+          // Sort newest first by created_at
           sorter: (a, b) => {
-            const aTime = new Date((a.frontmatter.created_at as string) || (a.frontmatter.date as string) || 0).getTime()
-            const bTime = new Date((b.frontmatter.created_at as string) || (b.frontmatter.date as string) || 0).getTime()
+            const aTime = new Date((a.frontmatter.created_at as string) || 0).getTime()
+            const bTime = new Date((b.frontmatter.created_at as string) || 0).getTime()
             return bTime - aTime
           },
           filter: ({ filePathRelative }) =>
@@ -138,4 +138,5 @@ export default defineUserConfig({
 
     searchPlugin({}),
   ],
+  shouldPrefetch: false,
 })

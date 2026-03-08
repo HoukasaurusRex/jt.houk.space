@@ -1,97 +1,15 @@
 ---
-id: 7
-category: "coding"
-Title: null
-created_at: "2020-11-13T07:01:44.834Z"
-updated_at: "2021-02-19T10:18:22.505Z"
 title: "How to Track Indoor Air Pollution with a Raspberry Pi"
+created_at: "2020-11-13"
+updated_at: "2021-02-19T10:18:22.505Z"
 tags:
-  - "coding"
-  - "raspberrypi"
-  - "projects"
+  - "iot"
   - "python"
-  - "data science"
-description: null
-status: "published"
+  - "tutorial"
 summary: "Breathe better with this simple Raspberry Pi Python project. This is a good place to start if you're interested in data analytics and sensor reading."
 author: "JT Houk"
 location: "Beijing"
-date: "2020-11-13"
 image: "https://res.cloudinary.com/jthouk/image/upload/v1613708321/aqipi_a8f2a16357.jpg"
-images:
-  -
-    id: 24
-    name: "aqipi.jpg"
-    hash: "aqipi_a8f2a16357"
-    sha256: null
-    ext: ".jpg"
-    mime: "image/jpeg"
-    size: 208.02
-    url: "https://res.cloudinary.com/jthouk/image/upload/v1613708321/aqipi_a8f2a16357.jpg"
-    provider: "cloudinary"
-    provider_metadata:
-      public_id: "aqipi_a8f2a16357"
-      resource_type: "image"
-    created_at: "2021-02-19T04:18:43.659Z"
-    updated_at: "2021-02-19T04:18:43.676Z"
-    alternativeText: ""
-    caption: ""
-    width: 2016
-    height: 1008
-    formats:
-      large:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1613708322/large_aqipi_a8f2a16357.jpg"
-        hash: "large_aqipi_a8f2a16357"
-        mime: "image/jpeg"
-        name: "large_aqipi.jpg"
-        path: null
-        size: 82.7
-        width: 1000
-        height: 500
-        provider_metadata:
-          public_id: "large_aqipi_a8f2a16357"
-          resource_type: "image"
-      small:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1613708323/small_aqipi_a8f2a16357.jpg"
-        hash: "small_aqipi_a8f2a16357"
-        mime: "image/jpeg"
-        name: "small_aqipi.jpg"
-        path: null
-        size: 25.2
-        width: 500
-        height: 250
-        provider_metadata:
-          public_id: "small_aqipi_a8f2a16357"
-          resource_type: "image"
-      medium:
-        ext: ".jpg"
-        url: "https://res.cloudinary.com/jthouk/image/upload/v1613708323/medium_aqipi_a8f2a16357.jpg"
-        hash: "medium_aqipi_a8f2a16357"
-        mime: "image/jpeg"
-        name: "medium_aqipi.jpg"
-        path: null
-        size: 51.01
-        width: 750
-        height: 375
-        provider_metadata:
-          public_id: "medium_aqipi_a8f2a16357"
-          resource_type: "image"
-        thumbnail: 
-          ext: ".jpg"
-          url: "https://res.cloudinary.com/jthouk/image/upload/v1613708322/thumbnail_aqipi_a8f2a16357.jpg"
-          hash: "thumbnail_aqipi_a8f2a16357"
-          mime: "image/jpeg"
-          name: "thumbnail_aqipi.jpg"
-          path: null
-          size: 7.63
-          width: 245
-          height: 123
-          provider_metadata: 
-            public_id: "thumbnail_aqipi_a8f2a16357"
-            resource_type: "image"
-      previewUrl: null
 
 ---
 You ever wonder what's actually in the air you breathe every day? I've lived in Beijing for a few years now and I'm always running a couple of air purifiers in my home, but how well do they actually work? Sure some have built in sensors, but how accurate are they? Well with a little Python, a Raspberry Pi, and some moxie, we can find our own answers.

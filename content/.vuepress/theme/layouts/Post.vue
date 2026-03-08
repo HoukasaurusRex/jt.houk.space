@@ -46,7 +46,7 @@ const author = computed(() =>
 )
 
 const date = computed(() => {
-  const d = (page.value.frontmatter.date as string) || (page.value.frontmatter.created_at as string)
+  const d = page.value.frontmatter.created_at as string
   return d ? new Date(d) : null
 })
 

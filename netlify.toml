@@ -77,8 +77,8 @@
     on404 = "error"
 
     # Change this key to restart from scratch
-    # Updated to v9 after VuePress 2 migration (Mar 2026)
-    cacheKey = "v9"
+    # Updated to v10 after tag restructuring (Mar 2026)
+    cacheKey = "v10"
 
     # Extra diagnostic logging for development
     debugMode = false
