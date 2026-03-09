@@ -1,0 +1,17 @@
+export const showerThoughts: string[] = [
+  "It's a good bagel when it makes you test positive for heroin",
+  'Websites are just other peoples computers rendering on your screen',
+  'The first person to hear a parrot talk was probably not okay',
+  'Laps only exist when you sit down',
+  'A different version of you exists in every person who knows you',
+  'Read this in your voice not mine',
+  'Maybe plants are farming us by giving us oxygen until we decompose',
+  'Whoever named it a building knew it was never really finished',
+  'Your dog has no idea you can make mistakes',
+  'The GPS lady has recalculated more than any math teacher',
+  'Deja vu is just your brain buffering',
+  'Sleep is just a free trial of being dead',
+  'The word queue is just a Q followed by four silent letters',
+  'You have survived every single one of your worst days so far',
+  'The blinker is the only honest part of most drivers',
+]

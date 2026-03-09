@@ -4,6 +4,7 @@ import './theme/styles/index.css'
 
 // Custom layouts
 import BlogArticles from './theme/layouts/BlogArticles.vue'
+import NotFound from './theme/layouts/NotFound.vue'
 import Post from './theme/layouts/Post.vue'
 
 // Global components registered for use in Markdown files
@@ -14,6 +15,7 @@ import Landing from './theme/global-components/Landing.vue'
 export default defineClientConfig({
   layouts: {
     BlogArticles,
+    NotFound,
     Post,
   },
 
