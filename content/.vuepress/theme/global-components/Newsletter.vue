@@ -107,9 +107,9 @@ function runTypewriterAnimation() {
   // Keystroke sequence with natural variance
   const keystrokes: [string, number][] = [
     ['Subscrib', 0],          // delete "e" immediately
-    ['Subscribi', 0.09],      // type "i"
-    ['Subscribin', 0.11],     // type "n"
-    ['Subscribing', 0.08],    // type "g"
+    ['Subscribi', 0.12],      // type "i"
+    ['Subscribin', 0.14],     // type "n"
+    ['Subscribing', 0.11],    // type "g"
     ['Subscribing.', 0.3],    // pause before dots (slower)
     ['Subscribing..', 0.35],  // second dot
     ['Subscribing...', 0.4],  // third dot
