@@ -24,9 +24,6 @@
       @click.prevent="onSubmit"
     >
       <span class="btn-label">{{ buttonLabel }}</span>
-      <span v-if="showEllipsis" class="btn-dots">
-        <span class="dot" /><span class="dot" /><span class="dot" />
-      </span>
     </button>
     <Toast
       v-if="errorMsg"
@@ -71,7 +68,6 @@ const errorMsg = ref('')
 const previouslySubscribed = ref(false)
 const isVisible = ref(false)
 const isTyping = ref(false)
-const showEllipsis = ref(false)
 const showRipple = ref(false)
 
 const buttonLabel = ref('Subscribe')
@@ -102,24 +98,33 @@ function setupObserver() {
 // --- Typewriter loading animation ---
 function runTypewriterAnimation() {
   isTyping.value = true
-  showEllipsis.value = false
 
   const tl = gsap.timeline()
   typingTimeline = tl
 
-  // Delete "e" from "Subscribe"
-  tl.call(() => { buttonLabel.value = 'Subscrib' }, [], 0.15)
-  // Type "i"
-  tl.call(() => { buttonLabel.value = 'Subscribi' }, [], 0.35)
-  // Type "n"
-  tl.call(() => { buttonLabel.value = 'Subscribin' }, [], 0.5)
-  // Type "g"
-  tl.call(() => { buttonLabel.value = 'Subscribing' }, [], 0.65)
-  // Start ellipsis pulse, hide cursor
+  // Keystroke sequence with natural variance
+  const keystrokes: [string, number][] = [
+    ['Subscrib', 0],          // delete "e" immediately
+    ['Subscribi', 0.09],      // type "i"
+    ['Subscribin', 0.11],     // type "n"
+    ['Subscribing', 0.08],    // type "g"
+    ['Subscribing.', 0.22],   // brief pause then first dot
+    ['Subscribing..', 0.12],  // second dot
+  ]
+
+  let t = 0
+  for (const [text, delay] of keystrokes) {
+    t += delay
+    tl.call(() => { buttonLabel.value = text }, [], t)
+  }
+
+  // After initial sequence, start looping dot animation
   tl.call(() => {
-    isTyping.value = false
-    showEllipsis.value = true
-  }, [], 0.85)
+    const dotLoop = gsap.timeline({ repeat: -1, repeatDelay: 0.4 })
+    typingTimeline = dotLoop
+    dotLoop.call(() => { buttonLabel.value = 'Subscribing.' }, [], 0)
+    dotLoop.call(() => { buttonLabel.value = 'Subscribing..' }, [], 0.12)
+  }, [], t + 0.5)
 }
 
 function resetTypewriter() {
@@ -128,7 +133,6 @@ function resetTypewriter() {
     typingTimeline = null
   }
   isTyping.value = false
-  showEllipsis.value = false
 }
 
 // --- Success animations ---
@@ -408,30 +412,6 @@ onUnmounted(() => {
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
-}
-
-/* Ellipsis dots */
-.btn-dots {
-  display: inline-flex;
-  gap: 3px;
-  margin-left: 4px;
-}
-
-.dot {
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #fff;
-  animation: dot-pulse 1s ease-in-out infinite;
-}
-
-.dot:nth-child(2) { animation-delay: 0.15s; }
-.dot:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes dot-pulse {
-  0%, 60%, 100% { opacity: 0.2; }
-  30% { opacity: 1; }
 }
 
 /* Ink ripple */
