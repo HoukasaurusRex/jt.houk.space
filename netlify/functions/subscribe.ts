@@ -35,24 +35,19 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, body: 'OK' }
     }
 
-    // Contact may already exist — try updating their data
+    // Contact already exists — return success with hint
     if (res.status === 422) {
-      const updateRes = await fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
+      // Best-effort update of source data
+      fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${KEILA_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ data: { source } }),
-      })
+      }).catch(() => {})
 
-      if (updateRes.ok) {
-        return { statusCode: 200, body: 'OK' }
-      }
-
-      const updateText = await updateRes.text()
-      console.error('Keila update responded with', updateRes.status, updateText.slice(0, 500))
-      return { statusCode: 502, body: JSON.stringify({ error: 'Subscription failed', status: updateRes.status }) }
+      return { statusCode: 200, body: JSON.stringify({ already_subscribed: true }) }
     }
 
     const responseText = await res.text()

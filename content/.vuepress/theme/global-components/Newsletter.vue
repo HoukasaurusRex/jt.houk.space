@@ -262,6 +262,8 @@ async function onSubmit() {
       throw new Error(`Subscribe failed: ${res.status}`)
     }
 
+    const data = await res.json().catch(() => ({}))
+
     submitted.value = true
     mail.value = ''
 
@@ -271,7 +273,7 @@ async function onSubmit() {
     previouslySubscribed.value = true
 
     resetTypewriter()
-    buttonLabel.value = 'Subscribed!'
+    buttonLabel.value = data.already_subscribed ? 'Already subscribed!' : 'Subscribed!'
 
     playSuccessAnimation()
   } catch (error) {
