@@ -37,6 +37,5 @@ const giscusTheme = computed(() => isDark.value ? 'dark' : 'light')
 .comments-container {
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
 }
 </style>
