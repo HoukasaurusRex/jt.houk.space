@@ -46,8 +46,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import gsap from 'gsap'
+import type { gsap as GsapType } from 'gsap'
 import Toast from './Toast.vue'
+
+let gsap: typeof GsapType
 
 const SUBSCRIBE_URL = '/api/subscribe'
 const STORAGE_KEY = 'newsletter-subscribed'
@@ -275,7 +277,8 @@ async function onSubmit() {
 }
 
 // --- Lifecycle ---
-onMounted(() => {
+onMounted(async () => {
+  gsap = (await import('gsap')).default
   try {
     previouslySubscribed.value = localStorage.getItem(STORAGE_KEY) === 'true'
   } catch {}
