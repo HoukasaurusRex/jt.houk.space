@@ -36,7 +36,7 @@ export const handler: Handler = async (event) => {
     }
 
     // Contact already exists — return success with hint
-    if (res.status === 422) {
+    if (res.status === 422 || res.status === 400) {
       // Best-effort update of source data
       fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
         method: 'PATCH',

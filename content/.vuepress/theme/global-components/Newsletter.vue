@@ -54,6 +54,18 @@ const SUBSCRIBE_URL = '/api/subscribe'
 const STORAGE_KEY = 'newsletter-subscribed'
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
+const ERROR_MESSAGES = [
+  "Well, that didn't work. Mind trying again?",
+  'Something went sideways. Give it another shot?',
+  'The internet gremlins struck. One more try?',
+  "Hmm, that didn't land. Try again in a sec?",
+  'Subscription hiccup. Shall we try once more?',
+]
+
+function randomErrorMessage(): string {
+  return ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)]
+}
+
 const props = withDefaults(defineProps<{ source?: string }>(), {
   source: '',
 })
@@ -288,7 +300,7 @@ async function onSubmit() {
     console.error(error)
     resetTypewriter()
     buttonLabel.value = getDefaultLabel()
-    errorMsg.value = "Well, that didn't work. Mind trying again?"
+    errorMsg.value = randomErrorMessage()
   } finally {
     loading.value = false
   }
@@ -345,13 +357,13 @@ onUnmounted(() => {
   &::after {
     content: '';
     position: absolute;
-    inset: -1px;
+    inset: -2px;
     border-radius: inherit;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsla(327, 76%, 64%, 0.4) 50%,
+      hsla(327, 76%, 64%, 0.7) 50%,
       transparent 100%
     ) border-box;
     mask:
@@ -368,8 +380,8 @@ onUnmounted(() => {
 }
 
 @keyframes shine-sweep {
-  0% { transform: translateX(-100%); opacity: 0.6; }
-  20% { transform: translateX(100%); opacity: 0.6; }
+  0% { transform: translateX(-100%); opacity: 1; }
+  20% { transform: translateX(100%); opacity: 1; }
   21% { opacity: 0; }
   100% { opacity: 0; }
 }
