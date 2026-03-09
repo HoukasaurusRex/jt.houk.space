@@ -101,7 +101,7 @@ Rules:
 
 const buildJournalEntry = (isoDate: string, longDate: string) => ({
   dir: path.join(process.cwd(), 'content', 'journal'),
-  fileName: `${isoDate.split('T')[0]}.md`,
+  fileName: `${isoDate.split('T')[0]}.draft.md`,
   content: `---
 title: "${longDate}"
 created_at: "${isoDate}"
@@ -198,7 +198,7 @@ const createEntry = async () => {
 
   const baseFileName =
     type === 'journal'
-      ? `${isoDate.split('T')[0]}.md`
+      ? `${isoDate.split('T')[0]}.draft.md`
       : type === 'article'
         ? `${slugify(title)}.draft.md`
         : `${slugify(title)}.md`
