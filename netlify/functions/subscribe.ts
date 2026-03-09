@@ -35,31 +35,31 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, body: 'OK' }
     }
 
-    // Contact may already exist — try updating their data
-    if (res.status === 422) {
-      const updateRes = await fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
+    const responseText = await res.text()
+
+    // Check if this is a duplicate contact (Keila returns 400 or 422 with "email" error)
+    const isDuplicate = (res.status === 400 || res.status === 422) && responseText.includes('email')
+    if (isDuplicate) {
+      // Best-effort update of source data
+      fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${KEILA_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ data: { source } }),
-      })
+      }).catch(() => {})
 
-      if (updateRes.ok) {
-        return { statusCode: 200, body: 'OK' }
-      }
-
-      const updateText = await updateRes.text()
-      console.error('Keila update responded with', updateRes.status, updateText.slice(0, 500))
-      return { statusCode: 502, body: 'Subscription failed' }
+      return { statusCode: 200, body: JSON.stringify({ already_subscribed: true }) }
     }
 
-    const responseText = await res.text()
+    // Client errors (validation failures) pass through as 400
+    // Server/upstream errors pass through as 502
+    const statusCode = res.status >= 400 && res.status < 500 ? 400 : 502
     console.error('Keila responded with', res.status, responseText.slice(0, 500))
-    return { statusCode: 502, body: 'Subscription failed' }
+    return { statusCode, body: JSON.stringify({ error: 'Subscription failed', status: res.status }) }
   } catch (err) {
     console.error('Subscribe function error:', err)
-    return { statusCode: 500, body: 'Internal error' }
+    return { statusCode: 500, body: JSON.stringify({ error: 'Internal error' }) }
   }
 }

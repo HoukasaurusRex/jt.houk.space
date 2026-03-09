@@ -5,6 +5,22 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@anthropic-ai/sdk@npm:^0.78.0":
+  version: 0.78.0
+  resolution: "@anthropic-ai/sdk@npm:0.78.0"
+  dependencies:
+    json-schema-to-ts: "npm:^3.1.1"
+  peerDependencies:
+    zod: ^3.25.0 || ^4.0.0
+  peerDependenciesMeta:
+    zod:
+      optional: true
+  bin:
+    anthropic-ai-sdk: bin/cli
+  checksum: 10c0/a43c83047d0f6ac8d50938e8a07aee27b8891cf51011fcbdb07159996762f262734e4839df00e57f713e25c8c740424939e13c91e6b3f5b12879b9cde1d9c835
+  languageName: node
+  linkType: hard
+
 "@apideck/better-ajv-errors@npm:^0.3.1":
   version: 0.3.6
   resolution: "@apideck/better-ajv-errors@npm:0.3.6"
@@ -1107,7 +1123,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.11.2":
+"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.18.3":
   version: 7.28.6
   resolution: "@babel/runtime@npm:7.28.6"
   checksum: 10c0/358cf2429992ac1c466df1a21c1601d595c46930a13c1d4662fde908d44ee78ec3c183aaff513ecb01ef8c55c3624afe0309eeeb34715672dbfadb7feedb2c0d
@@ -7303,6 +7319,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-schema-to-ts@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "json-schema-to-ts@npm:3.1.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.18.3"
+    ts-algebra: "npm:^2.0.0"
+  checksum: 10c0/609bae04aa5e860a11b6d30ccf41445fae1c7f66fb600c1d170257cf33aa468aa9d03aa046428c3688aff0ff450c2b0c76584b66fa4a5d0da8e33799e4c439a6
+  languageName: node
+  linkType: hard
+
 "json-schema-traverse@npm:^0.4.1":
   version: 0.4.1
   resolution: "json-schema-traverse@npm:0.4.1"
@@ -7404,6 +7430,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "jt.houk.space@workspace:."
   dependencies:
+    "@anthropic-ai/sdk": "npm:^0.78.0"
     "@giscus/vue": "npm:^3.1.1"
     "@netlify/functions": "npm:^5.1.2"
     "@playwright/test": "npm:^1.58.2"
@@ -10758,6 +10785,13 @@ __metadata:
   version: 2.2.0
   resolution: "trough@npm:2.2.0"
   checksum: 10c0/58b671fc970e7867a48514168894396dd94e6d9d6456aca427cc299c004fe67f35ed7172a36449086b2edde10e78a71a284ec0076809add6834fb8f857ccb9b0
+  languageName: node
+  linkType: hard
+
+"ts-algebra@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "ts-algebra@npm:2.0.0"
+  checksum: 10c0/4ae93bec1bada635bba425854eec323dad50b6ffe86bc04ad2d7f9ce3fb129d673dcf483e19a6e70d07a3a9083e6a0a7f4e004bb8d2164cddc60cc9540ba187f
   languageName: node
   linkType: hard
 
