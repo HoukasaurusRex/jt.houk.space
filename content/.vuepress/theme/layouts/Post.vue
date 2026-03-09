@@ -22,7 +22,7 @@
     </template>
     <template #page-content-bottom>
       <div class="post-footer-components">
-        <Newsletter />
+        <Newsletter source="jt.houk.space" />
         <Comments />
       </div>
       <FloatingToc />

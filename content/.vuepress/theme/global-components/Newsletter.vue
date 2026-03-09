@@ -27,8 +27,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const KEILA_FORM_URL = '/api/subscribe'
+const SUBSCRIBE_URL = '/api/subscribe'
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
+
+const props = withDefaults(defineProps<{ source?: string }>(), {
+  source: '',
+})
 
 const mail = ref('')
 const loading = ref(false)
@@ -45,8 +49,10 @@ async function onSubmit() {
   if (!isValidEmail.value || loading.value || submitted.value) return
   loading.value = true
   try {
-    const body = new URLSearchParams({ email: mail.value })
-    await fetch(KEILA_FORM_URL, {
+    const params: Record<string, string> = { email: mail.value }
+    if (props.source) params.source = props.source
+    const body = new URLSearchParams(params)
+    await fetch(SUBSCRIBE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString(),

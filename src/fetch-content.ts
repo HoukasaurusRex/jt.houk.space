@@ -8,7 +8,7 @@ const contentDir = path.join(`${__dirname}/../content`)
 
 const components = {
   Comments: '<Comments />',
-  Newsletter: '<Newsletter />',
+  Newsletter: '<Newsletter source="jt.houk.space" />',
   Cards: '<Cards />',
   Landing: '<Landing />',
 }
