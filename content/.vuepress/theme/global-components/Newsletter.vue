@@ -360,20 +360,15 @@ onUnmounted(() => {
       linear-gradient(#fff 0 0) padding-box,
       linear-gradient(#fff 0 0);
     mask-composite: exclude;
-    transform: translateX(-100%);
-    opacity: 0;
+    animation: shine-sweep 4s ease-in-out infinite;
   }
-}
-
-.newsletter-shine::after {
-  animation: shine-sweep 4s ease-in-out infinite;
 }
 
 @keyframes shine-sweep {
   0% { transform: translateX(-100%); opacity: 1; }
   20% { transform: translateX(100%); opacity: 1; }
-  21% { opacity: 0; }
-  100% { opacity: 0; }
+  21% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(-100%); opacity: 0; }
 }
 
 .newsletter-input {
