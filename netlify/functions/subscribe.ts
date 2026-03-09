@@ -52,14 +52,14 @@ export const handler: Handler = async (event) => {
 
       const updateText = await updateRes.text()
       console.error('Keila update responded with', updateRes.status, updateText.slice(0, 500))
-      return { statusCode: 502, body: 'Subscription failed' }
+      return { statusCode: 502, body: JSON.stringify({ error: 'Subscription failed', status: updateRes.status }) }
     }
 
     const responseText = await res.text()
     console.error('Keila responded with', res.status, responseText.slice(0, 500))
-    return { statusCode: 502, body: 'Subscription failed' }
+    return { statusCode: 502, body: JSON.stringify({ error: 'Subscription failed', status: res.status }) }
   } catch (err) {
     console.error('Subscribe function error:', err)
-    return { statusCode: 500, body: 'Internal error' }
+    return { statusCode: 500, body: JSON.stringify({ error: 'Internal error' }) }
   }
 }
