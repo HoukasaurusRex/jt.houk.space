@@ -70,7 +70,7 @@ async function onSubmit() {
 <style scoped>
 .newsletter {
   max-width: 420px;
-  background-color: var(--foreground-color);
+  background-color: var(--background-color);
   color: var(--text-color);
   margin: auto;
   padding: 30px;
