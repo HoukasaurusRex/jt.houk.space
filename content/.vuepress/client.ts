@@ -10,7 +10,6 @@ import Post from './theme/layouts/Post.vue'
 // Global components registered for use in Markdown files
 const Cards = defineAsyncComponent(() => import('./theme/global-components/Cards.vue'))
 const Card = defineAsyncComponent(() => import('./theme/components/Card.vue'))
-import Toast from './theme/global-components/Toast.vue'
 import Landing from './theme/global-components/Landing.vue'
 
 export default defineClientConfig({
@@ -24,7 +23,6 @@ export default defineClientConfig({
     app.component('Cards', Cards)
     app.component('Card', Card)
     app.component('Landing', Landing)
-    app.component('Toast', Toast)
   },
 
   setup() {

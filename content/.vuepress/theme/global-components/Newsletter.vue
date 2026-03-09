@@ -32,12 +32,14 @@
       :duration="5000"
       @dismiss="errorMsg = ''"
     />
-    <Teleport to="body">
-      <div v-if="showRipple" class="ink-ripple-container">
-        <div ref="ripple1Ref" class="ink-ripple" />
-        <div ref="ripple2Ref" class="ink-ripple" />
-      </div>
-    </Teleport>
+    <ClientOnly>
+      <Teleport to="body">
+        <div v-if="showRipple" class="ink-ripple-container">
+          <div ref="ripple1Ref" class="ink-ripple" />
+          <div ref="ripple2Ref" class="ink-ripple" />
+        </div>
+      </Teleport>
+    </ClientOnly>
   </div>
 </template>
 
@@ -108,8 +110,9 @@ function runTypewriterAnimation() {
     ['Subscribi', 0.09],      // type "i"
     ['Subscribin', 0.11],     // type "n"
     ['Subscribing', 0.08],    // type "g"
-    ['Subscribing.', 0.22],   // brief pause then first dot
-    ['Subscribing..', 0.12],  // second dot
+    ['Subscribing.', 0.3],    // pause before dots (slower)
+    ['Subscribing..', 0.35],  // second dot
+    ['Subscribing...', 0.4],  // third dot
   ]
 
   let t = 0
@@ -118,12 +121,13 @@ function runTypewriterAnimation() {
     tl.call(() => { buttonLabel.value = text }, [], t)
   }
 
-  // After initial sequence, start looping dot animation
+  // After initial sequence, loop all three dots
   tl.call(() => {
-    const dotLoop = gsap.timeline({ repeat: -1, repeatDelay: 0.4 })
+    const dotLoop = gsap.timeline({ repeat: -1, repeatDelay: 0.3 })
     typingTimeline = dotLoop
     dotLoop.call(() => { buttonLabel.value = 'Subscribing.' }, [], 0)
-    dotLoop.call(() => { buttonLabel.value = 'Subscribing..' }, [], 0.12)
+    dotLoop.call(() => { buttonLabel.value = 'Subscribing..' }, [], 0.35)
+    dotLoop.call(() => { buttonLabel.value = 'Subscribing...' }, [], 0.7)
   }, [], t + 0.5)
 }
 
