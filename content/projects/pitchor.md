@@ -82,7 +82,9 @@
 
 ![pitchor.jpg](https://res.cloudinary.com/jthouk/image/upload/v1614250890/pitchor_aa70f7f9c2.jpg)
 
-Pitchor is a WeChat Miniprogram to upload startup investment pitches and match with angel investors for funding. It was created as part of the AngelHack Hackathon in Beijing with two other developers and bootstrapped to MVP functionality within two days, winning 3rd place in the event with over 100 other participants.
+Pitchor is a WeChat Miniprogram to upload startup investment pitches and match with angel investors for funding. It was created as part of the
+AngelHack Hackathon in Beijing with two other developers and bootstrapped to MVP functionality within two days, winning 3rd place in the event with
+over 100 other participants.
 
 ## Features
 
@@ -90,5 +92,3 @@ Pitchor is a WeChat Miniprogram to upload startup investment pitches and match w
 * Short video uploads
 * Matching system for developers, startups, and investors
 * Heatmap of user in your area
-
-

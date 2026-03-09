@@ -102,4 +102,6 @@
 
 [![akkadu.jpg](https://res.cloudinary.com/jthouk/image/upload/v1614250911/akkadu_1d85d70e56.jpg)](https://akkadu.com)
 
-Akkadu is a remote simultaneous interpretation platform that allows audiences of an event to listen to the audio interpretation streams happening in real time for the event they are attending. I worked with a team of developers to create the full stack application, audio streaming function, and cloud-based application scaling.
+Akkadu is a remote simultaneous interpretation platform that allows audiences of an event to listen to the audio interpretation streams happening in
+real time for the event they are attending. I worked with a team of developers to create the full stack application, audio streaming function,
+and cloud-based application scaling.

@@ -97,11 +97,11 @@
 
 ![zentone.jpg](https://res.cloudinary.com/jthouk/image/upload/v1614250903/zentone_56f56cf63a.jpg)
 
-Zentone is a web application sold to a client to host and display slides playing audio presentations for marketing pitches. The slideshows were uploadable by users where it was rendered in PDF.js and could attach audio segments to each slide.
+Zentone is a web application sold to a client to host and display slides playing audio presentations for marketing pitches.
+The slideshows were uploadable by users where it was rendered in PDF.js and could attach audio segments to each slide.
 
 ## Features
 
 * PDF and MP3 uploads
 * Management console for users to control audio segment playback on slides
 * Publishable content to be publicly viewable
-

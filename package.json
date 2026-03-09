@@ -8,6 +8,8 @@
     "fetch": "node --env-file=.env.defaults --experimental-strip-types src/fetch-content.ts",
     "new-journal-entry": "node --experimental-strip-types src/new-journal-entry.ts",
     "lint": "eslint --quiet --fix",
+    "lint:md": "markdownlint-cli2 --fix 'content/**/*.md'",
+    "wrap:md": "node --experimental-strip-types src/wrap-markdown-lines.ts",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "pw:test": "node --env-file=.env.defaults node_modules/.bin/playwright test",
@@ -43,6 +45,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^9.33.0",
     "husky": "^9.1.7",
+    "markdownlint-cli2": "^0.21.0",
     "prettier": "^3.8.1",
     "sass-embedded": "^1.97.3",
     "serve": "^14.2.6",
@@ -51,7 +54,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=25.8.0"
+    "node": ">=22.0.0"
   },
   "repository": {
     "type": "git",

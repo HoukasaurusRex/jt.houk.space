@@ -158,7 +158,8 @@ this room? Build feedback channels that let people report harms, reviewed by som
 
 ## V. Implementation Is the Only Thing That Matters
 
-The [European AI Alliance](https://futurium.ec.europa.eu/en/european-ai-alliance/community-content/writing-organizational-ai-policy-first-step-towards-effective-ai-governance)
+The [European AI
+Alliance](https://futurium.ec.europa.eu/en/european-ai-alliance/community-content/writing-organizational-ai-policy-first-step-towards-effective-ai-governance)
 has found that fewer than 2% of published AI ethics guidelines include concrete implementation examples. Policy documents
 without operational grounding are not governance; they are liability management dressed up as values.
 
@@ -208,5 +209,3 @@ The people in the room.
 | [EU AI Act](https://artificialintelligenceact.eu/) | European Union | Risk classification of AI systems, prohibition of real-time biometric surveillance and social scoring, high-risk system requirements, conformity assessments |
 | [LGPD](https://www.gov.br/secretaria-geral/pt-br/legislacao/lei/2018-1/2018_lei-13709) | Brazil | Consent and legitimate interest as legal bases, data subject rights, data protection officer requirements |
 | [PIPEDA](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/) | Canada | Accountability, consent, limiting collection, safeguards, individual access rights |
-
-

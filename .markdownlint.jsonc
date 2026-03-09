@@ -1,8 +1,22 @@
 {
   "MD013": {
-    "line_length": 150
+    "line_length": 150,
+    "headings": false,
+    "code_blocks": false,
+    "tables": false
   },
-  "MD033": {
-    "allowed_elements": ["Newsletter", "Comments"]
-  }
+  // VuePress uses Vue components and HTML in markdown
+  "MD033": false,
+  // VuePress pages start with frontmatter, not headings
+  "MD041": false,
+  // Projects fetched from CMS have duplicate h1s
+  "MD025": false,
+  // Journal entries use emphasis as subheadings
+  "MD036": false,
+  // CMS-fetched images may lack alt text
+  "MD045": false,
+  // Journal entries reuse section headings across entries
+  "MD024": false,
+  // Compact table formatting from CMS
+  "MD060": false
 }

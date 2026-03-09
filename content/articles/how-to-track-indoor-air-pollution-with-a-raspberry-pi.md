@@ -12,15 +12,22 @@ location: "Beijing"
 image: "https://res.cloudinary.com/jthouk/image/upload/v1613708321/aqipi_a8f2a16357.jpg"
 
 ---
-You ever wonder what's actually in the air you breathe every day? I've lived in Beijing for a few years now and I'm always running a couple of air purifiers in my home, but how well do they actually work? Sure some have built in sensors, but how accurate are they? Well with a little Python, a Raspberry Pi, and some moxie, we can find our own answers.
+You ever wonder what's actually in the air you breathe every day? I've lived in Beijing for a few years now and I'm always running a couple of air
+purifiers in my home, but how well do they actually work? Sure some have built in sensors, but how accurate are they? Well with a little Python,
+a Raspberry Pi, and some moxie, we can find our own answers.
 
-This will focus primarily on measuring [PM2.5](https://www.iqair.com/blog/air-quality/pm2-5) and [PM10](https://www.iqair.com/us/blog/air-quality/pm10) in the air and converting the values to an Air Quality Index ([AQI](https://en.wikipedia.org/wiki/Air_quality_index)). For measuring other harmful chemicals like Nitrogen Dioxide (NO2) or Carbon Monoxide (CO), see the "[Adding Sensors](#adding-sensors)" section at the end of the article
+This will focus primarily on measuring [PM2.5](https://www.iqair.com/blog/air-quality/pm2-5) and
+[PM10](https://www.iqair.com/us/blog/air-quality/pm10) in the air and converting the values to an Air Quality Index
+([AQI](https://en.wikipedia.org/wiki/Air_quality_index)). For measuring other harmful chemicals like Nitrogen Dioxide (NO2) or Carbon Monoxide (CO),
+see the "[Adding Sensors](#adding-sensors)" section at the end of the article
 
 ## Prerequisites
 
-- [Raspberry Pi](https://www.raspberrypi.org/products/) Configured, [Headless](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) (I used a 3b, but anything with a USB port should do just fine, though built in wifi is recommended for portability) (~$35)
+- [Raspberry Pi](https://www.raspberrypi.org/products/) Configured,
+[Headless](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) (I used a 3b, but anything with a USB port should do just
+fine, though built in wifi is recommended for portability) (~$35)
 - [SDS011 PM Sensor](https://www.amazon.com/SDS011-Quality-Detection-Conditioning-Monitor/dp/B07FSDMRR5) (~$15)
-- [Adafruit IO](https://io.adafruit.com/) Account (free) 
+- [Adafruit IO](https://io.adafruit.com/) Account (free)
 
 ## Configure the Raspberry Pi
 
@@ -28,15 +35,21 @@ Now we can get down to business. Power up your Raspberry Pi, attach your sensor,
 
 ### Setting up Adafruit IO
 
-Create an account on [Adafruit IO](https://io.adafruit.com/). This is a great site to collect data streams and display them on custom dashboards. After you've created an account, let's create a couple of feeds. We'll need three: a pm2.5, a pm10, and a log feed (I named mine "beijing-twofive", "beijing-ten", and "logs" respectively). After that, you can either create a dashboard now or later and play around with how you want to display the data. This is how I have mine set up.
+Create an account on [Adafruit IO](https://io.adafruit.com/). This is a great site to collect data streams and display them on custom dashboards.
+After you've created an account, let's create a couple of feeds. We'll need three: a pm2.5, a pm10, and a log feed (I named mine "beijing-twofive",
+"beijing-ten", and "logs" respectively). After that, you can either create a dashboard now or later and play around with how you want to display the
+data. This is how I have mine set up.
 
 ![Adafruit IO Dashboard](https://res.cloudinary.com/jthouk/image/upload/v1605250759/x4j2mf7ta1mdpdxpk6cy.jpg)
 
 ### Configure your Raspberry Pi
 
-[Configure](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) your Raspberry Pi with the installers on the product website. Once configured with either Raspbian or a Linux distribution of your choice (this project should be compatible with most distributions, but it's only been tested on Debian, Raspbian, and MacOS), install the following dependencies:
+[Configure](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) your Raspberry Pi with the installers on the product
+website. Once configured with either Raspbian or a Linux distribution of your choice (this project should be compatible with most distributions,
+but it's only been tested on Debian, Raspbian, and MacOS), install the following dependencies:
 
-- [Python3](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-debian-10) (you can skip the virtual env setup for our purposes)
+- [Python3](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-debian-10)
+(you can skip the virtual env setup for our purposes)
 - [Git](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-debian-10)
 
 ### Download the Code and Install Dependencies
@@ -68,7 +81,8 @@ Both `CITY` and `AIO_LOGS` are feed names created in the AdafruitIO dashboard.
 
 ### Run the Code
 
-Now you can run the code. I like to use [screen](https://www.howtogeek.com/662422/how-to-use-linuxs-screen-command/) to save my terminal process to be accessible later, but you can just run it in your main shell as well.
+Now you can run the code. I like to use [screen](https://www.howtogeek.com/662422/how-to-use-linuxs-screen-command/) to save my terminal process to be
+accessible later, but you can just run it in your main shell as well.
 
 ```sh
 screen -S aqipi
@@ -84,9 +98,11 @@ There won't be any output in your terminal, but you should be able to go to your
 
 ### Sensor Placement
 
-Standard advice for locating your sensor is that it should be outside and four metres above ground level. That’s good advice for general environmental monitoring; however, we’re not necessarily interested in general environmental monitoring – we’re interested in knowing what we’re breathing in.
+Standard advice for locating your sensor is that it should be outside and four metres above ground level. That’s good advice for general environmental
+monitoring; however, we’re not necessarily interested in general environmental monitoring – we’re interested in knowing what we’re breathing in.
 
-Choose a location where you spend most of your time or where you might be particularly interested in the general air quality (e.g. in the kitchen or garage) and place your sensor in a safe place where it won't be affected by excessive moisture or humidity.
+Choose a location where you spend most of your time or where you might be particularly interested in the general air quality (e.g.
+in the kitchen or garage) and place your sensor in a safe place where it won't be affected by excessive moisture or humidity.
 
 ## Understanding the Code
 
@@ -125,13 +141,15 @@ def read_data():
 
 ### Converting PPM^2 to AQI
 
-This is converting to the [US EPA AQI](https://en.wikipedia.org/wiki/Air_quality_index), in order to use a different standard, you might need to tweak the formula to fit your country's AQI model.
+This is converting to the [US EPA AQI](https://en.wikipedia.org/wiki/Air_quality_index), in order to use a different standard,
+you might need to tweak the formula to fit your country's AQI model.
 
 ![US EPA AQI Formula: I = (I_high - I_low) / (C_high - C_low) * (C - C_low) + I_low](https://res.cloudinary.com/jthouk/image/upload/v1605257657/snz4jmfdnkdugzmxubus.png)
 
 ### Exponential Backoff
 
-This repo implements an exponential backoff policy to retry connections after an exponentially longer period to account for common network errors or connection issues with your sensor.
+This repo implements an exponential backoff policy to retry connections after an exponentially longer period to account for common network errors or
+connection issues with your sensor.
 
 ```python
 def exponential_backoff(n):
@@ -140,17 +158,24 @@ def exponential_backoff(n):
 
 ## Results
 
-First testing against the air quality outside, make sure it seems to match up with [IQ Air's](https://www.iqair.com/air-quality-map) Air Quality Index. 
+First testing against the air quality outside, make sure it seems to match up with [IQ Air's](https://www.iqair.com/air-quality-map)
+Air Quality Index.
 
-After a few weeks of running the sensor, it seems the sensors on my air purifiers would often underreport pm2.5 values by as much as 50% and were seldom correlated with each other. The Raspberry Pi on the other hand, filtering out for data spikes, seems to respond very reasonably to real world phenomena such as rising with the outdoor AQI and falling linearly when the purifiers are all left on high for a few hours. I have also learned how much barometric pressure differences will also increase the penetration of outdoor pollution to my home. Interestingly, poor kitchen ventilation also causes quite noticeable spikes in indoor air pollution!
+After a few weeks of running the sensor, it seems the sensors on my air purifiers would often underreport pm2.5 values by as much as 50% and were
+seldom correlated with each other. The Raspberry Pi on the other hand, filtering out for data spikes, seems to respond very reasonably to real world
+phenomena such as rising with the outdoor AQI and falling linearly when the purifiers are all left on high for a few hours.
+I have also learned how much barometric pressure differences will also increase the penetration of outdoor pollution to my home. Interestingly,
+poor kitchen ventilation also causes quite noticeable spikes in indoor air pollution!
 
 I've been using this sensor a few months now and have since felt much more empowered with managing the quality of the air I breathe each day.
 
 ## Adding Sensors
 
-This project can be easily extended by adding additional sensors, such as an Ozone (O3), Carbon Monoxide (CO), Nitrogen Dioxide (NO2), or any other harmful air pollutants that might be more relevant to your area. If you do, please let me know and I'd like to compare your findings and update the AQIPi repository to extend the project.
+This project can be easily extended by adding additional sensors, such as an Ozone (O3), Carbon Monoxide (CO), Nitrogen Dioxide (NO2),
+or any other harmful air pollutants that might be more relevant to your area. If you do, please let me know and I'd like to compare your findings and
+update the AQIPi repository to extend the project.
 
 ## Acknowledgements
 
-Big thanks to Andrew Gregory from [raspberrypi.org](https://www.raspberrypi.org/blog/monitor-air-quality-with-a-raspberry-pi/) on his work providing the inspiration for this project.
-
+Big thanks to Andrew Gregory from [raspberrypi.org](https://www.raspberrypi.org/blog/monitor-air-quality-with-a-raspberry-pi/)
+on his work providing the inspiration for this project.

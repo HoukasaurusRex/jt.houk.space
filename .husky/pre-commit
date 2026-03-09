@@ -1,2 +1,4 @@
 yarn lint
+yarn wrap:md
+yarn lint:md
 yarn build
