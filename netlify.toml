@@ -77,8 +77,8 @@
     on404 = "error"
 
     # Change this key to restart from scratch
-    # Updated to v10 after tag restructuring (Mar 2026)
-    cacheKey = "v10"
+    # Updated to v11 after tag restructuring (Mar 2026)
+    cacheKey = "v11"
 
     # Extra diagnostic logging for development
     debugMode = false
