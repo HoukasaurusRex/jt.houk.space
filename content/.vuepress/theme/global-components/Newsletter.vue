@@ -347,7 +347,7 @@ onUnmounted(() => {
   &::after {
     content: '';
     position: absolute;
-    inset: -2px;
+    inset: 0;
     border-radius: inherit;
     border: 2px solid transparent;
     background: linear-gradient(
