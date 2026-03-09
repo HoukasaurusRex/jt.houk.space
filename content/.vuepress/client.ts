@@ -1,5 +1,5 @@
 import { defineClientConfig } from 'vuepress/client'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import './theme/styles/index.css'
 
 // Custom layouts
@@ -23,7 +23,15 @@ export default defineClientConfig({
     app.component('Landing', Landing)
   },
 
-  setup() {},
+  setup() {
+    onMounted(() => {
+      try {
+        if (localStorage.getItem('journal-unlocked') === 'true') {
+          document.documentElement.classList.add('journal-unlocked')
+        }
+      } catch {}
+    })
+  },
 
   rootComponents: [],
 })

@@ -2575,6 +2575,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cypress@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "@types/cypress@npm:1.1.6"
+  dependencies:
+    cypress: "npm:*"
+  checksum: 10c0/50925d0eccd88045c84816a38486472e9f46a35945639b312275769742f7b4348732f5233c86bd7fb816cf8f98b562ca06bc9e7704434bca19666cfbd331f288
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.1.12":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -4676,7 +4685,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^15.11.0":
+"cypress@npm:*, cypress@npm:^15.11.0":
   version: 15.11.0
   resolution: "cypress@npm:15.11.0"
   dependencies:
@@ -7270,6 +7279,7 @@ __metadata:
     "@playwright/test": "npm:^1.58.2"
     "@tailwindcss/forms": "npm:^0.5.11"
     "@tailwindcss/vite": "npm:^4.2.1"
+    "@types/cypress": "npm:^1.1.6"
     "@types/node": "npm:^25.3.5"
     "@typescript-eslint/eslint-plugin": "npm:^8.56.1"
     "@typescript-eslint/parser": "npm:^8.56.1"

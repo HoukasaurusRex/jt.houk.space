@@ -16,8 +16,8 @@ describe('Navigation and layout', () => {
       cy.get('nav a, .vp-navbar a').contains('RaW').should('be.visible')
     })
 
-    it('renders Journal link', () => {
-      cy.get('nav a, .vp-navbar a').contains('Journal').should('be.visible')
+    it('renders Journal link (hidden until unlocked)', () => {
+      cy.get('nav a, .vp-navbar a').contains('Journal').should('exist')
     })
 
     it('Articles link navigates to /articles/', () => {
