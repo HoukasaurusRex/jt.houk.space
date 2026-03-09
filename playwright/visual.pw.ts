@@ -74,6 +74,62 @@ test.describe('Landing page', () => {
     })
     expect(decor).toBe('none')
   })
+
+  test('terminal prefix is visible with > character', async ({ page }) => {
+    const prefix = page.locator('.terminal-prefix')
+    await expect(prefix).toBeVisible()
+    const text = await prefix.textContent()
+    expect(text).toContain('>')
+  })
+
+  test('typing activates editing mode', async ({ page }) => {
+    const h1 = page.locator('h1.typewriter')
+    const originalText = await h1.textContent()
+    await page.keyboard.type('ls')
+    await expect(h1).not.toHaveText(originalText!)
+    await expect(h1).toHaveClass(/editing/)
+  })
+
+  test('ls command shows output with directory listing', async ({ page }) => {
+    await page.keyboard.type('ls')
+    await page.keyboard.press('Enter')
+    const output = page.locator('.terminal-output')
+    await expect(output).toBeVisible()
+    const text = await output.textContent()
+    expect(text).toContain('articles')
+    expect(text).toContain('journal')
+  })
+
+  test('unknown command shows error message', async ({ page }) => {
+    await page.keyboard.type('foo')
+    await page.keyboard.press('Enter')
+    const output = page.locator('.terminal-output')
+    await expect(output).toBeVisible()
+    const text = await output.textContent()
+    expect(text).toContain('unknown command')
+    expect(text).toContain('foo')
+  })
+
+  test('journal navbar item is hidden by default', async ({ page }) => {
+    const journalLink = page.locator('.vp-navbar-item a[href="/journal/"]')
+    await expect(journalLink).toBeHidden()
+  })
+
+  test('cd journal unlocks journal navbar item', async ({ page }) => {
+    await page.keyboard.type('cd journal')
+    await page.keyboard.press('Enter')
+    await page.waitForTimeout(500)
+    const journalLink = page.locator('.vp-navbar-item a[href="/journal/"]')
+    await expect(journalLink).toBeVisible()
+  })
+
+  test('viewport still fits after terminal output', async ({ page }) => {
+    await page.keyboard.type('help')
+    await page.keyboard.press('Enter')
+    await page.waitForTimeout(500)
+    const scrollHeight = await page.evaluate(() => document.body.scrollHeight)
+    expect(scrollHeight).toBeLessThanOrEqual(720)
+  })
 })
 
 test.describe('Articles listing', () => {

@@ -42,6 +42,14 @@ body {
   }
 }
 
+/* Journal navbar item: hidden by default, revealed by useJournalUnlock */
+.vp-navbar-item:has(a[href="/journal/"]) {
+  display: none;
+}
+.journal-unlocked .vp-navbar-item:has(a[href="/journal/"]) {
+  display: inline-block;
+}
+
 .vp-toggle-sidebar-button {
   top: calc((var(--navbar-height) - 2.45rem) / 2) !important;
 }

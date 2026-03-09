@@ -56,8 +56,8 @@ export default defineUserConfig({
     navbar: [
       { text: 'Articles', link: '/articles/' },
       { text: 'About', link: '/about/' },
+      { text: 'Journal', link: '/journal/' },
       { text: 'RaW', link: 'https://rulesaswrittenshow.com' },
-      // { text: 'Get In Touch', link: 'mailto:jt@houk.space?subject=Hello%20From%20Your%20Site&body=' },
     ],
     sidebar: false,
     editLink: false,
@@ -69,7 +69,7 @@ export default defineUserConfig({
   }),
 
   extendsPage(page) {
-    if (page.filePathRelative?.startsWith('articles/') && !page.frontmatter.layout) {
+    if ((page.filePathRelative?.startsWith('articles/') || page.filePathRelative?.startsWith('journal/')) && !page.frontmatter.layout) {
       page.frontmatter.layout = 'Post'
     }
   },
@@ -87,9 +87,11 @@ export default defineUserConfig({
         image: (frontmatter.image as string) || '',
         location: (frontmatter.location as string) || '',
       }),
-      // Only include published markdown files under articles/
+      // Only include published markdown files under articles/ or journal/
       filter: ({ filePathRelative }) =>
-        !!(filePathRelative && filePathRelative.startsWith('articles/') && !filePathRelative.endsWith('.draft.md')),
+        !!(filePathRelative &&
+          (filePathRelative.startsWith('articles/') || filePathRelative.startsWith('journal/')) &&
+          !filePathRelative.endsWith('.draft.md')),
       category: [
         {
           key: 'tag',
@@ -114,7 +116,20 @@ export default defineUserConfig({
             !!(filePathRelative && filePathRelative.startsWith('articles/')),
           path: '/articles/',
           layout: 'BlogArticles',
-          frontmatter: () => ({ title: 'Articles' }),
+          frontmatter: () => ({ title: 'Articles', blogType: 'articles' }),
+        },
+        {
+          key: 'journal',
+          sorter: (a, b) => {
+            const aTime = new Date((a.frontmatter.created_at as string) || 0).getTime()
+            const bTime = new Date((b.frontmatter.created_at as string) || 0).getTime()
+            return bTime - aTime
+          },
+          filter: ({ filePathRelative }) =>
+            !!(filePathRelative && filePathRelative.startsWith('journal/')),
+          path: '/journal/',
+          layout: 'BlogArticles',
+          frontmatter: () => ({ title: 'Journal', blogType: 'journal' }),
         },
       ],
       hotReload: !isProd,

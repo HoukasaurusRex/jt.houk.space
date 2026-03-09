@@ -60,18 +60,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useBlogType, useBlogCategory } from '@vuepress/plugin-blog/client'
-import { useRoute } from 'vuepress/client'
+import { useRoute, usePageFrontmatter } from 'vuepress/client'
 import Layout from '@vuepress/theme-default/layouts/Layout.vue'
 
 const route = useRoute()
-const type = useBlogType('articles')
+const frontmatter = usePageFrontmatter()
+const articlesType = useBlogType('articles')
+const journalType = useBlogType('journal')
 const category = useBlogCategory('tag')
 
 const articles = computed(() => {
   if (route.path.startsWith('/tag/') && category.value.currentItems) {
     return category.value.currentItems
   }
-  return type.value.items
+  const key = (frontmatter.value.blogType as string) || 'articles'
+  return key === 'journal' ? journalType.value.items : articlesType.value.items
 })
 
 function slugify(text: string): string {
