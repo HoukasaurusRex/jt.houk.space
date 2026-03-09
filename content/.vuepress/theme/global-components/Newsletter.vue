@@ -55,16 +55,14 @@ const STORAGE_KEY = 'newsletter-subscribed'
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
 const ERROR_MESSAGES = [
-  "Well, that didn't work. Mind trying again?",
-  'Something went sideways. Give it another shot?',
-  'The internet gremlins struck. One more try?',
-  "Hmm, that didn't land. Try again in a sec?",
-  'Subscription hiccup. Shall we try once more?',
+  'Well that sucks',
+  'My bad, maybe try again?',
+  'I think there\'s a house elf messing with the server. Let me get the elf stick.',
+  'Dang',
 ]
 
-function randomErrorMessage(): string {
-  return ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)]
-}
+const randomErrorMessage = (): string =>
+  ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)]
 
 const props = withDefaults(defineProps<{ source?: string }>(), {
   source: '',
@@ -91,14 +89,10 @@ const isValidEmail = computed(() => emailRegex.test(mail.value))
 let observer: IntersectionObserver | null = null
 let typingTimeline: gsap.core.Timeline | null = null
 
-// Compute default button label
-function getDefaultLabel(): string {
-  if (previouslySubscribed.value) return 'Subscribe... again?'
-  return 'Subscribe'
-}
+const getDefaultLabel = (): string =>
+  previouslySubscribed.value ? 'Subscribe... again?' : 'Subscribe'
 
-// --- IntersectionObserver for border glow ---
-function setupObserver() {
+const setupObserver = () => {
   if (!wrapperRef.value) return
   observer = new IntersectionObserver(
     ([entry]) => {
@@ -109,8 +103,7 @@ function setupObserver() {
   observer.observe(wrapperRef.value)
 }
 
-// --- Typewriter loading animation ---
-function runTypewriterAnimation() {
+const runTypewriterAnimation = () => {
   isTyping.value = true
 
   const tl = gsap.timeline()
@@ -143,7 +136,7 @@ function runTypewriterAnimation() {
   }, [], t + 0.5)
 }
 
-function resetTypewriter() {
+const resetTypewriter = () => {
   if (typingTimeline) {
     typingTimeline.kill()
     typingTimeline = null
@@ -151,8 +144,7 @@ function resetTypewriter() {
   isTyping.value = false
 }
 
-// --- Success animations ---
-function playSuccessAnimation() {
+const playSuccessAnimation = () => {
   if (!wrapperRef.value) return
   const el = wrapperRef.value
 
@@ -198,8 +190,7 @@ function playSuccessAnimation() {
   tl.call(() => playInkRipple(), [], '-=0.6')
 }
 
-// --- Ink ripple celebration ---
-function playInkRipple() {
+const playInkRipple = () => {
   if (!btnRef.value) return
   const rect = btnRef.value.getBoundingClientRect()
   const cx = rect.left + rect.width / 2
@@ -260,8 +251,7 @@ function playInkRipple() {
   })
 }
 
-// --- Submit handler ---
-async function onSubmit() {
+const onSubmit = async () => {
   if (!isValidEmail.value || loading.value || submitted.value) return
   errorMsg.value = ''
   loading.value = true
