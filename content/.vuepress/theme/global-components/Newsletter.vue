@@ -167,12 +167,20 @@ function playSuccessAnimation() {
     ease: 'elastic.out(1, 0.4)',
   })
 
-  // 3. Glow settles
+  // 3. Hold intense glow briefly then settle to warm persistent state
   tl.to(el, {
-    boxShadow: '0 0 15px hsla(327,76%,64%,0.12)',
-    duration: 0.8,
+    boxShadow: '0 0 25px hsla(327,76%,64%,0.35), 0 0 50px hsla(327,76%,64%,0.15)',
+    borderColor: 'hsla(327,76%,64%,0.5)',
+    duration: 0.6,
     ease: 'power1.out',
   }, '-=0.2')
+
+  tl.to(el, {
+    boxShadow: '0 0 12px hsla(327,76%,64%,0.1)',
+    borderColor: 'hsla(327,76%,64%,0.2)',
+    duration: 1.2,
+    ease: 'power2.out',
+  })
 
   // 4. Trigger ink ripple mid-sequence
   tl.call(() => playInkRipple(), [], '-=0.6')
@@ -355,14 +363,14 @@ onUnmounted(() => {
   }
 }
 
-.newsletter--visible .newsletter-shine::after {
-  animation: shine-sweep 6s ease-in-out infinite;
+.newsletter-shine::after {
+  animation: shine-sweep 4s ease-in-out infinite;
 }
 
 @keyframes shine-sweep {
-  0% { transform: translateX(-100%); opacity: 1; }
-  15% { transform: translateX(100%); opacity: 1; }
-  16% { opacity: 0; }
+  0% { transform: translateX(-100%); opacity: 0.6; }
+  20% { transform: translateX(100%); opacity: 0.6; }
+  21% { opacity: 0; }
   100% { opacity: 0; }
 }
 
