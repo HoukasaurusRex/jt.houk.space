@@ -207,7 +207,7 @@ function formatDate(date: Date | string): string {
 }
 
 @media (min-width: 640px) {
-  .card-layout {
+  .card-layout:has(.card-image-link) {
     grid-template-columns: 200px 1fr;
     gap: 1.25rem;
   }
