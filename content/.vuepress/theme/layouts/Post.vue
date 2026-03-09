@@ -23,6 +23,7 @@
     <template #page-content-bottom>
       <div class="post-footer-components">
         <Newsletter source="jt.houk.space" />
+        <RecommendedReads />
         <Comments />
       </div>
       <FloatingToc />
@@ -36,6 +37,7 @@ import { usePageData } from '@vuepress/client'
 import Layout from '@vuepress/theme-default/layouts/Layout.vue'
 import Notification from '../components/Notification.vue'
 import FloatingToc from '../components/FloatingToc.vue'
+import RecommendedReads from '../components/RecommendedReads.vue'
 import Newsletter from '../global-components/Newsletter.vue'
 import Comments from '../global-components/Comments.vue'
 
