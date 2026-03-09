@@ -111,7 +111,7 @@ test.describe('Landing page', () => {
   })
 
   test('journal navbar item is hidden by default', async ({ page }) => {
-    const journalLink = page.locator('.vp-navbar-item a[href="/journal/"]')
+    const journalLink = page.locator('.vp-navbar .vp-navbar-item a[href="/journal/"]')
     await expect(journalLink).toBeHidden()
   })
 
@@ -119,7 +119,7 @@ test.describe('Landing page', () => {
     await page.keyboard.type('cd journal')
     await page.keyboard.press('Enter')
     await page.waitForTimeout(500)
-    const journalLink = page.locator('.vp-navbar-item a[href="/journal/"]')
+    const journalLink = page.locator('.vp-navbar .vp-navbar-item a[href="/journal/"]')
     await expect(journalLink).toBeVisible()
   })
 
