@@ -6,7 +6,8 @@
     "dev": "vuepress dev content",
     "build": "vuepress build content",
     "fetch": "node --env-file=.env.defaults --experimental-strip-types src/fetch-content.ts",
-    "new-journal-entry": "node --experimental-strip-types src/new-journal-entry.ts",
+    "new-entry": "node --env-file=.env.defaults --experimental-strip-types src/new-entry.ts",
+    "new-journal-entry": "node --experimental-strip-types src/new-entry.ts journal",
     "lint": "eslint --quiet --fix",
     "lint:md": "markdownlint-cli2 --fix 'content/**/*.md'",
     "wrap:md": "node --experimental-strip-types src/wrap-markdown-lines.ts",
@@ -18,6 +19,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@giscus/vue": "^3.1.1",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/vite": "^4.2.1",
