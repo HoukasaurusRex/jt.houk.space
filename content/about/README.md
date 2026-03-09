@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&theme=radical&height=300&section=header&text=HoukasaurusRex&fontSize=90)
+![header](/header-wave.svg)
 
 <img src="https://raw.githubusercontent.com/HoukasaurusRex/HoukasaurusRex/master/assets/8bitme.gif" alt="" align="right" width="250">
 

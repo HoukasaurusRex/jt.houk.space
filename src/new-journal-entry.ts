@@ -11,7 +11,7 @@ const createNewJournalEntry = () => {
   }).format(today)
 
   const fileName = `${dateSlug}.md`
-  const dirPath = path.join(process.cwd(), 'content', 'dev-log')
+  const dirPath = path.join(process.cwd(), 'content', 'journal')
   const filePath = path.join(dirPath, fileName)
 
   // Ensure directory exists
@@ -28,16 +28,14 @@ const createNewJournalEntry = () => {
   // Create file with basic frontmatter
   const content = `---
 title: "${longDate}"
-category: "Software Development"
 created_at: "${isoDate}"
 updated_at: "${isoDate}"
-date: "${dateSlug}"
 tags:
   - ""
 summary: ""
 author: "JT Houk"
 location: "Montreal"
-images: []
+image: ""
 ---
 
 `
