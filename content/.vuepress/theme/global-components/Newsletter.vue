@@ -25,6 +25,11 @@
     >
       <span class="btn-label">{{ buttonLabel }}</span>
     </button>
+    <transition name="subtext-slide" mode="out-in">
+      <span v-if="slowSubtext" :key="slowSubtext" class="newsletter-subtext">
+        {{ slowSubtext }}
+      </span>
+    </transition>
     <Toast
       v-if="errorMsg"
       :message="errorMsg"
@@ -57,9 +62,21 @@ const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]
 const ERROR_MESSAGES = [
   'Well that sucks',
   'My bad, maybe try again?',
+  'Dang elves again',
   'I think there\'s a house elf messing with the server. Let me get the elf stick.',
   'Dang',
 ]
+
+const SLOW_MESSAGES = [
+  'Bear with me here',
+  'The mailserver is sleeping, give her some time to wake up',
+  'Let me knock on the door to see if she\'s awake',
+  "You know what, I got your email and I'll try delivering it to her myself when she's up",
+]
+
+const SLOW_INTERVAL_MS = 6000
+// 3s initial delay + 4 messages × 6s each = 27s before we give up
+const SLOW_TIMEOUT_MS = 3000 + SLOW_MESSAGES.length * SLOW_INTERVAL_MS
 
 const randomErrorMessage = (): string =>
   ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)]
@@ -83,11 +100,14 @@ const isTyping = ref(false)
 const showRipple = ref(false)
 
 const buttonLabel = ref('Subscribe')
+const slowSubtext = ref('')
 
 const isValidEmail = computed(() => emailRegex.test(mail.value))
 
 let observer: IntersectionObserver | null = null
 let typingTimeline: gsap.core.Timeline | null = null
+let slowTimer: ReturnType<typeof setTimeout> | null = null
+let slowIndex = 0
 
 const getDefaultLabel = (): string =>
   previouslySubscribed.value ? 'Subscribe... again?' : 'Subscribe'
@@ -134,6 +154,27 @@ const runTypewriterAnimation = () => {
     dotLoop.call(() => { buttonLabel.value = 'Subscribing..' }, [], 0.35)
     dotLoop.call(() => { buttonLabel.value = 'Subscribing...' }, [], 0.7)
   }, [], t + 0.5)
+}
+
+const startSlowSubtext = () => {
+  slowIndex = 0
+  slowSubtext.value = ''
+  const showNext = () => {
+    if (slowIndex >= SLOW_MESSAGES.length) return
+    slowSubtext.value = SLOW_MESSAGES[slowIndex]
+    slowIndex++
+    slowTimer = setTimeout(showNext, SLOW_INTERVAL_MS)
+  }
+  slowTimer = setTimeout(showNext, 3000)
+}
+
+const stopSlowSubtext = () => {
+  if (slowTimer) {
+    clearTimeout(slowTimer)
+    slowTimer = null
+  }
+  slowSubtext.value = ''
+  slowIndex = 0
 }
 
 const resetTypewriter = () => {
@@ -257,8 +298,12 @@ const onSubmit = async () => {
   loading.value = true
 
   runTypewriterAnimation()
+  startSlowSubtext()
 
   try {
+
+    const controller = new AbortController()
+    const abortTimer = setTimeout(() => controller.abort(), SLOW_TIMEOUT_MS)
     const params: Record<string, string> = { email: mail.value }
     if (props.source) params.source = props.source
     const body = new URLSearchParams(params)
@@ -266,7 +311,9 @@ const onSubmit = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString(),
+      signal: controller.signal,
     })
+    clearTimeout(abortTimer)
 
     if (!res.ok) {
       throw new Error(`Subscribe failed: ${res.status}`)
@@ -293,6 +340,7 @@ const onSubmit = async () => {
     errorMsg.value = randomErrorMessage()
   } finally {
     loading.value = false
+    stopSlowSubtext()
   }
 }
 
@@ -312,6 +360,7 @@ onUnmounted(() => {
     observer = null
   }
   resetTypewriter()
+  stopSlowSubtext()
 })
 </script>
 
@@ -423,6 +472,32 @@ onUnmounted(() => {
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* Slow-loading subtext */
+.newsletter-subtext {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  color: var(--text-color-75, hsla(180, 33%, 10%, 0.75));
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.3;
+}
+
+.subtext-slide-enter-active {
+  transition: all 0.3s ease-out;
+}
+.subtext-slide-leave-active {
+  transition: all 0.2s ease-in;
+}
+.subtext-slide-enter-from {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.subtext-slide-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
 }
 
 /* Ink ripple */
