@@ -15,7 +15,7 @@
             v-for="tag in tags"
             :key="tag"
             :to="'/tag/' + slugify(tag) + '/'"
-            class="post-tag"
+            class="pill"
           >{{ tag }}</router-link>
         </div>
       </header>
@@ -36,6 +36,7 @@ import { computed } from 'vue'
 import { usePageData } from '@vuepress/client'
 import Layout from '@vuepress/theme-default/layouts/Layout.vue'
 import Notification from '../components/Notification.vue'
+import { formatDate, slugify } from '../utils/format'
 import FloatingToc from '../components/FloatingToc.vue'
 import RecommendedReads from '../components/RecommendedReads.vue'
 import Newsletter from '../global-components/Newsletter.vue'
@@ -66,13 +67,7 @@ const tags = computed(() =>
   (page.value.frontmatter.tags as string[]) || []
 )
 
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-}
 
-function formatDate(d: Date): string {
-  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(d)
-}
 </script>
 
 <style scoped>
@@ -122,26 +117,6 @@ function formatDate(d: Date): string {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
-}
-
-.post-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
-  border-radius: 2px;
-  border: 1px solid var(--accent-color);
-  color: var(--accent-color);
-  background: transparent;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-
-  &:hover {
-    background: var(--accent-color);
-    color: #fff;
-  }
 }
 
 .post-footer-components {

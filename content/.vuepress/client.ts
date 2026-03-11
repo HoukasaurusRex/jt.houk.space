@@ -4,8 +4,8 @@ import './theme/styles/index.css'
 
 // Custom layouts
 import BlogArticles from './theme/layouts/BlogArticles.vue'
-import NotFound from './theme/layouts/NotFound.vue'
 import Post from './theme/layouts/Post.vue'
+const NotFound = defineAsyncComponent(() => import('./theme/layouts/NotFound.vue'))
 
 // Global components registered for use in Markdown files
 const Cards = defineAsyncComponent(() => import('./theme/global-components/Cards.vue'))

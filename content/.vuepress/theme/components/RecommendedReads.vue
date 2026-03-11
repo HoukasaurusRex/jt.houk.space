@@ -18,7 +18,7 @@
             <span
               v-for="tag in article.info.tag"
               :key="tag"
-              class="pill"
+              class="pill pill-sm"
               :class="{ 'pill-matched': article.sharedTags.includes(tag) }"
             >{{ tag }}</span>
           </div>
@@ -35,14 +35,9 @@
 
 <script setup lang="ts">
 import { useRecommendedArticles } from '../composables/useRecommendedArticles'
+import { formatDate } from '../utils/format'
 
 const recommended = useRecommendedArticles()
-
-function formatDate(date: Date | string): string {
-  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(
-    typeof date === 'string' ? new Date(date) : date
-  )
-}
 </script>
 
 <style scoped>
@@ -152,24 +147,6 @@ function formatDate(date: Date | string): string {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
-}
-
-.pill {
-  display: inline-block;
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  padding: 0.1rem 0.4rem;
-  border-radius: 2px;
-  border: 1px solid var(--accent-color);
-  color: var(--accent-color);
-  background: transparent;
-}
-
-.pill-matched {
-  background: var(--accent-color);
-  color: #fff;
 }
 
 .rec-fallback {

@@ -62,6 +62,7 @@ import { computed } from 'vue'
 import { useBlogType, useBlogCategory } from '@vuepress/plugin-blog/client'
 import { useRoute, usePageFrontmatter } from 'vuepress/client'
 import Layout from '@vuepress/theme-default/layouts/Layout.vue'
+import { formatDate, slugify } from '../utils/format'
 
 const route = useRoute()
 const frontmatter = usePageFrontmatter()
@@ -77,15 +78,7 @@ const articles = computed(() => {
   return key === 'journal' ? journalType.value.items : articlesType.value.items
 })
 
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-}
 
-function formatDate(date: Date | string): string {
-  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(
-    typeof date === 'string' ? new Date(date) : date
-  )
-}
 </script>
 
 <style scoped>
@@ -286,24 +279,4 @@ function formatDate(date: Date | string): string {
   margin-top: auto;
 }
 
-/* ── Tag pills (individually clickable) ── */
-.pill {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
-  border-radius: 2px;
-  border: 1px solid var(--accent-color);
-  color: var(--accent-color);
-  background: transparent;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-
-  &:hover {
-    background: var(--accent-color);
-    color: #fff;
-  }
-}
 </style>

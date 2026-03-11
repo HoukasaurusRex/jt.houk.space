@@ -1,18 +1,30 @@
 <template>
-  <div ref="wrapperRef" class="newsletter" :class="{ 'newsletter--visible': isVisible }">
-    <div class="newsletter-shine"></div>
+  <form
+    ref="wrapperRef"
+    class="newsletter"
+    :class="{ 'newsletter--visible': isVisible }"
+    :aria-busy="loading"
+    novalidate
+    @submit.prevent="onSubmit"
+  >
+    <div class="newsletter-shine" aria-hidden="true"></div>
+    <label for="newsletter-email" class="newsletter-label">Email newsletter</label>
     <input
+      id="newsletter-email"
       v-model="mail"
       type="email"
       name="email"
-      aria-label="Email"
       placeholder="Email"
+      inputmode="email"
+      autocomplete="email"
       autocapitalize="off"
       autocorrect="off"
+      required
       data-cy="email"
       class="newsletter-input"
       :disabled="submitted"
-      @keydown.enter="onSubmit"
+      :aria-invalid="mail.length > 0 && !isValidEmail ? true : undefined"
+      aria-describedby="newsletter-status"
     />
     <button
       ref="btnRef"
@@ -21,10 +33,12 @@
       class="newsletter-btn"
       :class="{ 'newsletter-btn--typing': isTyping }"
       :disabled="submitted || loading"
-      @click.prevent="onSubmit"
     >
       <span class="btn-label">{{ buttonLabel }}</span>
     </button>
+    <div id="newsletter-status" aria-live="polite" class="sr-only">
+      {{ statusAnnouncement }}
+    </div>
     <transition name="subtext-slide" mode="out-in">
       <span v-if="slowSubtext" :key="slowSubtext" class="newsletter-subtext">
         {{ slowSubtext }}
@@ -39,13 +53,13 @@
     />
     <ClientOnly>
       <Teleport to="body">
-        <div v-if="showRipple" class="ink-ripple-container">
+        <div v-if="showRipple" class="ink-ripple-container" aria-hidden="true">
           <div ref="ripple1Ref" class="ink-ripple" />
           <div ref="ripple2Ref" class="ink-ripple" />
         </div>
       </Teleport>
     </ClientOnly>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -57,7 +71,6 @@ let gsap: typeof GsapType
 
 const SUBSCRIBE_URL = '/api/subscribe'
 const STORAGE_KEY = 'newsletter-subscribed'
-const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
 const ERROR_MESSAGES = [
   'Well that sucks',
@@ -70,8 +83,9 @@ const ERROR_MESSAGES = [
 const SLOW_MESSAGES = [
   'Bear with me here',
   'The mailserver is sleeping, give her some time to wake up',
+  "I don't pay very much for her so maybe give her a couple seconds",
   'Let me knock on the door to see if she\'s awake',
-  "You know what, I got your email and I'll try delivering it to her myself when she's up",
+  "You know what, I got your message - I'll try delivering it myself when she's up",
 ]
 
 const SLOW_INTERVAL_MS = 6000
@@ -85,7 +99,7 @@ const props = withDefaults(defineProps<{ source?: string }>(), {
   source: '',
 })
 
-const wrapperRef = ref<HTMLElement | null>(null)
+const wrapperRef = ref<HTMLFormElement | null>(null)
 const btnRef = ref<HTMLElement | null>(null)
 const ripple1Ref = ref<HTMLElement | null>(null)
 const ripple2Ref = ref<HTMLElement | null>(null)
@@ -102,7 +116,22 @@ const showRipple = ref(false)
 const buttonLabel = ref('Subscribe')
 const slowSubtext = ref('')
 
-const isValidEmail = computed(() => emailRegex.test(mail.value))
+const validationInput = typeof document !== 'undefined'
+  ? Object.assign(document.createElement('input'), { type: 'email' })
+  : null
+
+const isValidEmail = computed(() => {
+  if (!validationInput) return false
+  validationInput.value = mail.value
+  return mail.value.length > 0 && validationInput.checkValidity()
+})
+
+const statusAnnouncement = computed(() => {
+  if (loading.value) return 'Subscribing, please wait.'
+  if (submitted.value) return buttonLabel.value
+  if (errorMsg.value) return errorMsg.value
+  return ''
+})
 
 let observer: IntersectionObserver | null = null
 let typingTimeline: gsap.core.Timeline | null = null
@@ -293,7 +322,13 @@ const playInkRipple = () => {
 }
 
 const onSubmit = async () => {
-  if (!isValidEmail.value || loading.value || submitted.value) return
+  if (loading.value || submitted.value) return
+  if (!isValidEmail.value) {
+    errorMsg.value = mail.value.length === 0
+      ? 'Please enter your email address'
+      : 'That doesn\'t look like a valid email'
+    return
+  }
   errorMsg.value = ''
   loading.value = true
 
@@ -418,6 +453,28 @@ onUnmounted(() => {
   20% { transform: translateX(100%); opacity: 1; }
   21% { transform: translateX(100%); opacity: 0; }
   100% { transform: translateX(-100%); opacity: 0; }
+}
+
+.newsletter-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-color-75, #888);
+  margin-bottom: 0.5rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .newsletter-input {
