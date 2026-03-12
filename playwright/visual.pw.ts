@@ -194,7 +194,7 @@ test.describe('Article post page', () => {
   })
 
   test('post has tag links', async ({ page }) => {
-    const tag = page.locator('.post-tag').first()
+    const tag = page.locator('.post-tags .pill').first()
     await expect(tag).toBeVisible()
     const href = await tag.getAttribute('href')
     expect(href).toMatch(/\/tag\//)
