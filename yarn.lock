@@ -3166,7 +3166,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepress/bundler-vite@npm:^2.0.0-rc.26":
+"@vuepress/bundler-vite@npm:2.0.0-rc.26":
   version: 2.0.0-rc.26
   resolution: "@vuepress/bundler-vite@npm:2.0.0-rc.26"
   dependencies:
@@ -3268,29 +3268,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepress/helper@npm:2.0.0-rc.125":
-  version: 2.0.0-rc.125
-  resolution: "@vuepress/helper@npm:2.0.0-rc.125"
-  dependencies:
-    "@vue/shared": "npm:^3.5.29"
-    "@vueuse/core": "npm:^14.2.1"
-    cheerio: "npm:^1.2.0"
-    fflate: "npm:^0.8.2"
-    gray-matter: "npm:^4.0.3"
-    vue: "npm:^3.5.29"
-  peerDependencies:
-    "@vuepress/bundler-vite": 2.0.0-rc.26
-    "@vuepress/bundler-webpack": 2.0.0-rc.26
-    vuepress: 2.0.0-rc.26
-  peerDependenciesMeta:
-    "@vuepress/bundler-vite":
-      optional: true
-    "@vuepress/bundler-webpack":
-      optional: true
-  checksum: 10c0/d6a6e04828f826a034989af695a4a16d51cf7c79423d86673a7ae9b1e9f93199981bbabe7827cf87970d3da5b1b51d058b922be2a6120c538fd1efa02990afb2
-  languageName: node
-  linkType: hard
-
 "@vuepress/highlighter-helper@npm:2.0.0-rc.124":
   version: 2.0.0-rc.124
   resolution: "@vuepress/highlighter-helper@npm:2.0.0-rc.124"
@@ -3354,16 +3331,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepress/plugin-blog@npm:^2.0.0-rc.124":
-  version: 2.0.0-rc.125
-  resolution: "@vuepress/plugin-blog@npm:2.0.0-rc.125"
+"@vuepress/plugin-blog@npm:2.0.0-rc.124":
+  version: 2.0.0-rc.124
+  resolution: "@vuepress/plugin-blog@npm:2.0.0-rc.124"
   dependencies:
-    "@vuepress/helper": "npm:2.0.0-rc.125"
+    "@vuepress/helper": "npm:2.0.0-rc.124"
     chokidar: "npm:^5.0.0"
     vue: "npm:^3.5.29"
   peerDependencies:
     vuepress: 2.0.0-rc.26
-  checksum: 10c0/a9b43d01700ad0c8ca772fac222da402b51bfb5d346e05b184424fdce312cd4eb26547b3001cb3cb8bec289172f5df364f5ba7219bf0e7f1ec210e66736752ec
+  checksum: 10c0/d7d6f517377866f9173c3557da7f0f1e4825cefc4f4c0338c4065f7d3e47098c46c94ac3fcfa3e71daab8000a6c008b23a5e467789eb443876951035118735e6
   languageName: node
   linkType: hard
 
@@ -3488,11 +3465,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepress/plugin-pwa@npm:^2.0.0-rc.124":
-  version: 2.0.0-rc.125
-  resolution: "@vuepress/plugin-pwa@npm:2.0.0-rc.125"
+"@vuepress/plugin-pwa@npm:2.0.0-rc.124":
+  version: 2.0.0-rc.124
+  resolution: "@vuepress/plugin-pwa@npm:2.0.0-rc.124"
   dependencies:
-    "@vuepress/helper": "npm:2.0.0-rc.125"
+    "@vuepress/helper": "npm:2.0.0-rc.124"
     "@vueuse/core": "npm:^14.2.1"
     mitt: "npm:^3.0.1"
     register-service-worker: "npm:^1.7.2"
@@ -3500,24 +3477,24 @@ __metadata:
     workbox-build: "npm:^7.4.0"
   peerDependencies:
     vuepress: 2.0.0-rc.26
-  checksum: 10c0/1251d05022eb90ccfb4cb3f36aa4826793ffc3531d92321e3b9702e9d6c0e3130495f4fa1d9e6df9f42eca7f1574034c6560d52fdcfd928ad9607bd78d70f50b
+  checksum: 10c0/490b2a9f0006782ee056ff5f4ad28a59fa05a34021f6c64d9757bd96938d8bda710ed83c10069818fc49ca9060c2478dc5ec7a733064bff56b99232047a3da4c
   languageName: node
   linkType: hard
 
-"@vuepress/plugin-search@npm:^2.0.0-rc.124":
-  version: 2.0.0-rc.125
-  resolution: "@vuepress/plugin-search@npm:2.0.0-rc.125"
+"@vuepress/plugin-search@npm:2.0.0-rc.124":
+  version: 2.0.0-rc.124
+  resolution: "@vuepress/plugin-search@npm:2.0.0-rc.124"
   dependencies:
-    "@vuepress/helper": "npm:2.0.0-rc.125"
+    "@vuepress/helper": "npm:2.0.0-rc.124"
     chokidar: "npm:^5.0.0"
     vue: "npm:^3.5.29"
   peerDependencies:
     vuepress: 2.0.0-rc.26
-  checksum: 10c0/19b02bc4ddcb640e3f270d4d48a717f9df2339146e8ba3bdb28645b0fc86df5427065f979f94bb45c586c67261bffe703091bc07c4b7875a06f04280f40fc59e
+  checksum: 10c0/27326483ebaaa96910b3e393b9a6f6302e00c9a0f3a3b45ed0510bd91dbdb082fb8f655d66b9e893a0d70799f6b6e6d5026f718afe626256c432f9b382ddb195
   languageName: node
   linkType: hard
 
-"@vuepress/plugin-seo@npm:2.0.0-rc.124, @vuepress/plugin-seo@npm:^2.0.0-rc.124":
+"@vuepress/plugin-seo@npm:2.0.0-rc.124":
   version: 2.0.0-rc.124
   resolution: "@vuepress/plugin-seo@npm:2.0.0-rc.124"
   dependencies:
@@ -3561,7 +3538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepress/theme-default@npm:^2.0.0-rc.124":
+"@vuepress/theme-default@npm:2.0.0-rc.124":
   version: 2.0.0-rc.124
   resolution: "@vuepress/theme-default@npm:2.0.0-rc.124"
   dependencies:
@@ -7384,12 +7361,12 @@ __metadata:
     "@types/node": "npm:^25.4.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.57.0"
     "@typescript-eslint/parser": "npm:^8.57.0"
-    "@vuepress/bundler-vite": "npm:^2.0.0-rc.26"
-    "@vuepress/plugin-blog": "npm:^2.0.0-rc.124"
-    "@vuepress/plugin-pwa": "npm:^2.0.0-rc.124"
-    "@vuepress/plugin-search": "npm:^2.0.0-rc.124"
-    "@vuepress/plugin-seo": "npm:^2.0.0-rc.124"
-    "@vuepress/theme-default": "npm:^2.0.0-rc.124"
+    "@vuepress/bundler-vite": "npm:2.0.0-rc.26"
+    "@vuepress/plugin-blog": "npm:2.0.0-rc.124"
+    "@vuepress/plugin-pwa": "npm:2.0.0-rc.124"
+    "@vuepress/plugin-search": "npm:2.0.0-rc.124"
+    "@vuepress/plugin-seo": "npm:2.0.0-rc.124"
+    "@vuepress/theme-default": "npm:2.0.0-rc.124"
     cypress: "npm:^15.11.0"
     eslint: "npm:^10.0.3"
     eslint-config-prettier: "npm:^10.1.8"
@@ -7408,7 +7385,7 @@ __metadata:
     typescript-eslint: "npm:^8.57.0"
     vue: "npm:^3.5.29"
     vue-eslint-parser: "npm:^10.1.0"
-    vuepress: "npm:^2.0.0-rc.26"
+    vuepress: "npm:2.0.0-rc.26"
   languageName: unknown
   linkType: soft
 
@@ -11200,7 +11177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vuepress@npm:^2.0.0-rc.26":
+"vuepress@npm:2.0.0-rc.26":
   version: 2.0.0-rc.26
   resolution: "vuepress@npm:2.0.0-rc.26"
   dependencies:
