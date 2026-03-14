@@ -78,25 +78,17 @@ export const handler: Handler = async (event) => {
         )
         const contact = getRes.ok ? await getRes.json() : null
         const existingData = contact?.data?.data ?? {}
-        console.log('Existing contact data:', JSON.stringify(existingData))
         const merged = mergeSources(existingData, source)
-        console.log('Merged sources:', JSON.stringify(merged))
 
-        const patchRes = await fetch(
-          `${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`,
-          {
-            method: 'PATCH',
-            headers: {
-              Authorization: `Bearer ${KEILA_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ data: { sources: merged } }),
+        await fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${KEILA_API_KEY}`,
+            'Content-Type': 'application/json',
           },
-        )
-        console.log('PATCH status:', patchRes.status, await patchRes.text())
-      } catch (e) {
-        console.error('Source merge failed:', e)
-      }
+          body: JSON.stringify({ data: { sources: merged } }),
+        })
+      } catch { /* best-effort merge */ }
 
       return { statusCode: 200, headers, body: JSON.stringify({ already_subscribed: true }) }
     }
