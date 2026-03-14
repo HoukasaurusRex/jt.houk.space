@@ -3,6 +3,7 @@
     v-show="!isClosed"
     class="alert"
     role="alert"
+    @keydown.escape="close"
   >
     <a
       :href="notification.link"

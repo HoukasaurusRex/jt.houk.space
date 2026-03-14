@@ -11,6 +11,7 @@ const NotFound = defineAsyncComponent(() => import('./theme/layouts/NotFound.vue
 const Cards = defineAsyncComponent(() => import('./theme/global-components/Cards.vue'))
 const Card = defineAsyncComponent(() => import('./theme/components/Card.vue'))
 import Landing from './theme/global-components/Landing.vue'
+import SkipLink from './theme/components/SkipLink.vue'
 
 export default defineClientConfig({
   layouts: {
@@ -35,5 +36,5 @@ export default defineClientConfig({
     })
   },
 
-  rootComponents: [],
+  rootComponents: [SkipLink],
 })

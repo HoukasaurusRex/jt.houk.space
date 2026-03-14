@@ -4,7 +4,6 @@
     class="newsletter"
     :class="{ 'newsletter--visible': isVisible }"
     :aria-busy="loading"
-    novalidate
     @submit.prevent="onSubmit"
   >
     <div class="newsletter-shine" aria-hidden="true"></div>
@@ -32,7 +31,7 @@
       data-cy="submit"
       class="newsletter-btn"
       :class="{ 'newsletter-btn--typing': isTyping }"
-      :disabled="submitted || loading"
+      :disabled="submitted || loading || !isValidEmail"
     >
       <span class="btn-label">{{ buttonLabel }}</span>
     </button>
@@ -68,6 +67,9 @@ import type { gsap as GsapType } from 'gsap'
 import Toast from './Toast.vue'
 
 let gsap: typeof GsapType
+const prefersReducedMotion = typeof window !== 'undefined'
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : false
 
 const SUBSCRIBE_URL = '/api/subscribe'
 const STORAGE_KEY = 'newsletter-subscribed'
@@ -153,6 +155,10 @@ const setupObserver = () => {
 }
 
 const runTypewriterAnimation = () => {
+  if (prefersReducedMotion) {
+    buttonLabel.value = 'Subscribing...'
+    return
+  }
   isTyping.value = true
 
   const tl = gsap.timeline()
@@ -215,7 +221,7 @@ const resetTypewriter = () => {
 }
 
 const playSuccessAnimation = () => {
-  if (!wrapperRef.value) return
+  if (prefersReducedMotion || !wrapperRef.value) return
   const el = wrapperRef.value
 
   const tl = gsap.timeline()
@@ -514,7 +520,8 @@ onUnmounted(() => {
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.8;
+    opacity: 0.5;
+    background-color: var(--text-color-75, #888);
   }
 }
 
@@ -572,6 +579,12 @@ onUnmounted(() => {
   background: var(--accent-color);
   opacity: 0;
   will-change: transform, opacity;
+}
+
+.newsletter-input:focus-visible,
+.newsletter-btn:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
 /* Dark mode glow boost */

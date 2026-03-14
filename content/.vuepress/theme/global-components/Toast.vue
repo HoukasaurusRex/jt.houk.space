@@ -3,10 +3,13 @@
     <Transition name="toast">
       <div
         v-if="visible"
+        ref="toastRef"
         class="toast"
         :class="'toast--' + type"
         role="alert"
+        tabindex="-1"
         @click="dismiss"
+        @keydown.escape="dismiss"
       >
         <span class="toast-message">{{ message }}</span>
       </div>
@@ -15,7 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+
+const toastRef = ref<HTMLElement | null>(null)
 
 const props = withDefaults(
   defineProps<{
@@ -42,6 +47,7 @@ function dismiss() {
 
 onMounted(() => {
   visible.value = true
+  nextTick(() => toastRef.value?.focus())
   if (props.duration > 0) {
     timer = setTimeout(dismiss, props.duration)
   }

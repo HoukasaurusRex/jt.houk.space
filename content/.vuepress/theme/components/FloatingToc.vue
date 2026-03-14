@@ -1,5 +1,5 @@
 <template>
-  <aside v-if="headers.length" class="floating-toc">
+  <aside v-if="headers.length" class="floating-toc" aria-label="Table of contents">
     <ul>
       <template v-for="header in headers" :key="header.link">
         <li :class="{ active: activeLink === header.link }">
