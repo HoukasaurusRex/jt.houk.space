@@ -4,7 +4,7 @@
       v-if="mounted"
       repo="HoukasaurusRex/jt.houk.space"
       repo-id="MDEwOlJlcG9zaXRvcnkxOTA3MTk5NzM="
-      category="General"
+      category="Article Discussions"
       category-id="DIC_kwDOC14n5c4CyAto"
       mapping="pathname"
       strict="0"
