@@ -70,24 +70,33 @@ export const handler: Handler = async (event) => {
     // Check if this is a duplicate contact (Keila returns 400 or 422 with "email" error)
     const isDuplicate = (res.status === 400 || res.status === 422) && responseText.includes('email')
     if (isDuplicate) {
-      // GET existing contact data, merge sources, then PATCH
+      // GET existing contact, merge sources, then PATCH
       try {
         const getRes = await fetch(
-          `${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`,
+          `${KEILA_API_URL}/${encodeURIComponent(email)}?id_type=email`,
           { headers: { Authorization: `Bearer ${KEILA_API_KEY}` } },
         )
-        const existing = getRes.ok ? await getRes.json() : {}
-        const merged = mergeSources(existing.data ?? {}, source)
+        const contact = getRes.ok ? await getRes.json() : null
+        const existingData = contact?.data?.data ?? {}
+        console.log('Existing contact data:', JSON.stringify(existingData))
+        const merged = mergeSources(existingData, source)
+        console.log('Merged sources:', JSON.stringify(merged))
 
-        await fetch(`${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`, {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${KEILA_API_KEY}`,
-            'Content-Type': 'application/json',
+        const patchRes = await fetch(
+          `${KEILA_API_URL}/${encodeURIComponent(email)}/data?id_type=email`,
+          {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${KEILA_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: { sources: merged } }),
           },
-          body: JSON.stringify({ data: { sources: merged } }),
-        })
-      } catch { /* best-effort merge */ }
+        )
+        console.log('PATCH status:', patchRes.status, await patchRes.text())
+      } catch (e) {
+        console.error('Source merge failed:', e)
+      }
 
       return { statusCode: 200, headers, body: JSON.stringify({ already_subscribed: true }) }
     }
