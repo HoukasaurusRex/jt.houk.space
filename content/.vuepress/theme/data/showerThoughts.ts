@@ -8,10 +8,9 @@ export const showerThoughts: string[] = [
   'Maybe plants are farming us by giving us oxygen until we decompose',
   'Whoever named it a building knew it was never really finished',
   'Your dog has no idea you can make mistakes',
-  'The GPS lady has recalculated more than any math teacher',
+  'You have more in common with a homeless person than a billionaire',
   'Deja vu is just your brain buffering',
   'Sleep is just a free trial of being dead',
   'The word queue is just a Q followed by four silent letters',
   'You have survived every single one of your worst days so far',
-  'The blinker is the only honest part of most drivers',
 ]
