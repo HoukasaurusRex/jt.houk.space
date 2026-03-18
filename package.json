@@ -16,6 +16,7 @@
     "pw:test": "node --env-file=.env.defaults node_modules/.bin/playwright test",
     "pw:update": "node --env-file=.env.defaults node_modules/.bin/playwright test --update-snapshots",
     "test": "yarn cy:run",
+    "sprint-review": "node --env-file=.env.defaults --experimental-strip-types src/sprint-review.ts",
     "prepare": "husky"
   },
   "dependencies": {

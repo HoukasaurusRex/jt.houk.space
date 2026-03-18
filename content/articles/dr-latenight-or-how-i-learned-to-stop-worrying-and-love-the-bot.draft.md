@@ -13,6 +13,7 @@ location: "Montreal"
 
 ## Writing notes
 
+- AI seems to be good at interpreting human intuition into machine-based idioms.
 - Is it more fun to code this way?
   - Kind of?
   - I can crank out the less fun parts like testing, dependency management, and documentation faster
@@ -22,3 +23,4 @@ location: "Montreal"
   - Yeah I'm losing a lot of detail in languages and frameworks
   - I am being exposed to way more advanced techniques and patterns that I would have never learned otherwise, but I only need conceptual
 understanding.
+- we are not the bottlenecks, we are the architects
