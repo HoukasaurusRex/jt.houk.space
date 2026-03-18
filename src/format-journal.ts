@@ -1,56 +1,10 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import Anthropic from '@anthropic-ai/sdk'
+import { loadTemplate } from './templates/loader.ts'
+import { JOURNAL_TAGS } from './tags.ts'
+import { complete } from './ai-provider.ts'
 
 const JOURNAL_DIR = path.join(process.cwd(), 'content', 'journal')
-
-const KNOWN_TAGS = [
-  'sales-history',
-  'incident-response',
-  'code-review',
-  'team',
-  'investigations',
-  'search-indexing',
-  'reporting',
-  'docker',
-  'localization',
-  'sprint-retro',
-  'onboarding',
-  'documentation',
-  'testing',
-]
-
-const SYSTEM_PROMPT = `You are a writing assistant helping format a software engineer's daily work journal.
-The journal belongs to JT Houk, a Senior Software Developer on the Selling Experience
-team at a retail commerce platform in Montreal. Manager: Samy K.
-
-Teammates: Dania, Zhijie, Vikki (internal team), Juliana, Daniela, Sylvie, Kapil (cross-team).
-Systems: GraphQL service, search indexing service, Kafka, Elasticsearch, BigQuery, Datadog,
-Docker, Transifex, retail POS.
-
-TASK: Convert the bullet-point draft into polished prose.
-
-RULES:
-- Preserve all ## section headers exactly as they appear (e.g. ## Projects, ## Incidents,
-  ## Team, ## Code Reviews, ## Investigations, ## Journal, ## Self Evaluation).
-- Convert bullet points within each section into flowing prose paragraphs.
-- Use first person. Use "we" for team efforts, "I" for personal work.
-- Keep technical specifics: PR numbers, service names, teammate names, tool names.
-- Write 1-3 paragraphs per section. Professional but conversational tone.
-- Do NOT add information that is not in the bullets. Expand and connect, do not invent.
-- Do NOT use em dashes or double hyphens. Restructure sentences to avoid them.
-- Write naturally without worrying about line length.
-- Do NOT include the frontmatter. Output ONLY the markdown body starting with the first ## header.
-
-ALSO: Generate metadata for the frontmatter.
-On the VERY FIRST LINE of your response, output:
-TAGS: tag1, tag2
-SUMMARY: One sentence summary
-
-Pick tags from this list when possible: ${KNOWN_TAGS.join(', ')}.
-If none fit, suggest a new lowercase hyphenated tag.
-The summary should be a concise description of the day's main activities (under 100 chars).
-Then output a blank line, followed by the formatted markdown body.`
 
 const findDrafts = (): string[] =>
   fs.readdirSync(JOURNAL_DIR)
@@ -100,28 +54,25 @@ const formatDraft = async (
   draftBody: string,
   contextEntries: string[],
 ): Promise<{ tags: string[]; summary: string; body: string } | null> => {
-  const client = new Anthropic()
-
   const contextBlock = contextEntries.length
     ? `PREVIOUS ENTRIES (for context on ongoing projects and writing style):\n\n${contextEntries.map((e) => `---\n${e}\n---`).join('\n\n')}\n\n`
     : ''
 
-  const response = await client.messages.create(
-    {
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2048,
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: 'user',
-          content: `${contextBlock}DRAFT TO FORMAT:\n\n${draftBody}`,
-        },
-      ],
-    },
-    { timeout: 30_000 },
-  )
+  const system = loadTemplate('format-journal.system.md', {
+    knownTags: JOURNAL_TAGS.join(', '),
+  })
 
-  const text = response.content[0].type === 'text' ? response.content[0].text : ''
+  const text = await complete({
+    system,
+    messages: [
+      {
+        role: 'user',
+        content: `${contextBlock}DRAFT TO FORMAT:\n\n${draftBody}`,
+      },
+    ],
+    maxTokens: 2048,
+    timeout: 30_000,
+  })
 
   const tagsMatch = text.match(/^TAGS:\s*(.+)$/m)
   const summaryMatch = text.match(/^SUMMARY:\s*(.+)$/m)
@@ -130,7 +81,7 @@ const formatDraft = async (
   const body = summaryLineEnd > -1 ? text.slice(summaryLineEnd).trim() + '\n' : ''
 
   const tags = tagsMatch
-    ? tagsMatch[1].split(',').map((t) => t.trim())
+    ? tagsMatch[1].split(',').map((t: string) => t.trim())
     : []
   const summary = summaryMatch ? summaryMatch[1].trim() : ''
 

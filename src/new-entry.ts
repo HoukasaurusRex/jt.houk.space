@@ -1,22 +1,12 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { exec } from 'child_process'
-import Anthropic from '@anthropic-ai/sdk'
+import { loadTemplate } from './templates/loader.ts'
+import { ARTICLE_TAGS } from './tags.ts'
+import { complete } from './ai-provider.ts'
 
 const TYPES = ['journal', 'article', 'project'] as const
 type EntryType = (typeof TYPES)[number]
-
-const KNOWN_TAGS = [
-  'ai',
-  'opinion',
-  'lifestyle',
-  'productivity',
-  'cloud',
-  'devops',
-  'tutorial',
-  'iot',
-  'python',
-]
 
 const slugify = (text: string): string =>
   text
@@ -39,53 +29,23 @@ const scaffoldArticle = async (
   if (!process.env.ANTHROPIC_API_KEY) return null
 
   try {
-    const client = new Anthropic()
-    const response = await client.messages.create(
-      {
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 512,
-        messages: [
-          {
-            role: 'user',
-            content: `You are helping scaffold a blog article draft for a personal tech blog written by a software engineer. The blog uses a conversational, personal voice with "we" language.
+    const userMessage = loadTemplate('new-entry.user.md', {
+      title,
+      knownTags: ARTICLE_TAGS.join(', '),
+    })
 
-Article title: "${title}"
-
-Known tags: ${KNOWN_TAGS.join(', ')}
-
-Respond in EXACTLY this format (no extra text):
-
-TAGS: tag1, tag2
-SUMMARY: One sentence summary of what this article could explore
-SECTIONS:
-## Section Heading One
-<!-- Leading question to prompt writing -->
-## Section Heading Two
-<!-- Leading question to prompt writing -->
-## Section Heading Three
-<!-- Leading question to prompt writing -->
-
-Rules:
-- Pick 1-3 tags from the known tags list. If none fit, suggest one new lowercase tag.
-- Summary should be a compelling one-liner, not a description of the article structure.
-- 3-5 section headings that tell a narrative arc.
-- Each heading gets exactly one HTML comment with a leading question to prompt the author.
-- Keep it concise.`,
-          },
-        ],
-      },
-      { timeout: 10_000 },
-    )
-
-    const text =
-      response.content[0].type === 'text' ? response.content[0].text : ''
+    const text = await complete({
+      messages: [{ role: 'user', content: userMessage }],
+      maxTokens: 1024,
+      timeout: 10_000,
+    })
 
     const tagsMatch = text.match(/^TAGS:\s*(.+)$/m)
     const summaryMatch = text.match(/^SUMMARY:\s*(.+)$/m)
     const sectionsMatch = text.match(/SECTIONS:\n([\s\S]+)$/)
 
     const tags = tagsMatch
-      ? tagsMatch[1].split(',').map((t) => t.trim())
+      ? tagsMatch[1].split(',').map((t: string) => t.trim())
       : []
     const summary = summaryMatch ? summaryMatch[1].trim() : ''
     const body = sectionsMatch ? sectionsMatch[1].trim() + '\n' : ''

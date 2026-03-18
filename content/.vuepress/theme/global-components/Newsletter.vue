@@ -118,14 +118,9 @@ const showRipple = ref(false)
 const buttonLabel = ref('Subscribe')
 const slowSubtext = ref('')
 
-const validationInput = typeof document !== 'undefined'
-  ? Object.assign(document.createElement('input'), { type: 'email' })
-  : null
-
 const isValidEmail = computed(() => {
-  if (!validationInput) return false
-  validationInput.value = mail.value
-  return mail.value.length > 0 && validationInput.checkValidity()
+  if (!mail.value.length) return false
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value)
 })
 
 const statusAnnouncement = computed(() => {
