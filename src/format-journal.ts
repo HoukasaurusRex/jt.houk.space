@@ -58,7 +58,7 @@ const formatDraft = async (
     ? `PREVIOUS ENTRIES (for context on ongoing projects and writing style):\n\n${contextEntries.map((e) => `---\n${e}\n---`).join('\n\n')}\n\n`
     : ''
 
-  const system = loadTemplate('format-journal.system.md', {
+  const system = await loadTemplate('format-journal.system.md', {
     knownTags: JOURNAL_TAGS.join(', '),
   })
 
@@ -71,7 +71,7 @@ const formatDraft = async (
       },
     ],
     maxTokens: 2048,
-    timeout: 30_000,
+    timeout: 60_000,
   })
 
   const tagsMatch = text.match(/^TAGS:\s*(.+)$/m)

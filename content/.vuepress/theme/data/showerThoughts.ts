@@ -11,6 +11,6 @@ export const showerThoughts: string[] = [
   'You have more in common with a homeless person than a billionaire',
   'Deja vu is just your brain buffering',
   'Sleep is just a free trial of being dead',
-  'The word queue is just a Q followed by four silent letters',
+  'A problem that is clearly defined is a problem nearly solved',
   'You have survived every single one of your worst days so far',
 ]

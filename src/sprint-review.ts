@@ -1,8 +1,9 @@
 import { execSync } from 'child_process'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as fs from 'fs/promises'
 import { loadTemplate } from './templates/loader.ts'
 import { complete } from './ai-provider.ts'
+import { ensureJournalEntry } from './entries.ts'
+import { searchJira, type JiraIssue } from './jira.ts'
 
 const SPRINT_DAYS = 14
 const JIRA_PROJECT = 'LRX'
@@ -13,17 +14,6 @@ interface PR {
   url: string
   closedAt: string
   repository: { name: string; nameWithOwner: string }
-}
-
-interface JiraIssue {
-  key: string
-  fields: {
-    summary: string
-    status: { name: string }
-    issuetype: { name: string }
-    priority: { name: string }
-    resolutiondate: string | null
-  }
 }
 
 const run = (cmd: string): string =>
@@ -52,42 +42,10 @@ const groupPRsByRepo = (prs: PR[]): Map<string, PR[]> => {
   return grouped
 }
 
-const searchJiraTickets = async (since: string): Promise<JiraIssue[]> => {
-  const { ATLASSIAN_DOMAIN, ATLASSIAN_EMAIL, ATLASSIAN_API_TOKEN } = process.env
-  if (!ATLASSIAN_DOMAIN || !ATLASSIAN_EMAIL || !ATLASSIAN_API_TOKEN) {
-    console.warn('Jira env vars not set, skipping Jira tickets.')
-    return []
-  }
-
-  const jql = `project = ${JIRA_PROJECT} AND assignee = currentUser() AND status changed to ("Done", "Closed", "Resolved") AFTER "${since}" ORDER BY resolved DESC`
-  const url = `https://${ATLASSIAN_DOMAIN}/rest/api/3/search/jql`
-  const auth = `Basic ${Buffer.from(`${ATLASSIAN_EMAIL}:${ATLASSIAN_API_TOKEN}`).toString('base64')}`
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: auth,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jql,
-        fields: ['key', 'summary', 'status', 'issuetype', 'priority', 'resolutiondate'],
-        maxResults: 50,
-      }),
-    })
-    if (!res.ok) {
-      console.warn(`Jira API returned ${res.status}: ${await res.text()}`)
-      return []
-    }
-    const data = await res.json()
-    return (data as { issues: JiraIssue[] }).issues || []
-  } catch (err) {
-    console.warn(`Jira fetch failed: ${err instanceof Error ? err.message : 'unknown'}`)
-    return []
-  }
-}
+const searchJiraTickets = async (since: string): Promise<JiraIssue[]> =>
+  searchJira(
+    `project = ${JIRA_PROJECT} AND assignee = currentUser() AND status changed to ("Done", "Closed", "Resolved") AFTER "${since}" ORDER BY resolved DESC`,
+  )
 
 const getCommits = (since: string): string => {
   try {
@@ -95,23 +53,6 @@ const getCommits = (since: string): string => {
   } catch {
     return ''
   }
-}
-
-const ensureJournalEntry = (): string => {
-  const today = new Date().toISOString().split('T')[0]
-  const journalPath = path.join(
-    process.cwd(),
-    'content',
-    'journal',
-    `${today}.draft.md`,
-  )
-
-  if (!fs.existsSync(journalPath)) {
-    console.log('Creating today\'s journal entry...')
-    run('yarn new-entry journal')
-  }
-
-  return journalPath
 }
 
 const isOrgRepo = (nameWithOwner: string): boolean =>
@@ -172,8 +113,8 @@ const sprintReview = async () => {
         .join('\n')}`
     : ''
 
-  const system = loadTemplate('sprint-review.system.md')
-  const userMessage = loadTemplate('sprint-review.user.md', {
+  const system = await loadTemplate('sprint-review.system.md')
+  const userMessage = await loadTemplate('sprint-review.user.md', {
     since,
     jiraSummary: jiraSummary || 'No Jira tickets found.',
     prSummary: prSummary || 'No PRs found.',
@@ -190,14 +131,14 @@ const sprintReview = async () => {
   console.log(text)
 
   // Write to today's journal entry (replace existing Sprint Review section or append)
-  const journalPath = ensureJournalEntry()
-  const existing = fs.readFileSync(journalPath, 'utf-8')
+  const journalPath = await ensureJournalEntry()
+  const existing = await fs.readFile(journalPath, 'utf-8')
   const section = `## Sprint Review\n\n${text}\n`
   const sprintHeadingRegex = /## Sprint Review\n[\s\S]*$/
   const updated = sprintHeadingRegex.test(existing)
     ? existing.replace(sprintHeadingRegex, section)
     : existing.trimEnd() + '\n\n' + section
-  fs.writeFileSync(journalPath, updated, 'utf-8')
+  await fs.writeFile(journalPath, updated, 'utf-8')
   console.log(`\nWritten to ${journalPath}`)
 }
 

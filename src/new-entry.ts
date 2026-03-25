@@ -1,18 +1,17 @@
-import * as fs from 'fs'
+import * as fs from 'fs/promises'
 import * as path from 'path'
 import { exec } from 'child_process'
 import { loadTemplate } from './templates/loader.ts'
 import { ARTICLE_TAGS } from './tags.ts'
 import { complete } from './ai-provider.ts'
+import {
+  buildJournalEntry,
+  buildArticleEntry,
+  buildProjectEntry,
+} from './entries.ts'
 
 const TYPES = ['journal', 'article', 'project'] as const
 type EntryType = (typeof TYPES)[number]
-
-const slugify = (text: string): string =>
-  text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
 
 const usage = () => {
   console.log(`Usage:
@@ -29,7 +28,7 @@ const scaffoldArticle = async (
   if (!process.env.ANTHROPIC_API_KEY) return null
 
   try {
-    const userMessage = loadTemplate('new-entry.user.md', {
+    const userMessage = await loadTemplate('new-entry.user.md', {
       title,
       knownTags: ARTICLE_TAGS.join(', '),
     })
@@ -37,7 +36,7 @@ const scaffoldArticle = async (
     const text = await complete({
       messages: [{ role: 'user', content: userMessage }],
       maxTokens: 1024,
-      timeout: 10_000,
+      timeout: 30_000,
     })
 
     const tagsMatch = text.match(/^TAGS:\s*(.+)$/m)
@@ -58,72 +57,6 @@ const scaffoldArticle = async (
     return null
   }
 }
-
-const buildJournalEntry = (isoDate: string, longDate: string) => ({
-  dir: path.join(process.cwd(), 'content', 'journal'),
-  fileName: `${isoDate.split('T')[0]}.draft.md`,
-  content: `---
-title: "${longDate}"
-created_at: "${isoDate}"
-updated_at: "${isoDate}"
-tags:
-  - ""
-summary: ""
-author: "JT Houk"
-location: "Montreal"
-image: ""
----
-
-`,
-})
-
-const buildArticleEntry = (
-  isoDate: string,
-  title: string,
-  scaffold?: { tags: string[]; summary: string; body: string } | null,
-) => {
-  const tags = scaffold?.tags?.length
-    ? scaffold.tags.map((t) => `  - "${t}"`).join('\n')
-    : '  - ""'
-  const summary = scaffold?.summary || ''
-  const body = scaffold?.body || ''
-
-  return {
-    dir: path.join(process.cwd(), 'content', 'articles'),
-    fileName: `${slugify(title)}.draft.md`,
-    content: `---
-title: "${title}"
-created_at: "${isoDate}"
-updated_at: "${isoDate}"
-tags:
-${tags}
-summary: "${summary}"
-author: "JT Houk"
-location: "Montreal"
----
-
-${body}`,
-  }
-}
-
-const buildProjectEntry = (isoDate: string, title: string) => ({
-  dir: path.join(process.cwd(), 'content', 'projects'),
-  fileName: `${slugify(title)}.md`,
-  content: `---
-title: "${title}"
-created_at: "${isoDate}"
-updated_at: "${isoDate}"
-category: ""
-language: ""
-link: ""
-technologies:
-  databases: []
-  languages: []
-  frameworks: []
----
-
-`,
-})
 
 const createEntry = async () => {
   const args = process.argv.slice(2)
@@ -148,32 +81,6 @@ const createEntry = async () => {
     day: 'numeric',
   }).format(today)
 
-  // Resolve output path early to avoid wasting an API call
-  const baseDir =
-    type === 'article'
-      ? path.join(process.cwd(), 'content', 'articles')
-      : type === 'project'
-        ? path.join(process.cwd(), 'content', 'projects')
-        : path.join(process.cwd(), 'content', 'journal')
-
-  const baseFileName =
-    type === 'journal'
-      ? `${isoDate.split('T')[0]}.draft.md`
-      : type === 'article'
-        ? `${slugify(title)}.draft.md`
-        : `${slugify(title)}.md`
-
-  const filePath = path.join(baseDir, baseFileName)
-
-  if (!fs.existsSync(baseDir)) {
-    fs.mkdirSync(baseDir, { recursive: true })
-  }
-
-  if (fs.existsSync(filePath)) {
-    console.warn(`Entry already exists: ${filePath}`)
-    return
-  }
-
   // Scaffold article content with AI if available
   let scaffold: { tags: string[]; summary: string; body: string } | null = null
   if (type === 'article') {
@@ -184,14 +91,26 @@ const createEntry = async () => {
     }
   }
 
-  const { content } =
+  const { dir, fileName, content } =
     type === 'article'
       ? buildArticleEntry(isoDate, title, scaffold)
       : type === 'project'
         ? buildProjectEntry(isoDate, title)
         : buildJournalEntry(isoDate, longDate)
 
-  fs.writeFileSync(filePath, content, 'utf-8')
+  const filePath = path.join(dir, fileName)
+
+  await fs.mkdir(dir, { recursive: true })
+
+  try {
+    await fs.access(filePath)
+    console.warn(`Entry already exists: ${filePath}`)
+    return
+  } catch {
+    // File doesn't exist, proceed with creation
+  }
+
+  await fs.writeFile(filePath, content, 'utf-8')
   console.log(`Created new ${type} entry: ${filePath}`)
 
   exec(`open "${filePath}"`)

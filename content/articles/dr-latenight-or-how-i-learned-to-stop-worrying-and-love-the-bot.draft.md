@@ -22,5 +22,8 @@ location: "Montreal"
 - Am I losing my own ability to code?
   - Yeah I'm losing a lot of detail in languages and frameworks
   - I am being exposed to way more advanced techniques and patterns that I would have never learned otherwise, but I only need conceptual
-understanding.
-- we are not the bottlenecks, we are the architects
+    understanding.
+- "we are not the bottlenecks, we are the architects"
+- it takes a lot of work to prevent ai from solving issues while adding new issues. Usually requires a lot of human strategic thinking.
+- context isn't free. Every addition increases entropy and makes the output more unpredictable.
+- embrace the planning phase. This is where 90% of the work is now, and the rest is review.
