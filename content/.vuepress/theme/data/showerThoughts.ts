@@ -1,6 +1,6 @@
 export const showerThoughts: string[] = [
   "It's a good bagel when it makes you test positive for heroin",
-  'Websites are just other peoples computers rendering on your screen',
+  'The old world is dying, and the new world struggles to be born; now is the time for monsters.\n - Antonio Gramsci',
   'The first person to hear a parrot talk was probably not okay',
   'Laps only exist when you sit down',
   'A different version of you exists in every person who knows you',

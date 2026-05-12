@@ -5,7 +5,7 @@ updated_at: "2026-03-23T14:37:27.513Z"
 tags:
   - "ai"
   - "tutorial"
-summary: "Hard-won lessons on how fast an unguarded AI API key can drain your wallet—and how to stop it."
+summary: ""
 author: "JT Houk"
 location: "Montreal"
 ---
@@ -14,39 +14,47 @@ location: "Montreal"
 
 - Oops, I Opus'd everything.
   - when planning, you can use opus for more conceptual brainstorming and ideation, but once you start executing, the lack of precision and verbosity
-becomes a liability.
-  - fortunately, Opus is great at converting a high-level conceptual plan into a detailed execution plan for sonnet to follow.
-- "Analyze this repository for me and tell me what you find" *well I found your wallet and I know how to use it*.
+    becomes a liability.
+  - Opus can be good at converting a high-level conceptual plan into a detailed execution plan for sonnet to follow though
+  - It's not always cheaper to use the smaller models though. Some high-level or ambiguous tasks will create inefficient investigation patterns
+    like with complex errors in code, architectural or structural problems with a project, or heavily interdependant or unique test setups.
+- "Analyze this repository for me and tell me what you find"
+  *well I found your wallet and I know how to use it*.
 - "Investigate this error while I go get a coffee"
   *well that didn't work, why don't I try doing the same thing slightly differently but this time I'll consume the entire log output.
-well that didn't work, why don't I try doing the same thing slightly differently and start thumbing through this interesting looking node_modules
-folder.*
+  well that didn't work, why don't I try doing the same thing slightly differently and start thumbing through this interesting looking node_modules
+  folder.*
+  - assume the perspective of the LLM here like you're maliciously complying
 - Are you writing a script to call a LLM API?
   - Start from the bottom up, using the cheapest, quickest models first and only scaling up when you have a specific need for more conceptual
-awareness.
+    awareness.
 - Fast, good, cheap triangle applies
-
-## The Morning I Watched Four Figures Disappear Before Coffee
-<!-- Open with the exact moment of discovery—the billing dashboard refresh, the stomach-drop. What was the project? Was it a demo, a side hustle,
-a "quick experiment"? The more mundane the origin, the more universal the dread. Resist explaining too early; let the reader sit in the confusion with
-you. -->
-
-## How Infinite Scale Became Our Problem, Not a Feature
-<!-- The API's "it just works" promise is also what makes it dangerous. Riff on the asymmetry: the same property that makes LLM APIs magical in
-demos—no provisioning, no capacity planning—removes every natural circuit breaker we've trained ourselves to rely on. Cloud veterans know this feeling
-from S3 egress or Lambda runaway loops. Draw that parallel. -->
-
-## The Taxonomy of Ways We Burned Money (So You Don't Have To)
-<!-- This is the technical core. Think in failure modes, not advice: runaway retry loops, fat context windows on every call, no token budgeting,
-dev keys with prod limits, forgotten background jobs. Ground each one in a plausible "it seemed reasonable at the time" decision.
-The goal is recognition, not shame. -->
-
-## The Guardrails Nobody Tells You to Set on Day One
-<!-- Concrete, practitioner-grade controls: hard spending caps, per-key limits, alerting before the threshold not after,
-request logging with cost attribution, circuit breakers in code. Frame these as the infra checklist you'd run before opening a port to the
-internet—same stakes, different vector. -->
-
-## Treat Your API Key Like a Loaded Gun You've Left on the Counter
-<!-- Land the conviction: the industry has normalized "move fast and add billing alerts later" and someone always pays for it.
-Challenge the idea that this is a beginner mistake—plenty of seniors get burned because the tooling defaults to permissive. End with a specific,
-memorable rule of thumb the reader can carry out of the article. -->
+- Keeping context windows low.
+  - Do you really need to send all of the wonderful work you did context pumping your model to write that very clever state management system
+    to adjust the container padding of your button element?
+- Refining plans before implementing can reduce costs
+  - Fewer complex errors produced when considered in design step
+  - Code produced easier for you and agents to debug
+- Some things are made for human eyes
+  - Design quirks and UX
+- Your model is not your friend
+  - Don't ask it to do things that are better for you to do with a search engine or a debugger
+  - Don't get it to generate assets more complicated than a pencil - it will try by default (e.g. add a skull and crossbones icon)
+    and they will be bad
+- Planning mode is not cheap, but implementation is much more expensive.
+- Don't auto-accept commands like testing - models can get hung up on solving something inefficiently when you might already know the answer,
+  especially when the problem is known in the project.
+- Use ccusage
+- Like children, each LLM responds better to different command styles.
+  - e.g. While Opus likes to pick its own insights from examples, Sonnet likes being given clear rules and responds well to instruction formatting.
+    Haiku gets the hammer and a safe little box to hit stuff in.
+- Never underestimate the power of a bad decision made iteratively
+- Have you tried just getting it right the first time?
+- The fast, good, cheap triangle has not retired. It just started billing per million tokens.
+- Prompting is a plan with intent
+- I wrote a memory tool that uses a vector database and a custom retriever to keep the context window low and costs down. It works,
+but there was also a case where it would return all results if not filtered and was polluting my context with 5000 tokens with information on my
+funky design preferences on my golang proxy server agents
+- I've been having some success with creating subagents to handle repetitive tasks (e.g. plan_from_ticket, review_plan, implement_plan, etc.)
+  - Balances cost while taking advantage of using appropriate models for the task
+  - "Give your robot its own robots"

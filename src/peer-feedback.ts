@@ -25,7 +25,7 @@ if (!values.name) {
 const name = values.name
 const periodStart = values.start!
 const periodEnd = values.end!
-const slackChatFile = values['slack-chat']
+const slackChatFile = values['slack-chat'] ?? `tmp/slack-${name.toLowerCase()}.txt`
 
 const readFilteredJournals = async (start: string, end: string, filterName: string): Promise<string> => {
   const allFiles = await fs.readdir(JOURNAL_DIR)
