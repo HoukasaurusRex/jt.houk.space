@@ -16,6 +16,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@cdktf/provider-cloudflare": "^13.0.0",
     "@cdktf/provider-google": "^14.0.0",
