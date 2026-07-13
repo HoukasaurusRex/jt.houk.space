@@ -52,7 +52,14 @@ export class KeilaCloudRun extends Construct {
         containers: [
           {
             image: "pentacent/keila:latest",
-            resources: { limits: { cpu: "1", memory: "512Mi" } },
+            // cpuIdle: true => request-based (throttled) CPU billing. CPU is only
+            // allocated while a request is in flight, so the instance costs nothing
+            // when idle. Trade-off: Keila's Oban background jobs will not run while
+            // idle, so scheduled/queued sends only progress when the app is hit.
+            resources: {
+              limits: { cpu: "1", memory: "512Mi" },
+              cpuIdle: true,
+            },
             volumeMounts: [{ name: "uploads", mountPath: "/app/uploads" }],
             env: [
               { name: "URL_HOST", value: config.domain },

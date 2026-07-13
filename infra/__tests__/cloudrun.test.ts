@@ -102,6 +102,15 @@ describe("KeilaCloudRun", () => {
     ).toBeDefined();
   });
 
+  it("uses request-based (throttled) CPU billing to avoid idle charges", () => {
+    const services = resources().google_cloud_run_v2_service;
+    const svc = Object.values(services)[0] as Record<string, unknown>;
+    const template = svc.template as Record<string, unknown>;
+    const containers = template.containers as Record<string, unknown>[];
+    const res = containers[0].resources as Record<string, unknown>;
+    expect(res.cpu_idle).toBe(true);
+  });
+
   it("disables update checks", () => {
     const services = resources().google_cloud_run_v2_service;
     const svc = Object.values(services)[0] as Record<string, unknown>;
