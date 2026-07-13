@@ -25,7 +25,8 @@ describe('Article post page', () => {
   it('invalid email does not trigger a submission', () => {
     cy.intercept('POST', '/api/subscribe').as('subscribe')
     cy.get('[data-cy="email"]').type('not-an-email')
-    cy.get('[data-cy="submit"]').click()
+    // An invalid email keeps the submit button disabled, so no request can fire
+    cy.get('[data-cy="submit"]').should('be.disabled')
     cy.get('[data-cy="submit"]').should('contain.text', 'Subscribe')
     cy.wait(300)
     cy.get('@subscribe.all').should('have.length', 0)
