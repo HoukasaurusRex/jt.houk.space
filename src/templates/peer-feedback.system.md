@@ -22,6 +22,8 @@ Keep each answer to 2-4 concise sentences. Write in first person ("I've noticed"
 working with {{name}}").
 </task>
 
+{{levelCalibration}}
+
 <rubric>
 Excellent feedback:
 - References a specific project, incident, or interaction by name or date

@@ -14,11 +14,21 @@ const { values } = parseArgs({
     start: { type: 'string', default: '2025-09-18' },
     end: { type: 'string', default: '2026-04-14' },
     'slack-chat': { type: 'string' },
+    level: { type: 'string' },
   },
 })
 
 if (!values.name) {
-  console.error('Usage: peer-feedback --name <FirstName> [--start YYYY-MM-DD] [--end YYYY-MM-DD] [--slack-chat <file>]')
+  console.error('Usage: peer-feedback --name <FirstName> [--start YYYY-MM-DD] [--end YYYY-MM-DD] [--slack-chat <file>] [--level <junior|mid|senior|staff|principal>]')
+  process.exit(1)
+}
+
+const VALID_LEVELS = ['junior', 'mid', 'senior', 'staff', 'principal'] as const
+type Level = (typeof VALID_LEVELS)[number]
+
+const level = values.level as Level | undefined
+if (level && !VALID_LEVELS.includes(level)) {
+  console.error(`Invalid --level "${level}". Must be one of: ${VALID_LEVELS.join(', ')}`)
   process.exit(1)
 }
 
@@ -83,12 +93,19 @@ const peerFeedback = async () => {
     console.log(`Loaded Slack chat from ${slackChatFile}`)
   }
 
+  if (level) console.log(`Calibrating for level: ${level}`)
+
   console.log(`\nGenerating peer feedback for ${name} with Claude...\n`)
+
+  const levelCalibration = level
+    ? await loadTemplate(`peer-feedback-calibration/${level}.md`)
+    : ''
 
   const system = await loadTemplate('peer-feedback.system.md', {
     name,
     periodStart,
     periodEnd,
+    levelCalibration,
   })
 
   const userMessage = await loadTemplate('peer-feedback.user.md', {
