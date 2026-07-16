@@ -53,4 +53,16 @@ describe("KeilaDomain", () => {
     const spec = mapping.spec as Record<string, unknown>;
     expect(spec.route_name).toBe("keila");
   });
+
+  it("creates a Cloudflare ruleset blocking bots/crawlers", () => {
+    const rulesets = resources().cloudflare_ruleset;
+    expect(rulesets).toBeDefined();
+    const ruleset = Object.values(rulesets)[0] as Record<string, unknown>;
+    expect(ruleset.phase).toBe("http_request_firewall_custom");
+    expect(ruleset.zone_id).toBe("abc123");
+    const rules = ruleset.rules as Record<string, unknown>[];
+    expect(rules[0].action).toBe("block");
+    expect(String(rules[0].expression)).toContain("cf.client.bot");
+    expect(String(rules[0].expression)).toContain("ClaudeBot");
+  });
 });
