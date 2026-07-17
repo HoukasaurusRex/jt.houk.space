@@ -63,14 +63,14 @@ describe("KeilaDomain", () => {
     const rules = ruleset.rules as Record<string, unknown>[];
     expect(rules[0].action).toBe("block");
     expect(String(rules[0].expression)).toContain("cf.client.bot");
-    expect(String(rules[0].expression)).toContain("ClaudeBot");
   });
 
-  it("enables Cloudflare Bot Fight Mode", () => {
+  it("enables Cloudflare Bot Fight Mode and AI crawler blocking", () => {
     const botManagement = resources().cloudflare_bot_management;
     expect(botManagement).toBeDefined();
     const bm = Object.values(botManagement)[0] as Record<string, unknown>;
     expect(bm.zone_id).toBe("abc123");
     expect(bm.fight_mode).toBe(true);
+    expect(bm.ai_bots_protection).toBe("block");
   });
 });
