@@ -65,4 +65,12 @@ describe("KeilaDomain", () => {
     expect(String(rules[0].expression)).toContain("cf.client.bot");
     expect(String(rules[0].expression)).toContain("ClaudeBot");
   });
+
+  it("enables Cloudflare Bot Fight Mode", () => {
+    const botManagement = resources().cloudflare_bot_management;
+    expect(botManagement).toBeDefined();
+    const bm = Object.values(botManagement)[0] as Record<string, unknown>;
+    expect(bm.zone_id).toBe("abc123");
+    expect(bm.fight_mode).toBe(true);
+  });
 });

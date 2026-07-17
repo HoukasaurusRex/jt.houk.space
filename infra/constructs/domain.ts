@@ -2,6 +2,7 @@ import { Construct } from "constructs";
 import { CloudRunDomainMapping } from "@cdktf/provider-google/lib/cloud-run-domain-mapping";
 import { DnsRecord } from "@cdktf/provider-cloudflare/lib/dns-record";
 import { Ruleset } from "@cdktf/provider-cloudflare/lib/ruleset";
+import { BotManagement } from "@cdktf/provider-cloudflare/lib/bot-management";
 
 // Matches Cloudflare's own verified-bot detection plus the UA tokens used by
 // crawlers that don't register for reverse-DNS verification (mail.houk.space
@@ -63,6 +64,15 @@ export class KeilaDomain extends Construct {
           enabled: true,
         },
       ],
+    });
+
+    // Bot Fight Mode uses behavioral/fingerprint heuristics rather than
+    // self-declared user-agents, so it catches crawlers that spoof a normal
+    // browser UA to evade the named-bot rule above. Available on all plans,
+    // unlike Super Bot Fight Mode (sbfm_*), which requires Pro+.
+    new BotManagement(this, "bot-fight-mode", {
+      zoneId: config.zoneId,
+      fightMode: true,
     });
   }
 }
