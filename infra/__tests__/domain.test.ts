@@ -71,6 +71,7 @@ describe("KeilaDomain", () => {
     const bm = Object.values(botManagement)[0] as Record<string, unknown>;
     expect(bm.zone_id).toBe("abc123");
     expect(bm.fight_mode).toBe(true);
+    expect(bm.enable_js).toBe(true);
     expect(bm.ai_bots_protection).toBe("block");
   });
 });

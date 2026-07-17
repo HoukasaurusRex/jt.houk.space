@@ -58,8 +58,10 @@ export class KeilaDomain extends Construct {
     new BotManagement(this, "bot-fight-mode", {
       zoneId: config.zoneId,
       // Fight Mode: behavioral/fingerprint heuristics that catch crawlers
-      // spoofing a normal browser UA to evade the rules above.
+      // spoofing a normal browser UA to evade the rules above. Requires
+      // enableJs (Cloudflare rejects Fight Mode without it).
       fightMode: true,
+      enableJs: true,
       // Cloudflare-maintained blocklist of known AI scraper/training crawlers;
       // stays current without us hand-maintaining a user-agent list.
       aiBotsProtection: "block",
