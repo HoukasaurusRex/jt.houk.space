@@ -14,12 +14,8 @@ describe("KeilaSecrets", () => {
     new KeilaSecrets(stack, "secrets", {
       connectionString: "postgres://keila:pass@localhost/keila",
       secretKeyBase: "a".repeat(64),
-      adminEmail: "admin@example.com",
       adminPassword: "test-password-123",
-      smtpHost: "smtp.example.com",
-      smtpUser: "apikey",
       smtpPassword: "test-password",
-      smtpFromEmail: "keila@example.com",
     });
     synth = JSON.parse(Testing.synth(stack));
   });
@@ -27,16 +23,16 @@ describe("KeilaSecrets", () => {
   const resources = () =>
     synth.resource as Record<string, Record<string, unknown>>;
 
-  it("creates 9 google_secret_manager_secret resources", () => {
+  it("creates 5 google_secret_manager_secret resources", () => {
     const secrets = resources().google_secret_manager_secret;
     expect(secrets).toBeDefined();
-    expect(Object.keys(secrets)).toHaveLength(9);
+    expect(Object.keys(secrets)).toHaveLength(5);
   });
 
-  it("creates 9 google_secret_manager_secret_version resources", () => {
+  it("creates 5 google_secret_manager_secret_version resources", () => {
     const versions = resources().google_secret_manager_secret_version;
     expect(versions).toBeDefined();
-    expect(Object.keys(versions)).toHaveLength(9);
+    expect(Object.keys(versions)).toHaveLength(5);
   });
 
   it("creates random_password resources for generated secrets", () => {
@@ -81,15 +77,19 @@ it("creates the keila-hashid-salt secret with a 32-char password", () => {
     expect((hashidPwd as Record<string, unknown>).special).toBe(false);
   });
 
-it("creates secrets for smtp and admin email", () => {
+it("keeps only the genuinely-sensitive secrets", () => {
     const secrets = resources().google_secret_manager_secret;
     const secretIds = Object.values(secrets).map(
       (s) => (s as Record<string, unknown>).secret_id
     );
-    expect(secretIds).toContain("keila-admin-email");
-    expect(secretIds).toContain("keila-smtp-host");
-    expect(secretIds).toContain("keila-smtp-user");
+    // Sensitive values stay in Secret Manager
+    expect(secretIds).toContain("keila-db-url");
+    expect(secretIds).toContain("keila-admin-password");
     expect(secretIds).toContain("keila-smtp-password");
-    expect(secretIds).toContain("keila-smtp-from-email");
+    // Non-secret config is NOT stored here (plain env vars instead)
+    expect(secretIds).not.toContain("keila-admin-email");
+    expect(secretIds).not.toContain("keila-smtp-host");
+    expect(secretIds).not.toContain("keila-smtp-user");
+    expect(secretIds).not.toContain("keila-smtp-from-email");
   });
 });

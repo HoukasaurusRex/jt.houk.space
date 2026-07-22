@@ -116,12 +116,8 @@ export class KeilaStack extends TerraformStack {
     const secrets = new KeilaSecrets(this, "secrets", {
       connectionString: dbUrl.stringValue,
       secretKeyBase: secretKeyBase.stringValue,
-      adminEmail: adminEmail.stringValue,
       adminPassword: adminPassword.stringValue,
-      smtpHost: smtpHost.stringValue,
-      smtpUser: smtpUser.stringValue,
       smtpPassword: smtpPassword.stringValue,
-      smtpFromEmail: smtpFromEmail.stringValue,
     });
     secrets.node.addDependency(apis);
 
@@ -145,6 +141,10 @@ export class KeilaStack extends TerraformStack {
       storageBucket: storage.bucket,
       secretVersions: secrets.versions,
       iamBindings: iam.iamBindings,
+      adminEmail: adminEmail.stringValue,
+      smtpHost: smtpHost.stringValue,
+      smtpUser: smtpUser.stringValue,
+      smtpFromEmail: smtpFromEmail.stringValue,
     });
     cloudrun.node.addDependency(iam);
 

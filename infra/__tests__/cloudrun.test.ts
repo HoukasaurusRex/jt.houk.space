@@ -17,12 +17,8 @@ describe("KeilaCloudRun", () => {
     const secrets = new KeilaSecrets(stack, "secrets", {
       connectionString: "postgres://keila:pass@10.0.0.2/keila",
       secretKeyBase: "a".repeat(64),
-      adminEmail: "admin@example.com",
       adminPassword: "test-password-123",
-      smtpHost: "smtp.example.com",
-      smtpUser: "apikey",
       smtpPassword: "test-password",
-      smtpFromEmail: "keila@example.com",
     });
     const storage = new KeilaStorage(stack, "storage", { region: "us-central1" });
     const iam = new KeilaIam(stack, "iam", { secrets, storageBucket: storage.bucket });
@@ -34,6 +30,10 @@ describe("KeilaCloudRun", () => {
       storageBucket: storage.bucket,
       secretVersions: secrets.versions,
       iamBindings: iam.iamBindings,
+      adminEmail: "admin@example.com",
+      smtpHost: "smtp.example.com",
+      smtpUser: "apikey",
+      smtpFromEmail: "keila@example.com",
     });
     synth = JSON.parse(Testing.synth(stack));
   });
@@ -89,7 +89,7 @@ describe("KeilaCloudRun", () => {
     ).toBeDefined();
   });
 
-  it("injects MAILER_SMTP_USER from Secret Manager", () => {
+  it("sets MAILER_SMTP_USER as a plain env var (not a secret)", () => {
     const services = resources().google_cloud_run_v2_service;
     const svc = Object.values(services)[0] as Record<string, unknown>;
     const template = svc.template as Record<string, unknown>;
@@ -97,8 +97,20 @@ describe("KeilaCloudRun", () => {
     const envs = containers[0].env as Record<string, unknown>[];
     const smtpUserEnv = envs.find((e) => e.name === "MAILER_SMTP_USER");
     expect(smtpUserEnv).toBeDefined();
+    expect(smtpUserEnv!.value).toBe("apikey");
+    expect(smtpUserEnv!.value_source).toBeUndefined();
+  });
+
+  it("keeps MAILER_SMTP_PASSWORD in Secret Manager", () => {
+    const services = resources().google_cloud_run_v2_service;
+    const svc = Object.values(services)[0] as Record<string, unknown>;
+    const template = svc.template as Record<string, unknown>;
+    const containers = template.containers as Record<string, unknown>[];
+    const envs = containers[0].env as Record<string, unknown>[];
+    const smtpPwEnv = envs.find((e) => e.name === "MAILER_SMTP_PASSWORD");
+    expect(smtpPwEnv).toBeDefined();
     expect(
-      (smtpUserEnv!.value_source as Record<string, unknown>).secret_key_ref
+      (smtpPwEnv!.value_source as Record<string, unknown>).secret_key_ref
     ).toBeDefined();
   });
 

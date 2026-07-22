@@ -14,6 +14,12 @@ export interface KeilaCloudRunConfig {
   storageBucket: StorageBucket;
   secretVersions: SecretManagerSecretVersion[];
   iamBindings: ITerraformDependable[];
+  // Non-secret config, injected as plain env vars (not Secret Manager):
+  // public SMTP settings plus the admin login email (its password stays secret).
+  adminEmail: string;
+  smtpHost: string;
+  smtpUser: string;
+  smtpFromEmail: string;
 }
 
 export class KeilaCloudRun extends Construct {
@@ -75,11 +81,11 @@ export class KeilaCloudRun extends Construct {
               { name: "SECRET_KEY_BASE", ...secretRef(config.secrets.secretKeyBase.secretId) },
               { name: "HASHID_SALT", ...secretRef(config.secrets.hashidSalt.secretId) },
               { name: "DB_URL", ...secretRef(config.secrets.dbUrl.secretId) },
-              { name: "KEILA_USER", ...secretRef(config.secrets.adminEmail.secretId) },
+              { name: "KEILA_USER", value: config.adminEmail },
               { name: "KEILA_PASSWORD", ...secretRef(config.secrets.adminPassword.secretId) },
-              { name: "MAILER_SMTP_FROM_EMAIL", ...secretRef(config.secrets.smtpFromEmail.secretId) },
-              { name: "MAILER_SMTP_HOST", ...secretRef(config.secrets.smtpHost.secretId) },
-              { name: "MAILER_SMTP_USER", ...secretRef(config.secrets.smtpUser.secretId) },
+              { name: "MAILER_SMTP_FROM_EMAIL", value: config.smtpFromEmail },
+              { name: "MAILER_SMTP_HOST", value: config.smtpHost },
+              { name: "MAILER_SMTP_USER", value: config.smtpUser },
               { name: "MAILER_SMTP_PASSWORD", ...secretRef(config.secrets.smtpPassword.secretId) },
             ],
           },

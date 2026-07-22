@@ -31,12 +31,8 @@ export class KeilaIam extends Construct {
       ["db-url", config.secrets.dbUrl],
       ["secret-key-base", config.secrets.secretKeyBase],
       ["hashid-salt", config.secrets.hashidSalt],
-      ["admin-email", config.secrets.adminEmail],
       ["admin-password", config.secrets.adminPassword],
-      ["smtp-host", config.secrets.smtpHost],
-      ["smtp-user", config.secrets.smtpUser],
       ["smtp-password", config.secrets.smtpPassword],
-      ["smtp-from-email", config.secrets.smtpFromEmail],
     ];
 
     for (const [name, secret] of allSecrets) {
