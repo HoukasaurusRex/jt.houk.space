@@ -78,6 +78,12 @@ export class KeilaCloudRun extends Construct {
               { name: "USER_CONTENT_DIR", value: "/app/uploads" },
               { name: "DISABLE_REGISTRATION", value: "true" },
               { name: "LOG_LEVEL", value: "info" },
+              // secretRef(...) => pulled from Secret Manager; value: ... => plain.
+              // Only genuine credentials use Secret Manager. The plain ones below
+              // (admin login email + public SMTP host/user/from) are deliberately
+              // NOT secrets: it keeps active secret versions <= 6 so Secret Manager
+              // stays in its free tier. Do not convert these back to secretRef
+              // without checking the version count, or the bill leaves free tier.
               { name: "SECRET_KEY_BASE", ...secretRef(config.secrets.secretKeyBase.secretId) },
               { name: "HASHID_SALT", ...secretRef(config.secrets.hashidSalt.secretId) },
               { name: "DB_URL", ...secretRef(config.secrets.dbUrl.secretId) },
