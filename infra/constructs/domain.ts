@@ -88,7 +88,9 @@ export class KeilaDomain extends Construct {
           description: "Block burst traffic from a single IP",
           enabled: true,
           ratelimit: {
-            characteristics: ["ip.src"],
+            // cf.colo.id is required: counters are tracked per-colocation,
+            // not globally, so Cloudflare rejects characteristics without it.
+            characteristics: ["ip.src", "cf.colo.id"],
             period: 10,
             requestsPerPeriod: 20,
             mitigationTimeout: 600,

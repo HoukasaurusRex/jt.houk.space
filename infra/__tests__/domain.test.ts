@@ -86,7 +86,7 @@ describe("KeilaDomain", () => {
     const rules = ruleset!.rules as Record<string, unknown>[];
     expect(rules[0].action).toBe("block");
     const ratelimit = rules[0].ratelimit as Record<string, unknown>;
-    expect(ratelimit.characteristics).toEqual(["ip.src"]);
+    expect(ratelimit.characteristics).toEqual(["ip.src", "cf.colo.id"]);
     expect(ratelimit.requests_per_period).toBe(20);
     expect(ratelimit.period).toBe(10);
   });
