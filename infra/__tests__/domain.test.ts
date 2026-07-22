@@ -66,6 +66,7 @@ describe("KeilaDomain", () => {
     const rules = ruleset!.rules as Record<string, unknown>[];
     expect(rules[0].action).toBe("block");
     expect(String(rules[0].expression)).toContain("cf.client.bot");
+    expect(String(rules[0].expression)).toContain('http.host eq "mail.houk.space"');
   });
 
   it("blocks known WordPress/PHP/VCS recon paths", () => {
@@ -87,7 +88,7 @@ describe("KeilaDomain", () => {
     expect(rules[0].action).toBe("block");
     const ratelimit = rules[0].ratelimit as Record<string, unknown>;
     expect(ratelimit.characteristics).toEqual(["ip.src", "cf.colo.id"]);
-    expect(ratelimit.requests_per_period).toBe(20);
+    expect(ratelimit.requests_per_period).toBe(60);
     expect(ratelimit.period).toBe(10);
   });
 

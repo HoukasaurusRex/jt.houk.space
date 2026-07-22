@@ -37,8 +37,10 @@ export class KeilaDomain extends Construct {
     });
 
     // AI-specific crawlers are handled by Cloudflare's managed ai_bots_protection
-    // below; this rule covers Cloudflare's broader verified-bot list (search
-    // engines, etc.) since mail.houk.space has nothing worth indexing.
+    // below (zone-wide; blocking AI training scrapers doesn't affect search
+    // indexing). This rule blocks Cloudflare's broader verified-bot list
+    // (search engines included), scoped to just this host since it alone has
+    // nothing worth indexing.
     new Ruleset(this, "bot-block", {
       zoneId: config.zoneId,
       name: "block-crawlers",
@@ -48,8 +50,8 @@ export class KeilaDomain extends Construct {
       rules: [
         {
           action: "block",
-          expression: "cf.client.bot",
-          description: "Block verified bots/crawlers",
+          expression: `(http.host eq "${config.domain}") and cf.client.bot`,
+          description: "Block verified bots/crawlers on this host only",
           enabled: true,
         },
         {
@@ -72,9 +74,9 @@ export class KeilaDomain extends Construct {
     });
 
     // Free-tier rate limit: a generic burst-of-requests catch-all for scanner
-    // patterns not covered by the named rules above. 20 req/10s per IP is well
-    // above any normal page load (a handful of requests) but well below a
-    // scanner sweeping a dozen paths in under two seconds.
+    // patterns not covered by the named rules above. 60 req/10s per IP gives
+    // headroom for a real page load (HTML + JS chunks + images + fonts) while
+    // still catching a scanner sweeping a dozen paths in under two seconds.
     new Ruleset(this, "rate-limit", {
       zoneId: config.zoneId,
       name: "rate-limit-scanners",
@@ -92,7 +94,7 @@ export class KeilaDomain extends Construct {
             // not globally, so Cloudflare rejects characteristics without it.
             characteristics: ["ip.src", "cf.colo.id"],
             period: 10,
-            requestsPerPeriod: 20,
+            requestsPerPeriod: 60,
             // Free plan is only entitled to a 10s mitigation timeout; a
             // sustained scan just keeps re-tripping this every 10s instead.
             mitigationTimeout: 10,
