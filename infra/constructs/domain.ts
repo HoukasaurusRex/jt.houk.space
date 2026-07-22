@@ -52,6 +52,48 @@ export class KeilaDomain extends Construct {
           description: "Block verified bots/crawlers",
           enabled: true,
         },
+        {
+          // Keila is Elixir/Phoenix; none of these paths can ever exist here.
+          // Scanners probing for them are pure noise (WordPress/PHP/VCS recon).
+          action: "block",
+          expression: [
+            'http.request.uri.path contains "wp-includes"',
+            'http.request.uri.path contains "wp-admin"',
+            'http.request.uri.path contains "wp-content"',
+            'http.request.uri.path contains "xmlrpc.php"',
+            'http.request.uri.path contains "wlwmanifest"',
+            'http.request.uri.path contains "/.git"',
+            'http.request.uri.path contains "/.env"',
+          ].join(" or "),
+          description: "Block WordPress/PHP/VCS recon paths (no such stack here)",
+          enabled: true,
+        },
+      ],
+    });
+
+    // Free-tier rate limit: a generic burst-of-requests catch-all for scanner
+    // patterns not covered by the named rules above. 20 req/10s per IP is well
+    // above any normal page load (a handful of requests) but well below a
+    // scanner sweeping a dozen paths in under two seconds.
+    new Ruleset(this, "rate-limit", {
+      zoneId: config.zoneId,
+      name: "rate-limit-scanners",
+      description: "Block IPs bursting requests (automated scanning)",
+      kind: "zone",
+      phase: "http_ratelimit",
+      rules: [
+        {
+          action: "block",
+          expression: "true",
+          description: "Block burst traffic from a single IP",
+          enabled: true,
+          ratelimit: {
+            characteristics: ["ip.src"],
+            period: 10,
+            requestsPerPeriod: 20,
+            mitigationTimeout: 600,
+          },
+        },
       ],
     });
 
