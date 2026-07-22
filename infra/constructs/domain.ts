@@ -93,7 +93,9 @@ export class KeilaDomain extends Construct {
             characteristics: ["ip.src", "cf.colo.id"],
             period: 10,
             requestsPerPeriod: 20,
-            mitigationTimeout: 600,
+            // Free plan is only entitled to a 10s mitigation timeout; a
+            // sustained scan just keeps re-tripping this every 10s instead.
+            mitigationTimeout: 10,
           },
         },
       ],
