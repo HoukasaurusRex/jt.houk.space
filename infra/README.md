@@ -136,8 +136,29 @@ Each feature is a separate construct file in `constructs/`:
 | `constructs/storage.ts` | GCS bucket for uploads |
 | `constructs/iam.ts` | Service account + IAM bindings |
 | `constructs/cloudrun.ts` | Cloud Run service definition |
-| `constructs/domain.ts` | Cloudflare DNS record (proxied CNAME) |
+| `constructs/domain.ts` | Cloudflare DNS record (proxied CNAME) + WAF custom rules (crawler/scanner block, rate limiting) + Bot Fight Mode |
 | `constructs/monitoring.ts` | Alerts and notification channels |
+
+### `constructs/domain.ts` — Bot Fight Mode cannot be path-scoped on the free plan
+
+In addition to the proxied CNAME, this construct enables Cloudflare **Bot Fight Mode**
+(`cloudflare_bot_management`, `fightMode: true`) plus custom WAF rules (WordPress/PHP/VCS
+recon-path block, a zone-wide rate limit) and the managed AI-crawler blocklist.
+
+Bot Fight Mode is a **zone-level toggle**, not a `cloudflare_ruleset` — it takes no expression
+and no path scope. On the free plan there is no `skip` rule that can exempt a path from it
+(only paid Super Bot Fight Mode gets the `http_request_sbfm` skip phase). It challenges
+non-browser traffic from datacenter IP ranges with a managed JS challenge (`Just a
+moment...`) regardless of auth headers or user agent — confirmed against the GitHub Actions
+runner (Azure ranges) and, most likely, this Netlify Function's own egress (AWS ranges).
+
+**Do not try to fix a challenged server-to-server caller with a WAF skip rule** — it won't
+work on this plan. The fix is to route that caller around Cloudflare entirely, at the Cloud
+Run origin (`keila_service_url` in this stack's Terraform output), which is already public
+(`allUsers` has `roles/run.invoker` — see `constructs/cloudrun.ts`) and keeps this
+protection, the rate limit, and the scale-to-zero config untouched. See the
+rules-as-written-podcast repo's `CLAUDE.md` (Newsletter section) and `scripts/lib/keila.ts`
+for the caller side of this.
 
 ## GitHub Project
 

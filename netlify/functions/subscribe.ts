@@ -1,6 +1,13 @@
 import { Handler } from '@netlify/functions'
 
-const KEILA_API_URL = 'https://mail.houk.space/api/v1/contacts'
+// Defaults to the Cloudflare-proxied host; production overrides KEILA_API_BASE to Keila's
+// Cloud Run origin directly. Bot Fight Mode on mail.houk.space challenges automated,
+// non-browser requests (confirmed for the rules-as-written-podcast CI runner; likely also
+// affects this function's Netlify egress) with a 403 JS challenge, and on the free
+// Cloudflare plan there is no WAF skip rule that can exempt a path from it. Do NOT repoint
+// this back at mail.houk.space — see infra/README.md's domain.ts section.
+const KEILA_API_BASE = process.env.KEILA_API_BASE ?? 'https://mail.houk.space/api/v1'
+const KEILA_API_URL = `${KEILA_API_BASE}/contacts`
 const KEILA_API_KEY = process.env.KEILA_API_KEY ?? ''
 
 const ALLOWED_ORIGINS = [
